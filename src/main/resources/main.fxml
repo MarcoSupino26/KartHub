@@ -41,7 +41,7 @@
             </Text>
          </HBox>
          <HBox style="-fx-alignment: center;">
-            <Button blendMode="COLOR_BURN" contentDisplay="CENTER" mnemonicParsing="false" onAction="#switchToPrenota" prefHeight="30.0" prefWidth="120.0" style="-fx-background-color: transparent;" text="Prenota">
+            <Button fx:id="book" blendMode="COLOR_BURN" contentDisplay="CENTER" mnemonicParsing="false" onAction="#switchToPrenota" prefHeight="30.0" prefWidth="120.0" style="-fx-background-color: transparent;" text="Prenota">
                <font>
                   <Font name="Futura-Medium" size="25.0" />
                </font>
@@ -57,7 +57,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button blendMode="COLOR_BURN" contentDisplay="CENTER" mnemonicParsing="false" onAction="#switchToLogin" prefHeight="52.0" prefWidth="120.0" style="-fx-background-color: transparent;" text="Log In">
+            <Button fx:id="log" blendMode="COLOR_BURN" contentDisplay="CENTER" mnemonicParsing="false" onAction="#switchToLogin" prefHeight="52.0" prefWidth="120.0" style="-fx-background-color: transparent;" text="Log In">
                <font>
                   <Font name="Futura-Medium" size="25.0" />
                </font>

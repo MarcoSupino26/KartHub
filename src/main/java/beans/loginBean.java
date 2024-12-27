@@ -3,7 +3,7 @@ package beans;
 public class loginBean {
     private String username;
     private String password;
-    private String type = "customer"; //sto facendo dummy, da modificare
+    private String type; //sto facendo dummy, da modificare
 
     public String getUsername() {
         return username;
@@ -22,4 +22,6 @@ public class loginBean {
     public void setPassword(String text){
         this.password = text;
     }
+
+    public void setType(String text){this.type = text;}
 }

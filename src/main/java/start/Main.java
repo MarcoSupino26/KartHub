@@ -25,7 +25,7 @@ public class Main extends Application {
         User utente;
         utente = new User("emanuele", "girobiro03", "Customer");
         memoria.addUser("emanuele", utente);
-        utente = new User("Immanuel", "scusi", "Cotton picker");
+        utente = new User("Immanuel", "scusi", "Owner");
         memoria.addUser("Immanuel", utente);
         SceneManager.setInitialStage(initialStage);
         SceneManager.changeScene("/main.fxml");

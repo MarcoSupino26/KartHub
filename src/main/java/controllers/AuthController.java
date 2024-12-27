@@ -13,9 +13,11 @@ public class AuthController {
         String username = logBean.getUsername();
         String passw = logBean.getPassword();
         User usr = users.getUser(username, passw);
+
         if(usr == null) {
             return false;
         }else{
+            SessionManager.getInstance().setLoggedUser(usr);
             return true;
         }
     }
