@@ -1,15 +1,14 @@
-package controllers;
+package models;
 
-import models.User;
-
-public class SessionManager {
-    private static SessionManager instance;
+public class Session {
+    private static Session instance;
     private User loggedUser;
-    private SessionManager(){}
 
-    public static SessionManager getInstance(){
+    private Session(){}
+
+    public static Session getInstance(){
         if(instance == null){
-            instance = new SessionManager();
+            instance = new Session();
         }
         return instance;
     }
