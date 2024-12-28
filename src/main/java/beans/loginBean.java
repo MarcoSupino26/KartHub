@@ -6,8 +6,7 @@ public class loginBean {
     private String password;
     private String type;
 
-    private loginBean(){;
-    }
+    private loginBean(){}
 
     public static loginBean getInstance(){
         if(instance == null){

@@ -1,7 +1,6 @@
 package controllers;
 import beans.loginBean;
 import models.Dao.FactoryDAO;
-import models.Dao.MemoryDao;
 import models.Dao.UserDao;
 import models.Dao.UserDaoMem;
 import models.Session;
