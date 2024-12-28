@@ -1,9 +1,20 @@
 package beans;
 
 public class loginBean {
+    private static loginBean instance;
     private String username;
     private String password;
-    private String type; //sto facendo dummy, da modificare
+    private String type;
+
+    private loginBean(){;
+    }
+
+    public static loginBean getInstance(){
+        if(instance == null){
+            instance = new loginBean();
+        }
+        return instance;
+    }
 
     public String getUsername() {
         return username;
@@ -23,5 +34,7 @@ public class loginBean {
         this.password = text;
     }
 
-    public void setType(String text){this.type = text;}
+    public void setType(String text){
+        this.type = text;
+    }
 }

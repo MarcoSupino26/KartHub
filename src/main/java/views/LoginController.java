@@ -3,6 +3,7 @@ package views;
 import beans.loginBean;
 import controllers.AuthController;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
@@ -16,7 +17,7 @@ public class LoginController {
 
     @FXML
     public void accedi(ActionEvent event){
-        loginBean logBean = new loginBean();
+        loginBean logBean = loginBean.getInstance();
         logBean.setUsername(usr.getText());
         logBean.setPassword(psw.getText());
 
@@ -35,4 +36,7 @@ public class LoginController {
         SceneManager.changeScene("/main.fxml");
     }
 
+    @FXML public void switchToSign(Event event){
+        SceneManager.changeScene("/sign.fxml");
+    }
 }

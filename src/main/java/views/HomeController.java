@@ -23,7 +23,7 @@ public class HomeController {
         logged = session.getLoggedUser();
         if(logged != null) {
             log.setText("Logout");
-            if(logged.getType().equals("Owner")){
+            if(logged.getType().equals("Proprietario")){
                 book.setText("Gestisci");
             }
         }
@@ -31,7 +31,7 @@ public class HomeController {
 
     @FXML
     public void switchToPrenota(ActionEvent event) throws IOException {
-        if(Session.getInstance().getLoggedUser().getType().equals("Customer")){
+        if(Session.getInstance().getLoggedUser().getType().equals("Proprietario")){
             SceneManager.changeScene("/ges.fxml");
         }
         else {
