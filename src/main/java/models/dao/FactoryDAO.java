@@ -1,4 +1,4 @@
-package models.Dao;
+package models.dao;
 
 public abstract class FactoryDAO {
     private static FactoryDAO instance;
@@ -11,5 +11,5 @@ public abstract class FactoryDAO {
     }
 
     public abstract UserDao createUserDao();
-    
+
 }

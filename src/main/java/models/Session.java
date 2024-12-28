@@ -4,7 +4,7 @@ public class Session {
     private static Session instance;
     private User loggedUser;
 
-    private Session(){}
+    protected Session(){}
 
     public static Session getInstance(){
         if(instance == null){

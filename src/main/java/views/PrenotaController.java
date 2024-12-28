@@ -15,12 +15,12 @@ public class PrenotaController {
     private Parent root;
 
     @FXML
-    public void switchToEventi(ActionEvent event) throws IOException {
+    public void switchToEventi(ActionEvent event){
         SceneManager.changeScene("/eventi.fxml");
     }
 
     @FXML
-    public void switchToHome(Event event) throws IOException {
+    public void switchToHome(Event event){
         SceneManager.changeScene("/main.fxml");
     }
 }

@@ -1,4 +1,4 @@
-package models.Dao;
+package models.dao;
 
 import models.User;
 
@@ -10,7 +10,7 @@ public class UserDaoMem extends UserDao{
     private final HashMap<String, User> users; //hash map per mantenere gli utenti in memoria
     private static UserDaoMem instance;
 
-    private UserDaoMem(){
+    protected UserDaoMem(){
         users = new HashMap<>();
     }
 

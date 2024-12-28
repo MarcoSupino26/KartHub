@@ -30,7 +30,7 @@ public class HomeController {
     }
 
     @FXML
-    public void switchToPrenota(ActionEvent event) throws IOException {
+    public void switchToPrenota(ActionEvent event){
         if(Session.getInstance().getLoggedUser().getType().equals("Proprietario")){
             SceneManager.changeScene("/ges.fxml");
         }
@@ -40,7 +40,7 @@ public class HomeController {
     }
 
     @FXML
-    public void switchToEventi(ActionEvent event) throws IOException {
+    public void switchToEventi(ActionEvent event){
         SceneManager.changeScene("/eventi.fxml");
     }
 
@@ -50,7 +50,7 @@ public class HomeController {
             SceneManager.changeScene("/login.fxml");
         }else {
             AuthController auth = new AuthController();
-            auth.session_end();
+            auth.sessionEnd();
             SceneManager.changeScene("/main.fxml");
         }
     }

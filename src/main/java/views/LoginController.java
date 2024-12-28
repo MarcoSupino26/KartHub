@@ -1,6 +1,6 @@
 package views;
 
-import beans.loginBean;
+import beans.LoginBean;
 import controllers.AuthController;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -17,7 +17,7 @@ public class LoginController {
 
     @FXML
     public void accedi(ActionEvent event){
-        loginBean logBean = loginBean.getInstance();
+        LoginBean logBean = LoginBean.getInstance();
         logBean.setUsername(usr.getText());
         logBean.setPassword(psw.getText());
 

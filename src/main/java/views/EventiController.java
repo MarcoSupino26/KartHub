@@ -14,7 +14,7 @@ public class EventiController {
     }
 
     @FXML
-    public void switchToPrenota(ActionEvent event) throws IOException {
+    public void switchToPrenota(ActionEvent event){
         SceneManager.changeScene("/prenota.fxml");
     }
 

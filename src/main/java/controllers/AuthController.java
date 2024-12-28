@@ -1,21 +1,22 @@
 package controllers;
-import beans.loginBean;
-import models.Dao.FactoryDAO;
-import models.Dao.UserDao;
-import models.Dao.UserDaoMem;
+import beans.LoginBean;
+import models.dao.FactoryDAO;
+import models.dao.UserDao;
+import models.dao.UserDaoMem;
 import models.Session;
 import models.User;
 
 public class AuthController {
 
     public AuthController(){
+        //il construttore non ha bisogno di inizializzare nulla
     }
 
-    public void session_end(){
+    public void sessionEnd(){
         Session.getInstance().freeSession();
     }
 
-    public boolean authUser(loginBean logBean){
+    public boolean authUser(LoginBean logBean){
         UserDaoMem users = UserDaoMem.getInstance();
         String username = logBean.getUsername();
         String passw = logBean.getPassword();
@@ -29,7 +30,7 @@ public class AuthController {
         }
     }
 
-    public void registerUser(loginBean logBean){
+    public void registerUser(LoginBean logBean){
         //UserDaoMem users = UserDaoMem.getInstance()
         UserDao users = FactoryDAO.getInstance().createUserDao();
         String username = logBean.getUsername();

@@ -1,4 +1,4 @@
-package models.Dao;
+package models.dao;
 
 public class MemoryDao extends FactoryDAO{
     @Override

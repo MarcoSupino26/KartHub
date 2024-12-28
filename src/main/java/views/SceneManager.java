@@ -9,6 +9,8 @@ import java.io.IOException;
 public class SceneManager {
     private static Stage initialStage;
 
+    public SceneManager(){}
+
     //Inizializzazione riferimento allo stage principale
     public static void setInitialStage(Stage stage) {
         initialStage = stage;

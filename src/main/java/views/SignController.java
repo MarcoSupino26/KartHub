@@ -1,6 +1,6 @@
 package views;
 
-import beans.loginBean;
+import beans.LoginBean;
 import controllers.AuthController;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -9,8 +9,6 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
-
-import javax.swing.*;
 
 public class SignController {
 
@@ -37,7 +35,7 @@ public class SignController {
     @FXML
     public void registrazione(ActionEvent event){
         RadioButton selected = (RadioButton) opt1.getToggleGroup().getSelectedToggle();
-        loginBean signBean = loginBean.getInstance();
+        LoginBean signBean = LoginBean.getInstance();
         signBean.setUsername(usr.getText());
         signBean.setPassword(psw.getText());
         signBean.setType(selected.getText());
