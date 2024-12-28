@@ -1,7 +1,9 @@
 package controllers;
 import beans.loginBean;
-import javafx.fxml.FXML;
-import models.Dao.UserDAO;
+import models.Dao.FactoryDAO;
+import models.Dao.MemoryDao;
+import models.Dao.UserDao;
+import models.Dao.UserDaoMem;
 import models.Session;
 import models.User;
 
@@ -15,7 +17,7 @@ public class AuthController {
     }
 
     public boolean authUser(loginBean logBean){
-        UserDAO users = UserDAO.getInstance();
+        UserDaoMem users = UserDaoMem.getInstance();
         String username = logBean.getUsername();
         String passw = logBean.getPassword();
         User usr = users.getUser(username, passw);
@@ -29,7 +31,8 @@ public class AuthController {
     }
 
     public void registerUser(loginBean logBean){
-        UserDAO users = UserDAO.getInstance();
+        //UserDaoMem users = UserDaoMem.getInstance()
+        UserDao users = FactoryDAO.getInstance().createUserDao();
         String username = logBean.getUsername();
         String passw = logBean.getPassword();
         String type = logBean.getType();

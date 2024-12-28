@@ -4,23 +4,26 @@ import models.User;
 
 import java.util.HashMap;
 
-public class UserDAO {
+public class UserDaoMem extends UserDao{
 
-    private static UserDAO instance; //istanza privata unica
-    private HashMap<String, User> users; //hash map per mantenere gli utenti in memoria
+    //private static UserDaoMem instance; //istanza privata unica
+    private final HashMap<String, User> users; //hash map per mantenere gli utenti in memoria
+    private static UserDaoMem instance;
 
-    private UserDAO(){
-        users = new HashMap<>(); //inizializza hashmap
+    private UserDaoMem(){
+        users = new HashMap<>();
     }
 
-    public static UserDAO getInstance(){
+
+    public static UserDaoMem getInstance(){
         if(instance == null){
-            instance = new UserDAO();
+            instance = new UserDaoMem();
         }
         return instance;
     }
 
     //inserimento utente
+    @Override
     public void addUser(String username, User user){
         if(!users.containsKey(username)){
             users.put(username, user);
@@ -29,6 +32,7 @@ public class UserDAO {
         }
     }
 
+    @Override
     public User getUser(String username, String password){
         if(users.containsKey(username) && users.get(username).getPassword().equals(password)){
             return users.get(username);
