@@ -1,10 +1,8 @@
-package models.dao;
-
-import models.User;
+package models.user;
 
 import java.util.HashMap;
 
-public class UserDaoMem extends UserDao{
+public class UserDaoMem extends UserDao {
     private final HashMap<String, User> users; //hash map per mantenere gli utenti in memoria
     private static UserDaoMem instance;
 

@@ -1,6 +1,4 @@
-package models.dao;
-
-import models.Booking;
+package models.booking;
 
 public class ChampagneDecorator extends BookDecorator {
     public ChampagneDecorator(Booking booking) {

@@ -1,11 +1,11 @@
 package views;
 
 import controllers.AuthController;
-import models.Session;
+import utils.Session;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import models.User;
+import models.user.User;
 
 import java.io.IOException;
 

@@ -1,9 +1,12 @@
-package models;
+package models.track;
+
+import models.slots.TimeSlot;
+import models.user.User;
 
 import java.util.List;
 
 public class Track {
-    private String name;
+    private final String name;
     private int availableKarts;
     private List<TimeSlot> timeSlots;
     private User owner;

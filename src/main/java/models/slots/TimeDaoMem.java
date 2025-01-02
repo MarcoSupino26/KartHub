@@ -1,6 +1,4 @@
-package models.dao;
-
-import models.TimeSlot;
+package models.slots;
 
 import java.util.HashMap;
 

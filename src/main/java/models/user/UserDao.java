@@ -1,6 +1,4 @@
-package models.dao;
-
-import models.User;
+package models.user;
 
 public abstract class UserDao {
     public abstract void addUser(String username, User user);

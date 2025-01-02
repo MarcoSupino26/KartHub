@@ -1,4 +1,6 @@
-package models;
+package utils;
+
+import models.user.User;
 
 public class Session {
     private static Session instance;

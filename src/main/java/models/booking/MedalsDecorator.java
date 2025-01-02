@@ -1,8 +1,6 @@
-package models.dao;
+package models.booking;
 
-import models.Booking;
-
-public class MedalsDecorator extends BookDecorator{
+public class MedalsDecorator extends BookDecorator {
     public MedalsDecorator(Booking booking) {
         super(booking);
     }

@@ -1,6 +1,4 @@
-package models.dao;
-
-import models.TimeSlot;
+package models.slots;
 
 public abstract class TimeDao {
     public abstract void addSlot(String key, TimeSlot slot);

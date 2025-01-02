@@ -1,7 +1,9 @@
 package models.dao.factory;
 
-import models.dao.TimeDao;
-import models.dao.UserDao;
+import models.slots.TimeDao;
+import models.track.TrackDao;
+import models.user.UserDao;
+import models.booking.BookingDao;
 
 public abstract class FactoryDAO {
     private static FactoryDAO instance;
@@ -16,4 +18,8 @@ public abstract class FactoryDAO {
     public abstract UserDao createUserDao();
 
     public abstract TimeDao createTimeDao();
+
+    public abstract TrackDao createTrackDao();
+
+    public abstract BookingDao createBookingDao();
 }

@@ -1,4 +1,4 @@
-package models.dao;
+package models.booking;
 
 public interface BookingInterface {
     double getCost();

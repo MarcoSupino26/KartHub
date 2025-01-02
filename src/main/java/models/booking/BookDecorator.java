@@ -1,6 +1,4 @@
-package models.dao;
-
-import models.Booking;
+package models.booking;
 
 public abstract class BookDecorator implements BookingInterface {
     protected Booking booking;

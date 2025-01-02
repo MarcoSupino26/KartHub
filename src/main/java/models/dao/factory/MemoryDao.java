@@ -1,9 +1,13 @@
 package models.dao.factory;
 
-import models.dao.TimeDao;
-import models.dao.TimeDaoMem;
-import models.dao.UserDao;
-import models.dao.UserDaoMem;
+import models.booking.BookingDao;
+import models.booking.BookingDaoMem;
+import models.slots.TimeDao;
+import models.slots.TimeDaoMem;
+import models.track.TrackDao;
+import models.track.TrackDaoMem;
+import models.user.UserDao;
+import models.user.UserDaoMem;
 
 public class MemoryDao extends FactoryDAO {
     @Override
@@ -13,4 +17,10 @@ public class MemoryDao extends FactoryDAO {
 
     @Override
     public TimeDao createTimeDao(){return TimeDaoMem.getInstance();}
+
+    @Override
+    public TrackDao createTrackDao(){return TrackDaoMem.getInstance();}
+
+    @Override
+    public BookingDao createBookingDao() {return BookingDaoMem.getInstance();}
 }
