@@ -5,8 +5,6 @@ import models.User;
 import java.util.HashMap;
 
 public class UserDaoMem extends UserDao{
-
-    //private static UserDaoMem instance; //istanza privata unica
     private final HashMap<String, User> users; //hash map per mantenere gli utenti in memoria
     private static UserDaoMem instance;
 
@@ -40,6 +38,7 @@ public class UserDaoMem extends UserDao{
             return null;
         }
     }
+    //rivedere la logica del null, forse meglio metterla nel controllore
 
     //removeUser()
 

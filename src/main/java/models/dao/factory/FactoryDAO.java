@@ -1,5 +1,6 @@
 package models.dao.factory;
 
+import models.dao.TimeDao;
 import models.dao.UserDao;
 
 public abstract class FactoryDAO {
@@ -14,4 +15,5 @@ public abstract class FactoryDAO {
 
     public abstract UserDao createUserDao();
 
+    public abstract TimeDao createTimeDao();
 }
