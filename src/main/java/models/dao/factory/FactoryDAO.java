@@ -1,4 +1,6 @@
-package models.dao;
+package models.dao.factory;
+
+import models.dao.UserDao;
 
 public abstract class FactoryDAO {
     private static FactoryDAO instance;
