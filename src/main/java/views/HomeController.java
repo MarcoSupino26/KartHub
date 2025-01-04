@@ -31,7 +31,10 @@ public class HomeController {
 
     @FXML
     public void switchToPrenota(ActionEvent event){
-        if(Session.getInstance().getLoggedUser().getType().equals("Proprietario")){
+        User logged = Session.getInstance().getLoggedUser();
+        if(logged == null) {
+            SceneManager.changeScene("/login.fxml");
+        }else if (logged.getType().equals("Proprietario")){
             SceneManager.changeScene("/ges.fxml");
         }
         else {

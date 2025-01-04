@@ -89,7 +89,7 @@
                </Button>
                <Text fill="WHITE" fontSmoothingType="LCD" layoutX="310.0" layoutY="361.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Non sei registrato?">
                   <font>
-                     <Font size="18.0" />
+                     <Font name="Futura-Medium" size="18.0" />
                   </font>
                </Text>
                <PasswordField fx:id="psw" alignment="CENTER" layoutX="258.0" layoutY="160.0" prefHeight="46.0" prefWidth="335.0" promptText="password" style="-fx-background-color: transparent;">
