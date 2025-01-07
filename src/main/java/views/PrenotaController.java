@@ -20,10 +20,18 @@ public class PrenotaController {
     private CheckBox check;
     @FXML
     private Group optional;
+    @FXML
+    private Group affiliates;
+    @FXML
+    private Group form;
+    @FXML
+    private Group tracks;
 
     @FXML
     public void initialize() {
+        form.setVisible(false);
         optional.setVisible(false);
+        tracks.setVisible(false);
     }
 
     @FXML
@@ -43,9 +51,21 @@ public class PrenotaController {
     }
 
     @FXML
+    public void bookTrack(Event event){
+        affiliates.setVisible(false);
+        tracks.setVisible(true);
+    }
+
+    @FXML
     public void showOptions(Event event){
         boolean checked = check.isSelected();
         optional.setVisible(checked);
         optional.setManaged(checked);
+    }
+
+    @FXML
+    public void proceed(Event event){
+        tracks.setVisible(false);
+        form.setVisible(true);
     }
 }
