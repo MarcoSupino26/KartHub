@@ -1,6 +1,8 @@
 package models.track;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class TrackDaoMem extends TrackDao {
     private final HashMap<String, Track> tracks;
@@ -30,5 +32,10 @@ public class TrackDaoMem extends TrackDao {
     @Override
     public Track getTrack(String trackName) {
         return tracks.get(trackName);
+    }
+
+    @Override
+    public List<Track> getAllTracks() {
+        return new ArrayList<>(tracks.values());
     }
 }

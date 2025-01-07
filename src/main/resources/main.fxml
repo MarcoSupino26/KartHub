@@ -16,7 +16,6 @@
    <top>
       <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="80.0" prefWidth="850.0" style="-fx-alignment: CENTER; -fx-background-color: #c5151d;" BorderPane.alignment="CENTER">
          <HBox prefHeight="98.0" prefWidth="235.0" style="-fx-alignment: center; -fx-translate-x: -140;">
-
             <cursor>
                <Cursor fx:constant="DEFAULT" />
             </cursor>
