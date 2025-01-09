@@ -1,5 +1,6 @@
 package models.track;
 
+import javafx.scene.image.Image;
 import models.slots.TimeSlot;
 import models.user.User;
 
@@ -12,14 +13,16 @@ public class Track {
     private int availableKarts;
     private List<TimeSlot> timeSlots;
     private User owner;
+    private Image profilePic;
 
-    public Track(String name, int availableKarts, List<TimeSlot> timeSlots, User owner, String description, String address) {
+    public Track(String name, int availableKarts, List<TimeSlot> timeSlots, User owner, String description, String address, Image profilePic) {
         this.name = name;
         this.availableKarts = availableKarts;
         this.timeSlots = timeSlots;
         this.owner = owner;
         this.description = description;
         this.address = address;
+        this.profilePic = profilePic;
     }
 
     public String getName() {
