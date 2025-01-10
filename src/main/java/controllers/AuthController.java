@@ -16,11 +16,6 @@ public class AuthController {
     }
 
     public boolean authUser(LoginBean logBean){
-
-        /*UserDaoMem users = UserDaoMem.getInstance();
-        String username = logBean.getUsername();
-        String passw = logBean.getPassword();
-        User usr = users.getUser(username, passw);*/
         UserDao userDAO = FactoryDAO.getInstance().createUserDao();
         String username = logBean.getUsername();
         String password = logBean.getPassword();
@@ -34,7 +29,6 @@ public class AuthController {
     }
 
     public void registerUser(LoginBean logBean){
-        //UserDaoMem users = UserDaoMem.getInstance()
         UserDao users = FactoryDAO.getInstance().createUserDao();
         String username = logBean.getUsername();
         String passw = logBean.getPassword();

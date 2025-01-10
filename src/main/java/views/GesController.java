@@ -11,10 +11,13 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
+import models.track.Track;
 import models.user.User;
 import utils.Session;
 
 import java.io.File;
+
+import static java.lang.Integer.parseInt;
 
 public class GesController {
     @FXML
@@ -31,52 +34,39 @@ public class GesController {
     private TextField description;
     @FXML
     private TextField address;
-    @FXML
-    private Group shifts;
-    @FXML
-    private TextField karts;
-    @FXML
-    private TextField opening;
-    @FXML
-    private TextField closing;
-    @FXML
-    private Text ownerName;
+
 
 
     @FXML
     public void initialize() {
+        User logged = Session.getInstance().getLoggedUser();
+        ManageController.getInstance().registeredTrack(); //utilizzare le eccezioni per gestire questo
         trackName.setStyle("-fx-text-fill: white; -fx-background-color: transparent;");
         description.setStyle("-fx-text-fill: white; -fx-background-color: transparent;");
         address.setStyle("-fx-text-fill: white; -fx-background-color: transparent;");
-        shifts.setVisible(false);
         absentTrack.setVisible(false);
         registration.setVisible(false);
-        User logged = Session.getInstance().getLoggedUser();
-        TrackBean track = TrackBean.getInstance();
-        track.setOwner(logged);
-        ManageController manage = new ManageController();
-        if(manage.registeredTrack()){
-            System.out.println("Still da fare");
-        }else{
-            profile.setText(logged.getUsername() + ",");
-            absentTrack.setVisible(true);
-        }
+        profile.setText(logged.getUsername() + ",");
+        absentTrack.setVisible(true);
     }
 
     @FXML
     public void logout(){
         Session.getInstance().freeSession();
         SceneManager.changeScene("/main.fxml");
+        SceneManager.showScene();
     }
 
     @FXML
     public void switchToEventi(){
         SceneManager.changeScene("/eventi.fxml");
+        SceneManager.showScene();
     }
 
     @FXML
     public void switchToHome(){
         SceneManager.changeScene("/main.fxml");
+        SceneManager.showScene();
     }
 
     @FXML
@@ -89,27 +79,17 @@ public class GesController {
         File selectedFile = fileChooser.showOpenDialog(registration.getScene().getWindow());
         Image image = new Image(selectedFile.toURI().toString());
         imagePicker.setImage(image);
-        TrackBean track = TrackBean.getInstance();
-        track.setImage(image);
-        track.setOwner(Session.getInstance().getLoggedUser());
-        track.setName(trackName.getText());
-        track.setDescription(description.getText());
-        track.setAddress(address.getText());
     }
 
     @FXML
     public void switchToShifts(){
-        registration.setVisible(false);
-        ownerName.setText(Session.getInstance().getLoggedUser().getUsername() + ", ci siamo quasi");
-        shifts.setVisible(true);
-        TrackBean track = TrackBean.getInstance();
-        track.setOpeningHour(opening.getText());
-        track.setClosingHour(closing.getText());
-        track.setAvailableKarts(Integer.parseInt(karts.getText()));
-    }
-
-    @FXML
-    public void saveTrack(){
-        System.out.println("In lavorazione...");
+        TrackBean track = new TrackBean();
+        track.setImage(imagePicker.getImage());
+        track.setName(trackName.getText());
+        track.setDescription(description.getText());
+        track.setAddress(address.getText());
+        ManageController.getInstance().saveTrack(track);
+        SceneManager.changeScene("/slotchoice.fxml");
+        SceneManager.showScene();
     }
 }

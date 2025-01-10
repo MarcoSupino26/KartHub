@@ -7,23 +7,15 @@ import models.user.User;
 import java.util.List;
 
 public class Track {
-    private final String name;
-    private final String description;
-    private final String address;
+    private String name;
+    private String description;
     private int availableKarts;
     private List<TimeSlot> timeSlots;
     private User owner;
-    private Image profilePic;
+    private String address;
+    private Image image;
 
-    public Track(String name, int availableKarts, List<TimeSlot> timeSlots, User owner, String description, String address, Image profilePic) {
-        this.name = name;
-        this.availableKarts = availableKarts;
-        this.timeSlots = timeSlots;
-        this.owner = owner;
-        this.description = description;
-        this.address = address;
-        this.profilePic = profilePic;
-    }
+    public Track(){}
 
     public String getName() {
         return name;
@@ -53,4 +45,23 @@ public class Track {
         this.owner = owner;
     }
 
+    public void setName(String name){
+        this.name = name;
+    }
+
+    public void setDescription(String description){
+        this.description = description;
+    }
+
+    public void setAddress(String address){
+        this.address = address;
+    }
+
+    public void setImage(Image image){
+        this.image = image;
+    }
+
+    public Image getImage() {
+        return image;
+    }
 }

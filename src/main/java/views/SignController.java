@@ -43,5 +43,6 @@ public class SignController {
         AuthController auth = new AuthController();
         auth.registerUser(signBean);
         SceneManager.changeScene("/main.fxml");
+        SceneManager.showScene();
     }
 }

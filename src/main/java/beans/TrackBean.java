@@ -7,41 +7,26 @@ import models.user.User;
 import java.util.List;
 
 public class TrackBean {
-    private static TrackBean instance;
     private String name;
-    private User owner;
     private Image image;
     private String description;
     private String address;
-    private int availableKarts;
-    private String openingHour;
-    private String closingHour;
-    private int duration;
 
-    protected TrackBean() {
-    }
-
-    public static TrackBean getInstance() {
-        if (instance == null) {
-            instance = new TrackBean();
-        }
-        return instance;
+    public TrackBean() {
     }
 
     public String getName() {
         return name;
     }
 
-    public User getOwner() {
-        return owner;
-    }
+    public String getAddress() {return  address;}
+
+    public Image getImage() {return image;}
+
+    public String getDescription() {return description;}
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public void setOwner(User owner) {
-        this.owner = owner;
     }
 
     public void setImage(Image image) {
@@ -54,21 +39,5 @@ public class TrackBean {
 
     public void setAddress(String address) {
         this.address = address;
-    }
-
-    public void setAvailableKarts(int availableKarts) {
-        this.availableKarts = availableKarts;
-    }
-
-    public void setOpeningHour(String openingHour) {
-        this.openingHour = openingHour;
-    }
-
-    public void setClosingHour(String closingHour) {
-        this.closingHour = closingHour;
-    }
-
-    public void setDuration(int duration) {
-        this.duration = duration;
     }
 }

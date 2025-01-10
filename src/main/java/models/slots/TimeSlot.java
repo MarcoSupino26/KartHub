@@ -1,23 +1,22 @@
 package models.slots;
 
-import java.time.LocalTime;
 
 public class TimeSlot{
-    private LocalTime startTime;
-    private LocalTime endTime;
+    private int startTime;
+    private int endTime;
     private boolean available;
 
-    public TimeSlot(LocalTime startTime, LocalTime endTime, boolean available) {
+    public TimeSlot(int startTime, int endTime, boolean available) {
         this.startTime = startTime;
         this.endTime = endTime;
         this.available = available;
     }
 
-    public LocalTime getStartTime() {
+    public int getStartTime() {
         return startTime;
     }
 
-    public LocalTime getEndTime() {
+    public int getEndTime() {
         return endTime;
     }
 
@@ -25,11 +24,11 @@ public class TimeSlot{
         return available;
     }
 
-    public void setStartTime(LocalTime startTime) {
+    public void setStartTime(int startTime) {
         this.startTime = startTime;
     }
 
-    public void setEndTime(LocalTime endTime) {
+    public void setEndTime(int endTime) {
         this.endTime = endTime;
     }
 

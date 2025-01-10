@@ -16,7 +16,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.GesController">
+<BorderPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.ShiftsController">
     <top>
         <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="80.0" prefWidth="850.0" style="-fx-alignment: CENTER; -fx-background-color: #c5151d;" BorderPane.alignment="CENTER">
             <HBox prefHeight="98.0" prefWidth="235.0" style="-fx-alignment: center; -fx-translate-x: -140;">
@@ -104,7 +104,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </TextField>
-                  <Button fx:id="saving" layoutX="311.0" layoutY="198.0" mnemonicParsing="false" onAction="#saveTrack" style="-fx-background-color: #c5151d;" text="Registra" textFill="WHITE">
+                  <Button fx:id="saving" layoutX="289.0" layoutY="205.0" mnemonicParsing="false" onAction="#saveTrack" style="-fx-background-color: #c5151d;" text="Registra" textFill="WHITE">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -123,6 +123,11 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </TextField>
+                  <Text fx:id="success" fill="WHITE" layoutX="94.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tracciato salvato con successo!" textAlignment="CENTER" wrappingWidth="478.93670654296875">
+                     <font>
+                        <Font size="35.0" />
+                     </font>
+                  </Text>
                </children>
             </Group>
             </Pane>

@@ -11,6 +11,7 @@ public class Main extends Application {
     public void start(Stage initialStage){
         SceneManager.setInitialStage(initialStage);
         SceneManager.changeScene("/main.fxml");
+        SceneManager.showScene();
     }
 
     public static void main(String[] args) {

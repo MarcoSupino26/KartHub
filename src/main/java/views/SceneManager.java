@@ -1,6 +1,7 @@
 package views;
 
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
@@ -24,15 +25,19 @@ public class SceneManager {
             initialStage.setScene(scene);
             initialStage.setTitle("KartHub");
             initialStage.setResizable(false);
-            initialStage.show();
+            //initialStage.show();
         } catch (IOException e) {
             e.printStackTrace();
             System.err.println("Caricamento di" + fxmlPath + "fallito");
         }
     }
 
+    public static void showScene(){
+        initialStage.show();
+    }
+
     //Getter controller schermata
-    public static <T> T loadFXML(String fxmlPath){
+    public static <T> T getController(String fxmlPath){
         try{
             FXMLLoader loader = new FXMLLoader(SceneManager.class.getResource(fxmlPath));
             loader.load();
