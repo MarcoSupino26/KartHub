@@ -48,7 +48,6 @@ public class PrenotaController {
     public void logout(Event event){
         Session.getInstance().freeSession();
         SceneManager.changeScene("/main.fxml");
-        SceneManager.showScene();
     }
 
     @FXML

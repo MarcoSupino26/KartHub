@@ -11,13 +11,11 @@ public class EventiController {
     @FXML
     public void switchToHome(MouseEvent event){
         SceneManager.changeScene("/main.fxml");
-        SceneManager.showScene();
     }
 
     @FXML
     public void switchToPrenota(ActionEvent event){
         SceneManager.changeScene("/prenota.fxml");
-        SceneManager.showScene();
     }
 
 }

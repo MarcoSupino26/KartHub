@@ -1,6 +1,7 @@
 package views;
 
 import controllers.AuthController;
+import controllers.ManageController;
 import utils.Session;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -35,8 +36,11 @@ public class HomeController {
         if(logged == null) {
             SceneManager.changeScene("/login.fxml");
         }else if (logged.getType().equals("Proprietario")){
-            SceneManager.changeScene("/ges.fxml");
-            SceneManager.showScene();
+            if(ManageController.getInstance().registeredTrack()){
+                SceneManager.changeScene("/trackmanager.fxml");
+            }else{
+                SceneManager.changeScene("/ges.fxml");
+            }
         }
         else {
             SceneManager.changeScene("/prenota.fxml");
@@ -46,19 +50,16 @@ public class HomeController {
     @FXML
     public void switchToEventi(ActionEvent event){
         SceneManager.changeScene("/eventi.fxml");
-        SceneManager.showScene();
     }
 
     @FXML
     public void switchToLogin(ActionEvent event) throws IOException {
         if(Session.getInstance().getLoggedUser() == null){
             SceneManager.changeScene("/login.fxml");
-            SceneManager.showScene();
         }else {
             AuthController auth = new AuthController();
             auth.sessionEnd();
             SceneManager.changeScene("/main.fxml");
-            SceneManager.showScene();
         }
     }
 }

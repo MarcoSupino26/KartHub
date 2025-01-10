@@ -40,11 +40,9 @@ public class GesController {
     @FXML
     public void initialize() {
         User logged = Session.getInstance().getLoggedUser();
-        ManageController.getInstance().registeredTrack(); //utilizzare le eccezioni per gestire questo
         trackName.setStyle("-fx-text-fill: white; -fx-background-color: transparent;");
         description.setStyle("-fx-text-fill: white; -fx-background-color: transparent;");
         address.setStyle("-fx-text-fill: white; -fx-background-color: transparent;");
-        absentTrack.setVisible(false);
         registration.setVisible(false);
         profile.setText(logged.getUsername() + ",");
         absentTrack.setVisible(true);
@@ -54,19 +52,21 @@ public class GesController {
     public void logout(){
         Session.getInstance().freeSession();
         SceneManager.changeScene("/main.fxml");
-        SceneManager.showScene();
+    }
+
+    public void switchToManager(){
+        SceneManager.changeScene("/trackmanager.fxml");
+        System.out.println("Cambiato al manager");
     }
 
     @FXML
     public void switchToEventi(){
         SceneManager.changeScene("/eventi.fxml");
-        SceneManager.showScene();
     }
 
     @FXML
     public void switchToHome(){
         SceneManager.changeScene("/main.fxml");
-        SceneManager.showScene();
     }
 
     @FXML
@@ -90,6 +90,5 @@ public class GesController {
         track.setAddress(address.getText());
         ManageController.getInstance().saveTrack(track);
         SceneManager.changeScene("/slotchoice.fxml");
-        SceneManager.showScene();
     }
 }

@@ -3,17 +3,15 @@ package controllers;
 import beans.InfoBean;
 import beans.ShiftsBean;
 import beans.TrackBean;
-import javafx.scene.Scene;
 import models.dao.factory.FactoryDAO;
 import models.slots.TimeSlot;
 import models.track.Track;
 import models.track.TrackDao;
 import models.user.User;
-import models.user.UserDao;
 import utils.Session;
 import views.SceneManager;
 import views.TrackManager;
-
+import javafx.scene.image.Image;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,19 +28,16 @@ public class ManageController {
         return instance;
     }
 
-    public void registeredTrack() { //controlla se l'owner ha un tracciato associato
+    public boolean registeredTrack(){ //controlla se l'owner ha un tracciato associato
         TrackDao trackDao = FactoryDAO.getInstance().createTrackDao();
         User owner = Session.getInstance().getLoggedUser();
         List<Track> tracks = trackDao.getAllTracks();
         for (Track track : tracks) {
             if (track.getOwner().equals(owner)) {
-                InfoBean trackInfo = new InfoBean(track);
-                SceneManager.changeScene("/trackmanager.fxml");
-                TrackManager manager = SceneManager.getController("/trackmanager.fxml");
-                manager.setData(trackInfo);
-                SceneManager.showScene();
+                return true;
             }
         }
+        return false;
         //qui dovrei gestire l'eccezione
     }
 
@@ -70,14 +65,15 @@ public class ManageController {
         trackDao.insertTrack(newTrack);
     }
 
-    /*public void getTrack(){
-        TrackDao TrackDao = FactoryDAO.getInstance().createTrackDao();
+    public InfoBean getTrackInfo(){
+        TrackDao trackDao = FactoryDAO.getInstance().createTrackDao();
         User owner = Session.getInstance().getLoggedUser();
-        List<Track> tracks = TrackDao.getAllTracks();
+        List<Track> tracks = trackDao.getAllTracks();
         for (Track track : tracks) {
             if (track.getOwner().equals(owner)) {
-                TrackBean bean = new TrackBean();
+                return new InfoBean(track.getImage(), track.getName());
             }
         }
-    }*/
+        return null;
+    }
 }

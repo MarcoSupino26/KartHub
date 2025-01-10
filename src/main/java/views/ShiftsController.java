@@ -31,20 +31,17 @@ public class ShiftsController {
     @FXML
     public void switchToHome(){
         SceneManager.changeScene("/main.fxml");
-        SceneManager.showScene();
     }
 
     @FXML
     public void switchToEventi(){
         SceneManager.changeScene("/eventi.fxml");
-        SceneManager.showScene();
     }
 
     @FXML
     public void logout(){
         Session.getInstance().setLoggedUser(null);
         SceneManager.changeScene("/main.fxml");
-        SceneManager.showScene();
     }
 
     @FXML
@@ -55,7 +52,7 @@ public class ShiftsController {
         int avKarts = Integer.parseInt(karts.getText());
         ShiftsBean shifts = new ShiftsBean(avKarts, opHour, clHour, shiftsDuration);
         ManageController.getInstance().saveShifts(shifts);
-        SceneManager.changeScene("/ges.fxml");
+        SceneManager.changeScene("/trackmanager.fxml");
     }
 
 }

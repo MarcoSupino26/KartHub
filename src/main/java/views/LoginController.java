@@ -25,22 +25,18 @@ public class LoginController {
         if(authenticator.authUser(logBean)){
             System.out.println("Benvenuto " + logBean.getUsername());
             SceneManager.changeScene("/main.fxml");
-            SceneManager.showScene();
         }else {
             System.out.println("Login fallito");
             SceneManager.changeScene("/login.fxml");
-            SceneManager.showScene();
         }
     }
 
     @FXML
     public void switchToHome(MouseEvent event){
         SceneManager.changeScene("/main.fxml");
-        SceneManager.showScene();
     }
 
     @FXML public void switchToSign(Event event){
         SceneManager.changeScene("/sign.fxml");
-        SceneManager.showScene();
     }
 }

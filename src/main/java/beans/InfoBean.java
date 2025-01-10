@@ -1,16 +1,22 @@
 package beans;
 
-import models.track.Track;
-import models.user.User;
+import javafx.scene.image.Image;
 
 public class InfoBean {
-    private Track track;
+    private Image image;
+    private String name;
 
-    public InfoBean(Track track) {
-        this.track = track;
+    public InfoBean(Image image, String name) {
+        this.image = image;
+        this.name = name;
     }
 
-    public Track getTrack() {
-        return track;
+    public String getName() {
+        return name;
     }
+
+    public Image getImage() {
+        return image;
+    }
+
 }
