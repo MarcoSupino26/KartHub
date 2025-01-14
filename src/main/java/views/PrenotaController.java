@@ -24,14 +24,11 @@ public class PrenotaController {
     private Group affiliates;
     @FXML
     private Group form;
-    @FXML
-    private Group tracks;
 
     @FXML
     public void initialize() {
         form.setVisible(false);
         optional.setVisible(false);
-        tracks.setVisible(false);
     }
 
     @FXML
@@ -52,8 +49,7 @@ public class PrenotaController {
 
     @FXML
     public void bookTrack(Event event){
-        affiliates.setVisible(false);
-        tracks.setVisible(true);
+        SceneManager.changeScene("/trackchoice.fxml");
     }
 
     @FXML
@@ -65,7 +61,6 @@ public class PrenotaController {
 
     @FXML
     public void proceed(Event event){
-        tracks.setVisible(false);
         form.setVisible(true);
     }
 }

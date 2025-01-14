@@ -64,4 +64,8 @@ public class Track {
     public Image getImage() {
         return image;
     }
+
+    public String getDescription() {
+        return description;
+    }
 }
