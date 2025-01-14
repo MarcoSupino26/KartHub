@@ -57,7 +57,7 @@ public class ManageController {
         int numberOfSlots = (60/shifts.getDuration()) * (start - end);
         List <TimeSlot> timeSlots = new ArrayList<TimeSlot>();
         for (int i = 0; i < numberOfSlots; i++) {
-            TimeSlot slot = new TimeSlot(start, end, true);
+            TimeSlot slot = new TimeSlot(start , end, true); //todo sistemare orari di inizio e fine fasce orarie
             timeSlots.add(slot);
         }
         newTrack.setTimeSlots(timeSlots);

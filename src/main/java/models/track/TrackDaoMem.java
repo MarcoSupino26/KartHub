@@ -1,5 +1,9 @@
 package models.track;
 
+import javafx.scene.image.Image;
+import models.dao.factory.FactoryDAO;
+import models.slots.TimeSlot;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,6 +14,16 @@ public class TrackDaoMem extends TrackDao {
 
     protected TrackDaoMem() {
         tracks = new HashMap<>();
+        Track track = new Track();
+        track.setName("Supox autodrome");
+        track.setDescription("Se nel mondo esistesse un pò di bene");
+        track.setAddress("Via dalle palle 23");
+        track.setAvailableKarts(11);
+        List<TimeSlot> timeSlots = null;
+        Image image = new Image("file:C:\\Users\\supin\\Desktop\\Università\\ISPW\\Interfacce\\tt racing.jpg");
+        track.setImage(image);
+        track.setOwner(FactoryDAO.getInstance().createUserDao().getUser("marco", "ciao"));
+        tracks.put("Supox autodrome", track);
     }
 
     public static TrackDaoMem getInstance() {
