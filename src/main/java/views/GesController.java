@@ -4,16 +4,13 @@ import beans.TrackBean;
 import controllers.ManageController;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
-import models.track.Track;
 import models.user.User;
-import utils.Session;
+import utils.SessionManager;
 
 import java.io.File;
 
@@ -39,7 +36,7 @@ public class GesController {
 
     @FXML
     public void initialize() {
-        User logged = Session.getInstance().getLoggedUser();
+        User logged = SessionManager.getInstance().getLoggedUser();
         trackName.setStyle("-fx-text-fill: white; -fx-background-color: transparent;");
         description.setStyle("-fx-text-fill: white; -fx-background-color: transparent;");
         address.setStyle("-fx-text-fill: white; -fx-background-color: transparent;");
@@ -50,7 +47,7 @@ public class GesController {
 
     @FXML
     public void logout(){
-        Session.getInstance().freeSession();
+        SessionManager.getInstance().freeSession();
         SceneManager.changeScene("/main.fxml");
     }
 

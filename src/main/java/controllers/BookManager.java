@@ -4,6 +4,8 @@ import beans.DisplayBean;
 import models.dao.factory.FactoryDAO;
 import models.track.Track;
 import models.track.TrackDao;
+import utils.BookingSession;
+import utils.SessionManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,5 +24,17 @@ public class BookManager {
             disBeans.add(displayBean);
         }
         return disBeans;
+
+    }
+    public void setBookingSession(String trackName){
+        List <Track> tracks;
+        tracks = FactoryDAO.getInstance().createTrackDao().getAllTracks();
+        for (Track track : tracks) {
+            if(track.getName().equals(trackName)){
+                BookingSession bookingSession = new BookingSession(track);
+                String logged = SessionManager.getInstance().getLoggedUser().getUsername();
+                SessionManager.getInstance().createBookingSession(bookingSession, logged);
+            }
+        }
     }
 }

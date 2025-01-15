@@ -2,11 +2,11 @@ package beans;
 
 public class ShiftsBean {
     private final int availableKarts;
-    private final int openingHour;
-    private final int closingHour;
+    private final double openingHour;
+    private final double closingHour;
     private final int duration;
 
-    public ShiftsBean(int karts, int openingHour, int closingHour, int duration) {
+    public ShiftsBean(int karts, double openingHour, double closingHour, int duration) {
         this.availableKarts = karts;
         this.openingHour = openingHour;
         this.closingHour = closingHour;
@@ -21,11 +21,11 @@ public class ShiftsBean {
         return duration;
     }
 
-    public int getOpeningHour() {
+    public double getOpeningHour() {
         return openingHour;
     }
 
-    public int getClosingHour() {
+    public double getClosingHour() {
         return closingHour;
     }
 }

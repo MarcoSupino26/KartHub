@@ -8,10 +8,9 @@ import models.slots.TimeSlot;
 import models.track.Track;
 import models.track.TrackDao;
 import models.user.User;
-import utils.Session;
-import views.SceneManager;
-import views.TrackManager;
-import javafx.scene.image.Image;
+import utils.SessionManager;
+
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +29,7 @@ public class ManageController {
 
     public boolean registeredTrack(){ //controlla se l'owner ha un tracciato associato
         TrackDao trackDao = FactoryDAO.getInstance().createTrackDao();
-        User owner = Session.getInstance().getLoggedUser();
+        User owner = SessionManager.getInstance().getLoggedUser();
         List<Track> tracks = trackDao.getAllTracks();
         for (Track track : tracks) {
             if (track.getOwner().equals(owner)) {
@@ -46,18 +45,25 @@ public class ManageController {
         newTrack.setName(track.getName());
         newTrack.setAddress(track.getAddress());
         newTrack.setDescription(track.getDescription());
-        newTrack.setOwner(Session.getInstance().getLoggedUser());
+        newTrack.setOwner(SessionManager.getInstance().getLoggedUser());
         newTrack.setImage(track.getImage());
     }
 
     public void saveShifts(ShiftsBean shifts) {
         newTrack.setAvailableKarts(shifts.getAvailableKarts());
-        int start = shifts.getOpeningHour();
-        int end = shifts.getClosingHour();
-        int numberOfSlots = (60/shifts.getDuration()) * (start - end);
+        double start = shifts.getOpeningHour();
+        double end = shifts.getClosingHour();
+        double duration = shifts.getDuration();
+
+        int totalMinutes = (int) ((end-start) * 60);
+        int numberOfSlots = totalMinutes / (int) duration;
+
         List <TimeSlot> timeSlots = new ArrayList<TimeSlot>();
+
         for (int i = 0; i < numberOfSlots; i++) {
-            TimeSlot slot = new TimeSlot(start , end, true); //todo sistemare orari di inizio e fine fasce orarie
+            double startSlot = start + ((duration * i) % 60)/100.0 + (int) (i / (60/duration));
+            double endSlot = start + ((duration * (i+1)) % 60)/100.0 + (int) ((i+1) / (60/duration));
+            TimeSlot slot = new TimeSlot(startSlot, endSlot, true);
             timeSlots.add(slot);
         }
         newTrack.setTimeSlots(timeSlots);
@@ -67,7 +73,7 @@ public class ManageController {
 
     public InfoBean getTrackInfo(){
         TrackDao trackDao = FactoryDAO.getInstance().createTrackDao();
-        User owner = Session.getInstance().getLoggedUser();
+        User owner = SessionManager.getInstance().getLoggedUser();
         List<Track> tracks = trackDao.getAllTracks();
         for (Track track : tracks) {
             if (track.getOwner().equals(owner)) {

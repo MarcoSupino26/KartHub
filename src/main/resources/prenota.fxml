@@ -18,9 +18,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.layout.AnchorPane?>
-<BorderPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.PrenotaController">
+<BorderPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.BookingController">
     <top>
         <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="80.0" prefWidth="850.0" style="-fx-alignment: CENTER; -fx-background-color: #c5151d;" BorderPane.alignment="CENTER">
             <HBox prefHeight="98.0" prefWidth="235.0" style="-fx-alignment: center; -fx-translate-x: -140;">
@@ -82,7 +80,7 @@
                 <children>
                     <Group fx:id="affiliates" layoutX="212.0" layoutY="39.0">
                         <children>
-                            <Button alignment="CENTER" contentDisplay="CENTER" layoutX="285.0" layoutY="171.0" mnemonicParsing="false" onAction="#bookTrack" prefHeight="40.0" prefWidth="141.0" style="-fx-background-color: #c5151d;" text="Intorno a te" textAlignment="CENTER" textFill="WHITE">
+                            <Button alignment="CENTER" contentDisplay="CENTER" layoutX="285.0" layoutY="171.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="141.0" style="-fx-background-color: #c5151d;" text="Intorno a te" textAlignment="CENTER" textFill="WHITE">
                                 <font>
                                     <Font name="Futura-Medium" size="18.0" />
                                 </font>
@@ -90,7 +88,7 @@
                                     <Cursor fx:constant="HAND" />
                                 </cursor>
                             </Button>
-                            <Button alignment="CENTER" contentDisplay="CENTER" layoutY="171.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="141.0" style="-fx-background-color: #c5151d;" text="I nostri affiliati" textAlignment="CENTER" textFill="WHITE">
+                            <Button alignment="CENTER" contentDisplay="CENTER" layoutY="171.0" mnemonicParsing="false" onAction="#bookTrack" prefHeight="40.0" prefWidth="141.0" style="-fx-background-color: #c5151d;" text="I nostri affiliati" textAlignment="CENTER" textFill="WHITE">
                                 <font>
                                     <Font size="18.0" />
                                 </font>
@@ -107,21 +105,21 @@
                     </Group>
                 </children>
                 <children>
-               <Group fx:id="form" layoutX="92.0" layoutY="18.0">
+                <Group fx:id="form" layoutX="92.0" layoutY="18.0">
                   <children>
                           <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c4161600" height="454.0" stroke="#c5151d" strokeLineCap="ROUND" strokeType="OUTSIDE" strokeWidth="5.0" width="656.0" />
                      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="53.0" layoutY="141.0" pickOnBounds="true" preserveRatio="true" />
-                           <Label contentDisplay="CENTER" layoutX="388.0" layoutY="34.0" prefHeight="0.0" prefWidth="200.0" style="-fx-text-fill: white; -fx-font-size: 24px;" text="Nome Kartodromo">
+                           <Label fx:id="trackName" contentDisplay="CENTER" layoutX="388.0" layoutY="34.0" prefHeight="0.0" prefWidth="200.0" style="-fx-text-fill: white; -fx-font-size: 24px;" text="Nome Kartodromo">
                         <font>
                            <Font name="Futura-Medium" size="18.0" />
                         </font>
                      </Label>
-                           <ComboBox fx:id="fasceOrarie" layoutX="368.0" layoutY="97.0" prefHeight="30.0" prefWidth="239.0" promptText="Seleziona orario">
+                           <ComboBox fx:id="slots" layoutX="368.0" layoutY="97.0" prefHeight="30.0" prefWidth="239.0" promptText="Seleziona orario">
                         <cursor>
                            <Cursor fx:constant="OPEN_HAND" />
                         </cursor>
                      </ComboBox>
-                           <TextField fx:id="numeroPersone" layoutX="369.0" layoutY="217.0" prefHeight="30.0" prefWidth="86.0" promptText="N. Persone">
+                           <TextField fx:id="participants" layoutX="369.0" layoutY="217.0" prefHeight="30.0" prefWidth="86.0" promptText="N. Persone">
                         <cursor>
                            <Cursor fx:constant="OPEN_HAND" />
                         </cursor>
@@ -137,7 +135,7 @@
                            <Cursor fx:constant="OPEN_HAND" />
                         </cursor>
                      </CheckBox>
-                           <ComboBox fx:id="formatoPrenotazione" layoutX="369.0" layoutY="159.0" prefHeight="30.0" prefWidth="239.0" promptText="Seleziona formato">
+                           <ComboBox fx:id="format" layoutX="369.0" layoutY="159.0" prefHeight="30.0" prefWidth="239.0" promptText="Seleziona formato">
                         <cursor>
                            <Cursor fx:constant="OPEN_HAND" />
                         </cursor>
@@ -166,13 +164,13 @@
                            </Text>
                         </children>
                      </Group>
-                     <ImageView fitHeight="180.0" fitWidth="319.0" layoutX="14.0" layoutY="112.0" pickOnBounds="true" preserveRatio="true">
+                     <ImageView fx:id="profilePic" fitHeight="180.0" fitWidth="319.0" layoutX="14.0" layoutY="112.0" pickOnBounds="true" preserveRatio="true">
                         <image>
                            <Image url="@../../../../Interfacce/holykartroma.jpg" />
                         </image>
                      </ImageView>
                   </children>
-               </Group>
+                </Group>
                 </children>
             </Pane>
         </VBox>

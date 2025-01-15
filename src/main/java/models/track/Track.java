@@ -4,6 +4,7 @@ import javafx.scene.image.Image;
 import models.slots.TimeSlot;
 import models.user.User;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Track {
@@ -15,7 +16,9 @@ public class Track {
     private String address;
     private Image image;
 
-    public Track(){}
+    public Track(){
+        timeSlots = new ArrayList<>();
+    }
 
     public String getName() {
         return name;

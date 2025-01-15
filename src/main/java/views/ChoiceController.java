@@ -10,10 +10,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import models.track.Track;
-import utils.Session;
+import utils.SessionManager;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 
 import java.util.List;
 
@@ -46,13 +44,16 @@ public class ChoiceController {
         trackPic.setFitHeight(100);
         trackPic.setPreserveRatio(true);
 
+        Text name = new Text(display.getName());
+        name.setStyle("-fx-background-color: #000000; -fx-font-size: 22px; -fx-fill: white;");
+        name.setFont(Font.font("Futura-Medium"));
         Text description = new Text(display.getDescription());
         description.setStyle("-fx-background-color: #000000; -fx-font-size: 18px; -fx-fill: white;");
-        description.setFont(Font.font("Futura Medium"));
+        description.setFont(Font.font("Futura-Medium"));
         Button selectTrack = new Button("Select Track");
         selectTrack.setStyle("-fx-background-color: #c5151d; -fx-text-fill: white;");
-        selectTrack.setFont(Font.font("Futura Medium"));
-        selectTrack.setOnAction(this::onSelectClicked);
+        selectTrack.setFont(Font.font("Futura-Medium"));
+        selectTrack.setOnAction(event->onSelectClicked(event, name.getText()));
 
         trackProfile.getChildren().addAll(trackPic, description, selectTrack);
 
@@ -66,7 +67,7 @@ public class ChoiceController {
 
     @FXML
     public void logout(){
-        Session.getInstance().freeSession();
+        SessionManager.getInstance().freeSession();
         SceneManager.changeScene("/main.fxml");
     }
 
@@ -76,7 +77,9 @@ public class ChoiceController {
     }
 
     @FXML
-    public void onSelectClicked(ActionEvent event) {
+    public void onSelectClicked(ActionEvent event, String name) {
+        BookManager bookManager = new BookManager();
+        bookManager.setBookingSession(name);
         SceneManager.changeScene("/prenota.fxml");
     }
 

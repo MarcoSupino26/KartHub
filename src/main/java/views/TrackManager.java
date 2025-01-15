@@ -1,13 +1,11 @@
 package views;
 
 import beans.InfoBean;
-import beans.TrackBean;
 import controllers.ManageController;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
-import utils.Session;
+import utils.SessionManager;
 
 public class TrackManager {
 
@@ -29,7 +27,7 @@ public class TrackManager {
 
     @FXML
     public void logout(){
-        Session.getInstance().freeSession();
+        SessionManager.getInstance().freeSession();
         SceneManager.changeScene("/main.fxml");
     }
 

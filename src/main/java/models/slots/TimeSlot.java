@@ -2,21 +2,21 @@ package models.slots;
 
 
 public class TimeSlot{
-    private int startTime;
-    private int endTime;
+    private double startTime;
+    private double endTime;
     private boolean available;
 
-    public TimeSlot(int startTime, int endTime, boolean available) {
+    public TimeSlot(double startTime, double endTime, boolean available) {
         this.startTime = startTime;
         this.endTime = endTime;
         this.available = available;
     }
 
-    public int getStartTime() {
+    public double getStartTime() {
         return startTime;
     }
 
-    public int getEndTime() {
+    public double getEndTime() {
         return endTime;
     }
 
@@ -24,11 +24,11 @@ public class TimeSlot{
         return available;
     }
 
-    public void setStartTime(int startTime) {
+    public void setStartTime(double startTime) {
         this.startTime = startTime;
     }
 
-    public void setEndTime(int endTime) {
+    public void setEndTime(double endTime) {
         this.endTime = endTime;
     }
 

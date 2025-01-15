@@ -2,7 +2,7 @@ package controllers;
 import beans.LoginBean;
 import models.dao.factory.FactoryDAO;
 import models.user.UserDao;
-import utils.Session;
+import utils.SessionManager;
 import models.user.User;
 
 public class AuthController {
@@ -12,7 +12,7 @@ public class AuthController {
     }
 
     public void sessionEnd(){
-        Session.getInstance().freeSession();
+        SessionManager.getInstance().freeSession();
     }
 
     public boolean authUser(LoginBean logBean){
@@ -23,7 +23,7 @@ public class AuthController {
         if(usr == null) {
             return false;
         }else{
-            Session.getInstance().setLoggedUser(usr);
+            SessionManager.getInstance().setLoggedUser(usr);
             return true;
         }
     }
@@ -35,6 +35,6 @@ public class AuthController {
         String type = logBean.getType();
         User usr = new User(username, passw, type);
         users.addUser(username, usr);
-        Session.getInstance().setLoggedUser(usr);
+        SessionManager.getInstance().setLoggedUser(usr);
     }
 }
