@@ -3,7 +3,7 @@ package models.booking;
 public class FreePracticeDecorator extends BookDecorator {
     private double fpCost;
 
-    public FreePracticeDecorator(ConcreteBooking booking, double priceModifier) {
+    public FreePracticeDecorator(BookingInterface booking, double priceModifier) {
         super(booking);
         fpCost = priceModifier;
     }

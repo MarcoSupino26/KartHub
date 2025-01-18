@@ -3,7 +3,7 @@ package models.booking;
 public class MedalsDecorator extends BookDecorator {
     private double medalsCost;
 
-    public MedalsDecorator(ConcreteBooking booking, double priceModifier) {
+    public MedalsDecorator(BookingInterface booking, double priceModifier) {
         super(booking);
         medalsCost = priceModifier;
     }

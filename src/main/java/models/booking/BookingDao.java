@@ -1,5 +1,5 @@
 package models.booking;
 
 public abstract class BookingDao{
-   public abstract void addBooking(ConcreteBooking concreteBooking);
+   public abstract void addBooking(BookingInterface booking);
 }

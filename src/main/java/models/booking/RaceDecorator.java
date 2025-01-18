@@ -3,7 +3,7 @@ package models.booking;
 public class RaceDecorator extends BookDecorator{
     private double raceCost;
 
-    public RaceDecorator(ConcreteBooking booking, double priceModifier) {
+    public RaceDecorator(BookingInterface booking, double priceModifier) {
         super(booking);
         raceCost = priceModifier;
     }

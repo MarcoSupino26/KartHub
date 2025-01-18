@@ -3,7 +3,7 @@ package models.booking;
 public class ChampagneDecorator extends BookDecorator {
     private double champagneCost;
 
-    public ChampagneDecorator(ConcreteBooking booking, double priceModifier) {
+    public ChampagneDecorator(BookingInterface booking, double priceModifier) {
         super(booking);
         champagneCost = priceModifier;
     }

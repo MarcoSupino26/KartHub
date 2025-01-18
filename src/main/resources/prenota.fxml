@@ -114,12 +114,12 @@
                            <Font name="Futura-Medium" size="18.0" />
                         </font>
                      </Label>
-                           <ComboBox fx:id="slots" layoutX="368.0" layoutY="97.0" prefHeight="30.0" prefWidth="239.0" promptText="Seleziona orario">
+                           <ComboBox fx:id="slots" layoutX="361.0" layoutY="227.0" prefHeight="30.0" prefWidth="239.0" promptText="Seleziona orario">
                         <cursor>
                            <Cursor fx:constant="OPEN_HAND" />
                         </cursor>
                      </ComboBox>
-                           <TextField fx:id="participants" layoutX="369.0" layoutY="217.0" prefHeight="30.0" prefWidth="86.0" promptText="N. Persone">
+                           <TextField fx:id="participants" layoutX="202.0" layoutY="257.0" prefHeight="30.0" prefWidth="86.0" promptText="N. Persone">
                         <cursor>
                            <Cursor fx:constant="OPEN_HAND" />
                         </cursor>
@@ -127,7 +127,7 @@
                            <Font size="14.0" />
                         </font>
                      </TextField>
-                           <CheckBox fx:id="check" layoutX="465.0" layoutY="217.0" onAction="#showOptions" prefHeight="30.0" prefWidth="142.0" style="-fx-text-fill: white;" text="Kart personali">
+                           <CheckBox fx:id="check" layoutX="50.0" layoutY="257.0" onAction="#showOptions" prefHeight="30.0" prefWidth="142.0" style="-fx-text-fill: white;" text="Kart personali">
                         <font>
                            <Font name="Futura-Medium" size="18.0" />
                         </font>
@@ -135,12 +135,7 @@
                            <Cursor fx:constant="OPEN_HAND" />
                         </cursor>
                      </CheckBox>
-                           <ComboBox fx:id="format" layoutX="369.0" layoutY="159.0" prefHeight="30.0" prefWidth="239.0" promptText="Seleziona formato">
-                        <cursor>
-                           <Cursor fx:constant="OPEN_HAND" />
-                        </cursor>
-                     </ComboBox>
-                           <Button fx:id="confermaPrenotazione" layoutX="434.0" layoutY="323.0" prefHeight="49.0" prefWidth="107.0" style="-fx-background-color: #c5151d; -fx-text-fill: white; -fx-font-size: 16px;" text="Conferma" textFill="WHITE">
+                           <Button layoutX="435.0" layoutY="300.0" onAction="#confirmBooking" prefHeight="49.0" prefWidth="107.0" style="-fx-background-color: #c5151d; -fx-text-fill: white; -fx-font-size: 16px;" text="Conferma" textFill="WHITE">
                         <cursor>
                            <Cursor fx:constant="HAND" />
                         </cursor>
@@ -148,7 +143,7 @@
                            <Font name="Futura-Medium" size="18.0" />
                         </font>
                      </Button>
-                     <Group fx:id="optional" layoutX="370.0" layoutY="261.78515625">
+                     <Group fx:id="optional" layoutX="50.0" layoutY="299.0">
                         <children>
                            <TextField fx:id="rental" layoutY="20.107421875" prefHeight="25.0" prefWidth="100.0" />
                            <TextField fx:id="personal" layoutX="138.0" layoutY="20.107421875" prefHeight="25.0" prefWidth="100.0" />
@@ -164,11 +159,59 @@
                            </Text>
                         </children>
                      </Group>
-                     <ImageView fx:id="profilePic" fitHeight="180.0" fitWidth="319.0" layoutX="14.0" layoutY="112.0" pickOnBounds="true" preserveRatio="true">
+                     <ImageView fx:id="profilePic" fitHeight="180.0" fitWidth="319.0" layoutX="9.0" layoutY="37.0" pickOnBounds="true" preserveRatio="true">
                         <image>
                            <Image url="@../../../../Interfacce/holykartroma.jpg" />
                         </image>
                      </ImageView>
+                     <CheckBox fx:id="medals" layoutX="481.0" layoutY="126.0" onAction="#showOptions" prefHeight="30.0" prefWidth="142.0" style="-fx-text-fill: white;" text="Premiazione">
+                        <font>
+                           <Font name="Futura-Medium" size="18.0" />
+                        </font>
+                        <cursor>
+                           <Cursor fx:constant="OPEN_HAND" />
+                        </cursor>
+                     </CheckBox>
+                     <CheckBox fx:id="fp" layoutX="346.0" layoutY="126.0" onAction="#showOptions" prefHeight="30.0" prefWidth="142.0" style="-fx-text-fill: white;" text="Prova Libera">
+                        <font>
+                           <Font name="Futura-Medium" size="18.0" />
+                        </font>
+                        <cursor>
+                           <Cursor fx:constant="OPEN_HAND" />
+                        </cursor>
+                     </CheckBox>
+                     <CheckBox fx:id="race" layoutX="346.0" layoutY="78.0" onAction="#showOptions" prefHeight="30.0" prefWidth="142.0" style="-fx-text-fill: white;" text="Gara">
+                        <font>
+                           <Font name="Futura-Medium" size="18.0" />
+                        </font>
+                        <cursor>
+                           <Cursor fx:constant="OPEN_HAND" />
+                        </cursor>
+                     </CheckBox>
+                     <CheckBox fx:id="quali" layoutX="481.0" layoutY="78.0" onAction="#showOptions" prefHeight="30.0" prefWidth="142.0" style="-fx-text-fill: white;" text="Qualifiche">
+                        <font>
+                           <Font name="Futura-Medium" size="18.0" />
+                        </font>
+                        <cursor>
+                           <Cursor fx:constant="OPEN_HAND" />
+                        </cursor>
+                     </CheckBox>
+                     <CheckBox fx:id="champagne" layoutX="346.0" layoutY="172.0" onAction="#showOptions" prefHeight="30.0" prefWidth="142.0" style="-fx-text-fill: white;" text="Champagne">
+                        <font>
+                           <Font name="Futura-Medium" size="18.0" />
+                        </font>
+                        <cursor>
+                           <Cursor fx:constant="OPEN_HAND" />
+                        </cursor>
+                     </CheckBox>
+                     <CheckBox fx:id="onBoard" layoutX="481.0" layoutY="172.0" onAction="#showOptions" prefHeight="30.0" prefWidth="142.0" style="-fx-text-fill: white;" text="OnBoard">
+                        <font>
+                           <Font name="Futura-Medium" size="18.0" />
+                        </font>
+                        <cursor>
+                           <Cursor fx:constant="OPEN_HAND" />
+                        </cursor>
+                     </CheckBox>
                   </children>
                 </Group>
                 </children>

@@ -1,9 +1,10 @@
 package controllers;
 
+import beans.OptionsBean;
 import beans.DisplayBean;
+import models.booking.*;
 import models.dao.factory.FactoryDAO;
 import models.track.Track;
-import models.track.TrackDao;
 import utils.BookingSession;
 import utils.SessionManager;
 
@@ -36,5 +37,43 @@ public class BookManager {
                 SessionManager.getInstance().createBookingSession(bookingSession, logged);
             }
         }
+    }
+
+    public void saveBooking(OptionsBean options){
+        BookingInterface booking = new ConcreteBooking();
+        String logged = SessionManager.getInstance().getLoggedUser().getUsername();
+        BookingSession bookingSession = SessionManager.getInstance().getBookingSession(logged);
+        Track track = bookingSession.getTrack();
+
+        ConcreteBooking concreteBooking = (ConcreteBooking) booking;
+        concreteBooking.setRental(options.getRental());
+        concreteBooking.setPersonal(options.getPersonal());
+
+        if(options.isRace()){
+            booking = new RaceDecorator(booking, track.getCost(1));
+        }
+
+        if(options.isFp()){
+            booking = new ChampagneDecorator(booking, track.getCost(2));
+        }
+
+        if(options.isQuali()){
+            booking = new QualifyingDecorator(booking, track.getCost(3));
+        }
+
+        if(options.isChampagne()){
+            booking = new ChampagneDecorator(booking, track.getCost(4));
+        }
+
+        if(options.isMedals()){
+            booking = new MedalsDecorator(booking, track.getCost(5));
+        }
+
+        if(options.isOnBoard()){
+            booking = new OnBoardDecorator(booking, track.getCost(6));
+        }
+
+        BookingDao bookDao = FactoryDAO.getInstance().createBookingDao();
+        bookDao.addBooking(booking);
     }
 }

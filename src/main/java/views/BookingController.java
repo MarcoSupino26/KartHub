@@ -138,7 +138,25 @@ public class BookingController {
     }
 
     @FXML
-    public void proceed(Event event){
-        form.setVisible(true);
+    public void confirmBooking(){
+        if(race.isSelected()){
+            if(quali.isSelected()){
+
+            }
+        }
+
+        if(fp.isSelected()){
+
+        }
+        if(onBoard.isSelected()){
+
+        }
+        if(medals.isSelected()){
+
+        }
+        if(champagne.isSelected()){
+
+        }
     }
+
 }

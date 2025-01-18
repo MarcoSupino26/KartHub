@@ -5,6 +5,7 @@ import models.slots.TimeSlot;
 import models.user.User;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Track {
@@ -15,9 +16,11 @@ public class Track {
     private User owner;
     private String address;
     private Image image;
+    private List<Double> cost;
 
     public Track(){
         timeSlots = new ArrayList<>();
+        cost = new ArrayList<>();
     }
 
     public String getName() {
@@ -62,6 +65,14 @@ public class Track {
 
     public void setImage(Image image){
         this.image = image;
+    }
+
+    public void setCost(List<Double> cost){
+        this.cost = cost;
+    }
+
+    public double getCost(int i){
+        return cost.get(i);
     }
 
     public Image getImage() {

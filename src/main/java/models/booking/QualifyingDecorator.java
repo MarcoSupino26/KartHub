@@ -3,7 +3,7 @@ package models.booking;
 public class QualifyingDecorator extends BookDecorator{
     private double qualiCost;
 
-    public QualifyingDecorator(ConcreteBooking booking, double priceModifier) {
+    public QualifyingDecorator(BookingInterface booking, double priceModifier) {
         super(booking);
         qualiCost = priceModifier;
     }
