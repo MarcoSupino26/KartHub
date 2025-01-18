@@ -1,5 +1,7 @@
 package views;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -11,6 +13,7 @@ import utils.BookingSession;
 import utils.SessionManager;
 
 import javafx.scene.image.ImageView;
+
 import java.util.List;
 
 public class BookingController {
@@ -26,8 +29,6 @@ public class BookingController {
     @FXML
     private ComboBox slots;
     @FXML
-    private ComboBox format;
-    @FXML
     private TextField participants;
     @FXML
     private TextField rental;
@@ -37,6 +38,19 @@ public class BookingController {
     private Label trackName;
     @FXML
     private ImageView profilePic;
+    @FXML
+    private CheckBox race;
+    @FXML
+    private CheckBox quali;
+    @FXML
+    private CheckBox fp;
+    @FXML
+    private CheckBox medals;
+    @FXML
+    private CheckBox champagne;
+    @FXML
+    private CheckBox onBoard;
+
 
     @FXML
     public void initialize() {
@@ -46,6 +60,17 @@ public class BookingController {
         BookingSession bookingSession = SessionManager.getInstance().getBookingSession(usr);
         if(bookingSession != null) {
             affiliates.setVisible(false);
+            quali.setDisable(true); // Impedisce la selezione iniziale
+            race.selectedProperty().addListener(new ChangeListener<Boolean>() {
+                @Override
+                public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                    // Abilita o disabilita la checkbox Qualifica in base alla selezione della Gara
+                    quali.setDisable(!newValue); // Se Gara è selezionata, Qualifica è abilitata
+                    if (!newValue) {
+                        quali.setSelected(false); // Deseleziona Qualifica se Gara non è selezionata
+                    }
+                }
+            });
             List<TimeSlot> timeSlotList = bookingSession.getTrack().getTimeSlots();
             slots.getItems().addAll(
                     timeSlotList.stream()

@@ -1,12 +1,13 @@
 package models.booking;
+import java.util.UUID;
 
 public class ConcreteBooking implements BookingInterface {
     private double baseCost;
     private String description;
-    private int id;
+    private final String id;
 
-    public ConcreteBooking(double baseCost) {
-        this.baseCost = baseCost;
+    public ConcreteBooking() {
+        this.id = UUID.randomUUID().toString();
     }
 
     @Override
@@ -17,5 +18,5 @@ public class ConcreteBooking implements BookingInterface {
     @Override
     public String getDescription() {return description;}
 
-    public int getId(){return id;}
+    public String getId(){return id;}
 }
