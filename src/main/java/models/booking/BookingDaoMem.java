@@ -3,7 +3,7 @@ package models.booking;
 import java.util.HashMap;
 
 public class BookingDaoMem extends BookingDao {
-    private final HashMap<Integer, Booking> bookings;
+    private final HashMap<Integer, ConcreteBooking> bookings;
     private static BookingDaoMem instance;
 
     protected BookingDaoMem() {
@@ -17,10 +17,10 @@ public class BookingDaoMem extends BookingDao {
     }
 
     @Override
-    public void addBooking(Booking booking) {
-        int id = booking.getId();
+    public void addBooking(ConcreteBooking concreteBooking) {
+        int id = concreteBooking.getId();
         if(!bookings.containsKey(id)){
-            bookings.put(id, booking);
+            bookings.put(id, concreteBooking);
         }else {
             System.out.println("La prenotazione" + id + " è già presente!");
         }

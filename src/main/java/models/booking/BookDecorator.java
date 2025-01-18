@@ -1,15 +1,14 @@
 package models.booking;
 
 public abstract class BookDecorator implements BookingInterface {
-    protected Booking booking;
+    protected ConcreteBooking concreteBooking;
 
-    public BookDecorator(Booking booking) {
-        this.booking = booking;
-    }
+    public BookDecorator(ConcreteBooking concreteBooking) {this.concreteBooking = concreteBooking;}
 
     @Override
-    public double getCost() {
-        return booking.getCost();
-    }
+    public double getCost() {return concreteBooking.getCost();}
+
+    @Override
+    public String getDescription() {return concreteBooking.getDescription();}
 }
 

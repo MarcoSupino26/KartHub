@@ -1,12 +1,26 @@
 package models.booking;
 
 public class MedalsDecorator extends BookDecorator {
-    public MedalsDecorator(Booking booking) {
+    private double medalsCost;
+
+    public MedalsDecorator(ConcreteBooking booking, double priceModifier) {
         super(booking);
+        medalsCost = priceModifier;
     }
+
+    public void setMedalsCost(double priceModifier) {medalsCost = priceModifier;}
 
     @Override
     public double getCost(){
-        return super.getCost() + 10.00;
+        return super.getCost() + medalsCost;
+    }
+
+    @Override
+    public String getDescription(){
+        String addedFormat = null;
+        if(super.getDescription() != null){
+            addedFormat = " + ";
+        }
+        return super.getDescription() + addedFormat + "Premiazione Medaglia";
     }
 }
