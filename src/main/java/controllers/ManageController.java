@@ -55,18 +55,10 @@ public class ManageController {
         double end = shifts.getClosingHour();
         double duration = shifts.getDuration();
 
-        int totalMinutes = (int) ((end-start) * 60);
-        int numberOfSlots = totalMinutes / (int) duration;
+        newTrack.setOpeningHour(start);
+        newTrack.setClosingHour(end);
+        newTrack.setShiftDuration(duration);
 
-        List <TimeSlot> timeSlots = new ArrayList<TimeSlot>();
-
-        for (int i = 0; i < numberOfSlots; i++) {
-            double startSlot = start + ((duration * i) % 60)/100.0 + (int) (i / (60/duration));
-            double endSlot = start + ((duration * (i+1)) % 60)/100.0 + (int) ((i+1) / (60/duration));
-            TimeSlot slot = new TimeSlot(startSlot, endSlot, true);
-            timeSlots.add(slot);
-        }
-        newTrack.setTimeSlots(timeSlots);
         TrackDao trackDao = FactoryDAO.getInstance().createTrackDao();
         trackDao.insertTrack(newTrack);
     }

@@ -1,5 +1,8 @@
 package views;
 
+import beans.DateBean;
+import beans.SlotsBean;
+import controllers.BookManager;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -14,6 +17,9 @@ import utils.SessionManager;
 
 import javafx.scene.image.ImageView;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 public class BookingController {
@@ -50,7 +56,8 @@ public class BookingController {
     private CheckBox champagne;
     @FXML
     private CheckBox onBoard;
-
+    @FXML
+    private DatePicker day;
 
     @FXML
     public void initialize() {
@@ -71,42 +78,58 @@ public class BookingController {
                     }
                 }
             });
-            List<TimeSlot> timeSlotList = bookingSession.getTrack().getTimeSlots();
-            slots.getItems().addAll(
-                    timeSlotList.stream()
-                            .filter(TimeSlot::isAvailable)
-                            .toList()
-            );
-            slots.setCellFactory(comboBoxListView -> new ListCell<TimeSlot>() {
+            day.valueProperty().addListener(new ChangeListener<LocalDate>() {
                 @Override
-                protected void updateItem(TimeSlot item, boolean empty) {
-                    super.updateItem(item, empty);
-                    if(empty || item == null) {
-                        setText(null);
-                    } else {
-                        String startTime = String.format("%.2f", item.getStartTime());
-                        String endTime = String.format("%.2f", item.getEndTime());
-                        setText(startTime + " - " + endTime);
+                public void changed(ObservableValue<? extends LocalDate> observable, LocalDate oldValue, LocalDate newValue) {
+                    if(newValue != null) {
+                        LocalDate selectedDay = day.getValue();
+                        DateBean dateBean = new DateBean(selectedDay);
+                        new BookManager().generateSlots(dateBean);
+                        List <TimeSlot> timeSlotList = bookingSession.getTrack().getTimeSlots(selectedDay);
+                        updateTimeSlotsListView(timeSlotList);
                     }
                 }
             });
-            slots.setButtonCell(new ListCell<TimeSlot>() {
-                @Override
-                protected void updateItem(TimeSlot item, boolean empty){
-                    super.updateItem(item, empty);
-                    if(empty || item == null) {
-                        setText(null);
-                    } else {
-                        String startTime = String.format("%.2f", item.getStartTime());
-                        String endTime = String.format("%.2f", item.getEndTime());
-                        setText(startTime + " - " + endTime);
-                    }
-                }
-            });
+
             trackName.setText(bookingSession.getTrack().getName());
             profilePic.setImage(bookingSession.getTrack().getImage());
             form.setVisible(true);
         }
+    }
+
+    @FXML
+    public void updateTimeSlotsListView(List<TimeSlot> timeSlotList) {
+        slots.getItems().addAll(
+                timeSlotList.stream()
+                        .filter(TimeSlot::isAvailable)
+                        .toList()
+        );
+        slots.setCellFactory(comboBoxListView -> new ListCell<TimeSlot>() {
+            @Override
+            protected void updateItem(TimeSlot item, boolean empty) {
+                super.updateItem(item, empty);
+                if(empty || item == null) {
+                    setText(null);
+                } else {
+                    String startTime = String.format("%.2f", item.getStartTime());
+                    String endTime = String.format("%.2f", item.getEndTime());
+                    setText(startTime + " - " + endTime);
+                }
+            }
+        });
+        slots.setButtonCell(new ListCell<TimeSlot>() {
+            @Override
+            protected void updateItem(TimeSlot item, boolean empty){
+                super.updateItem(item, empty);
+                if(empty || item == null) {
+                    setText(null);
+                } else {
+                    String startTime = String.format("%.2f", item.getStartTime());
+                    String endTime = String.format("%.2f", item.getEndTime());
+                    setText(startTime + " - " + endTime);
+                }
+            }
+        });
     }
 
     @FXML

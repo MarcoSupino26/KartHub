@@ -6,6 +6,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
@@ -114,7 +115,7 @@
                            <Font name="Futura-Medium" size="18.0" />
                         </font>
                      </Label>
-                           <ComboBox fx:id="slots" layoutX="361.0" layoutY="227.0" prefHeight="30.0" prefWidth="239.0" promptText="Seleziona orario">
+                           <ComboBox fx:id="slots" layoutX="362.0" layoutY="257.0" prefHeight="30.0" prefWidth="239.0" promptText="Seleziona orario">
                         <cursor>
                            <Cursor fx:constant="OPEN_HAND" />
                         </cursor>
@@ -212,6 +213,7 @@
                            <Cursor fx:constant="OPEN_HAND" />
                         </cursor>
                      </CheckBox>
+                     <DatePicker fx:id="day" layoutX="361.0" layoutY="212.0" prefHeight="30.0" prefWidth="239.0" />
                   </children>
                 </Group>
                 </children>

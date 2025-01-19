@@ -4,6 +4,8 @@ import javafx.scene.image.Image;
 import models.slots.TimeSlot;
 import models.user.User;
 
+import java.sql.Time;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,14 +14,17 @@ public class Track {
     private String name;
     private String description;
     private int availableKarts;
-    private List<TimeSlot> timeSlots;
+    private HashMap<LocalDate, List<TimeSlot>> timeSlots;
     private User owner;
     private String address;
     private Image image;
     private List<Double> cost;
+    private double openingHour;
+    private double closingHour;
+    private double shiftDuration;
 
     public Track(){
-        timeSlots = new ArrayList<>();
+        timeSlots = new HashMap<>();
         cost = new ArrayList<>();
     }
 
@@ -35,12 +40,15 @@ public class Track {
         this.availableKarts = availableKarts;
     }
 
-    public List<TimeSlot> getTimeSlots() {
-        return timeSlots;
+    public List<TimeSlot> getTimeSlots(LocalDate date) {
+        if(!timeSlots.containsKey(date)){
+            return null;
+        }
+        return timeSlots.get(date);
     }
 
-    public void setTimeSlots(List<TimeSlot> timeSlots) {
-        this.timeSlots = timeSlots;
+    public void addTimeSlots(List<TimeSlot> timeSlots, LocalDate date) {
+        this.timeSlots.put(date, timeSlots);
     }
 
     public User getOwner() {
@@ -82,4 +90,16 @@ public class Track {
     public String getDescription() {
         return description;
     }
+
+    public void setShiftDuration(double shiftDuration) {this.shiftDuration = shiftDuration;}
+
+    public void setOpeningHour(double openingHour) {this.openingHour = openingHour;}
+
+    public void setClosingHour(double closingHour) {this.closingHour = closingHour;}
+
+    public double getOpeningHour() {return openingHour;}
+
+    public double getClosingHour() {return closingHour;}
+
+    public double getShiftDuration() {return shiftDuration;}
 }
