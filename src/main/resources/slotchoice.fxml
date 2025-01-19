@@ -104,7 +104,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </TextField>
-                  <Button fx:id="saving" layoutX="289.0" layoutY="205.0" mnemonicParsing="false" onAction="#saveTrack" style="-fx-background-color: #c5151d;" text="Registra" textFill="WHITE">
+                  <Button fx:id="saving" layoutX="289.0" layoutY="205.0" mnemonicParsing="false" onAction="#switchToCost" style="-fx-background-color: #c5151d;" text="Procedi" textFill="WHITE">
                      <font>
                         <Font size="18.0" />
                      </font>

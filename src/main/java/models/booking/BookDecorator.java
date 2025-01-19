@@ -1,5 +1,7 @@
 package models.booking;
 
+import models.user.User;
+
 public abstract class BookDecorator implements BookingInterface {
     protected BookingInterface booking;
 
@@ -19,5 +21,8 @@ public abstract class BookDecorator implements BookingInterface {
 
     @Override
     public int getPersonal(){return booking.getPersonal();}
+
+    @Override
+    public User getUser(){return booking.getUser();}
 }
 

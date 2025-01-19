@@ -1,6 +1,7 @@
 package views;
 
 import beans.DateBean;
+import beans.OptionsBean;
 import beans.SlotsBean;
 import controllers.BookManager;
 import javafx.beans.value.ChangeListener;
@@ -161,25 +162,17 @@ public class BookingController {
     }
 
     @FXML
-    public void confirmBooking(){
-        if(race.isSelected()){
-            if(quali.isSelected()){
-
-            }
-        }
-
-        if(fp.isSelected()){
-
-        }
-        if(onBoard.isSelected()){
-
-        }
-        if(medals.isSelected()){
-
-        }
-        if(champagne.isSelected()){
-
-        }
+    public void confirmBooking() {
+        OptionsBean optionsBean = new OptionsBean();
+        optionsBean.setPersonal(Integer.parseInt(personal.getText()));
+        optionsBean.setRental(Integer.parseInt(rental.getText()));
+        optionsBean.setRace(race.isSelected());
+        optionsBean.setQuali(quali.isSelected());
+        optionsBean.setFp(fp.isSelected());
+        optionsBean.setMedals(medals.isSelected());
+        optionsBean.setChampagne(champagne.isSelected());
+        optionsBean.setOnBoard(onBoard.isSelected());
+        new BookManager().saveBooking(optionsBean);
+        SceneManager.changeScene("/main.fxml");
     }
-
 }

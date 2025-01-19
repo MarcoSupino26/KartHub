@@ -1,4 +1,6 @@
 package models.booking;
+import models.user.User;
+
 import java.util.UUID;
 
 public class ConcreteBooking implements BookingInterface {
@@ -7,6 +9,7 @@ public class ConcreteBooking implements BookingInterface {
     private final String id;
     private int rental;
     private int personal;
+    private User user;
 
     public ConcreteBooking() {
         this.id = UUID.randomUUID().toString();
@@ -28,6 +31,11 @@ public class ConcreteBooking implements BookingInterface {
 
     @Override
     public int getPersonal() {return personal;}
+
+    @Override
+    public User getUser(){return user;}
+
+    public void setUser(User user){this.user = user;}
 
     public void setRental(int rental) {this.rental = rental;}
 

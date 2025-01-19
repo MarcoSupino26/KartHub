@@ -1,5 +1,6 @@
 package controllers;
 
+import beans.CostBean;
 import beans.InfoBean;
 import beans.ShiftsBean;
 import beans.TrackBean;
@@ -8,6 +9,7 @@ import models.slots.TimeSlot;
 import models.track.Track;
 import models.track.TrackDao;
 import models.user.User;
+import utils.ManageSession;
 import utils.SessionManager;
 
 import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
@@ -16,7 +18,6 @@ import java.util.List;
 
 public class ManageController {
     private static ManageController instance;
-    private Track newTrack;
 
     protected ManageController() {}
 
@@ -41,23 +42,37 @@ public class ManageController {
     }
 
     public void saveTrack(TrackBean track) {
-        newTrack = new Track();
-        newTrack.setName(track.getName());
-        newTrack.setAddress(track.getAddress());
-        newTrack.setDescription(track.getDescription());
-        newTrack.setOwner(SessionManager.getInstance().getLoggedUser());
-        newTrack.setImage(track.getImage());
+        ManageSession manageSession = new ManageSession();
+        manageSession.setAddress(track.getAddress());
+        manageSession.setDescription(track.getDescription());
+        manageSession.setOwner(SessionManager.getInstance().getLoggedUser());
+        manageSession.setImage(track.getImage());
+        String usr = SessionManager.getInstance().getLoggedUser().getUsername();
+        SessionManager.getInstance().createManageSession(manageSession,usr);
     }
 
     public void saveShifts(ShiftsBean shifts) {
-        newTrack.setAvailableKarts(shifts.getAvailableKarts());
-        double start = shifts.getOpeningHour();
-        double end = shifts.getClosingHour();
-        double duration = shifts.getDuration();
+        String usr = SessionManager.getInstance().getLoggedUser().getUsername();
+        ManageSession manageSession = SessionManager.getInstance().getManageSession(usr);
+        manageSession.setAvailableKarts(shifts.getAvailableKarts());
+        manageSession.setOpening(shifts.getOpeningHour());
+        manageSession.setClosing(shifts.getClosingHour());
+    }
 
-        newTrack.setOpeningHour(start);
-        newTrack.setClosingHour(end);
-        newTrack.setShiftDuration(duration);
+    public void saveTrack(CostBean costBean){
+        Track newTrack = new Track();
+        String usr = SessionManager.getInstance().getLoggedUser().getUsername();
+        ManageSession ms = SessionManager.getInstance().getManageSession(usr);
+        newTrack.setOwner(ms.getOwner());
+        newTrack.setShiftDuration(ms.getDuration());
+        newTrack.setOpeningHour(ms.getOpening());
+        newTrack.setClosingHour(ms.getClosing());
+        newTrack.setDescription(ms.getDescription());
+        newTrack.setName(ms.getTrackName());
+        newTrack.setImage(ms.getImage());
+        newTrack.setAvailableKarts(ms.getAvailableKarts());
+        newTrack.setCost(costBean.getCost());
+        newTrack.setAddress(ms.getAddress());
 
         TrackDao trackDao = FactoryDAO.getInstance().createTrackDao();
         trackDao.insertTrack(newTrack);

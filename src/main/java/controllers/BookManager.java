@@ -81,17 +81,18 @@ public class BookManager {
         ConcreteBooking concreteBooking = (ConcreteBooking) booking;
         concreteBooking.setRental(options.getRental());
         concreteBooking.setPersonal(options.getPersonal());
+        concreteBooking.setUser(SessionManager.getInstance().getLoggedUser());
 
         if(options.isRace()){
             booking = new RaceDecorator(booking, track.getCost(1));
         }
 
         if(options.isFp()){
-            booking = new ChampagneDecorator(booking, track.getCost(2));
+            booking = new QualifyingDecorator(booking, track.getCost(2));
         }
 
         if(options.isQuali()){
-            booking = new QualifyingDecorator(booking, track.getCost(3));
+            booking = new FreePracticeDecorator(booking, track.getCost(3));
         }
 
         if(options.isChampagne()){
@@ -106,10 +107,9 @@ public class BookManager {
             booking = new OnBoardDecorator(booking, track.getCost(6));
         }
 
-        ConcreteBooking concreteBooking1 = (ConcreteBooking) booking;
-        concreteBooking1.setRental(options.getRental());
-        concreteBooking1.setPersonal(options.getPersonal());
-        /*BookingDao bookDao = FactoryDAO.getInstance().createBookingDao();
-        bookDao.addBooking(booking);*/
+        track.addBooking(booking);
+        BookingDao bookDao = FactoryDAO.getInstance().createBookingDao();
+        bookDao.addBooking(booking);
+        System.out.println("Booking " + booking.getId() + " saved");
     }
 }

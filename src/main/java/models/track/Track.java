@@ -1,6 +1,7 @@
 package models.track;
 
 import javafx.scene.image.Image;
+import models.booking.BookingInterface;
 import models.slots.TimeSlot;
 import models.user.User;
 
@@ -15,6 +16,7 @@ public class Track {
     private String description;
     private int availableKarts;
     private HashMap<LocalDate, List<TimeSlot>> timeSlots;
+    private HashMap<String, BookingInterface> bookings;
     private User owner;
     private String address;
     private Image image;
@@ -26,6 +28,7 @@ public class Track {
     public Track(){
         timeSlots = new HashMap<>();
         cost = new ArrayList<>();
+        bookings = new HashMap<>();
     }
 
     public String getName() {
@@ -49,6 +52,14 @@ public class Track {
 
     public void addTimeSlots(List<TimeSlot> timeSlots, LocalDate date) {
         this.timeSlots.put(date, timeSlots);
+    }
+
+    public BookingInterface getBooking(String bookingId) {
+        return bookings.get(bookingId);
+    }
+
+    public void addBooking(BookingInterface booking) {
+        this.bookings.put(booking.getId(), booking);
     }
 
     public User getOwner() {
@@ -90,7 +101,6 @@ public class Track {
     public String getDescription() {
         return description;
     }
-
     public void setShiftDuration(double shiftDuration) {this.shiftDuration = shiftDuration;}
 
     public void setOpeningHour(double openingHour) {this.openingHour = openingHour;}

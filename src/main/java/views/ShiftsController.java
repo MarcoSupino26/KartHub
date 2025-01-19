@@ -44,14 +44,14 @@ public class ShiftsController {
     }
 
     @FXML
-    public void saveTrack(){
+    public void switchToCost(){
         double opHour = Double.parseDouble(opening.getText());
         double clHour = Double.parseDouble(closing.getText());
         int shiftsDuration = Integer.parseInt(duration.getText());
         int avKarts = Integer.parseInt(karts.getText());
         ShiftsBean shifts = new ShiftsBean(avKarts, opHour, clHour, shiftsDuration);
         ManageController.getInstance().saveShifts(shifts);
-        SceneManager.changeScene("/trackmanager.fxml");
+        SceneManager.changeScene("/costchoice.fxml");
     }
 
 }

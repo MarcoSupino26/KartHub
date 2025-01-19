@@ -8,9 +8,11 @@ public class SessionManager {
     private static SessionManager instance;
     private User loggedUser;
     private static HashMap<String, BookingSession> bookingSessions;
+    private static HashMap<String, ManageSession> manageSessions;
 
     protected SessionManager(){
         bookingSessions = new HashMap<>();
+        manageSessions = new HashMap<>();
     }
 
     public static SessionManager getInstance(){
@@ -36,7 +38,13 @@ public class SessionManager {
         bookingSessions.put(username, bookingSession);
     }
 
+    public void createManageSession(ManageSession manageSession, String username){
+        manageSessions.put(username, manageSession);
+    }
+
     public BookingSession getBookingSession(String username){
         return bookingSessions.get(username);
     }
+
+    public ManageSession getManageSession(String username){return manageSessions.get(username);}
 }

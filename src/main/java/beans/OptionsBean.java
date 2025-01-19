@@ -1,27 +1,48 @@
 package beans;
 
 public class OptionsBean {
-    private final boolean race;
-    private final boolean quali;
-    private final boolean fp;
-    private final boolean medals;
-    private final boolean champagne;
+    private boolean race;
+    private boolean quali;
+    private boolean fp;
+    private boolean medals;
+    private boolean champagne;
     private boolean onBoard;
     private int rental;
     private int personal;
     private String shifts;
 
-    public OptionsBean(boolean race, boolean quali, boolean fp, boolean medals, boolean champagne, boolean onBoard, int rental, int personal, String shifts) {
-        this.race = race;
-        this.quali = quali;
-        this.fp = fp;
-        this.medals = medals;
-        this.champagne = champagne;
-        this.onBoard = onBoard;
-        this.rental = rental;
-        this.personal = personal;
-        this.shifts = shifts;
+    public OptionsBean() {
     }
+
+    public void setRace(boolean race) {
+        this.race = race;
+    }
+
+    public void setQuali(boolean quali) {
+        this.quali = quali;
+    }
+
+    public void setFp(boolean fp) {
+        this.fp = fp;
+    }
+
+    public void setMedals(boolean medals) {
+        this.medals = medals;
+    }
+
+    public void setChampagne(boolean champagne) {
+        this.champagne = champagne;
+    }
+
+    public void setOnBoard(boolean onBoard) {
+        this.onBoard = onBoard;
+    }
+
+    public void setRental(int rental) {
+        this.rental = rental;
+    }
+
+    public void setPersonal(int personal) {this.personal = personal;}
 
     public boolean isRace() {
         return race;

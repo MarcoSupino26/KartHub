@@ -88,4 +88,5 @@ public class GesController {
         ManageController.getInstance().saveTrack(track);
         SceneManager.changeScene("/slotchoice.fxml");
     }
+
 }
