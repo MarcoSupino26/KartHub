@@ -1,9 +1,7 @@
 package controllers;
 
-import beans.CostBean;
-import beans.InfoBean;
-import beans.ShiftsBean;
-import beans.TrackBean;
+import beans.*;
+import models.booking.BookingInterface;
 import models.dao.factory.FactoryDAO;
 import models.slots.TimeSlot;
 import models.track.Track;
@@ -28,7 +26,7 @@ public class ManageController {
         return instance;
     }
 
-    public boolean registeredTrack(){ //controlla se l'owner ha un tracciato associato
+    public boolean registeredTrack() { //controlla se l'owner ha un tracciato associato
         TrackDao trackDao = FactoryDAO.getInstance().createTrackDao();
         User owner = SessionManager.getInstance().getLoggedUser();
         List<Track> tracks = trackDao.getAllTracks();
@@ -39,6 +37,27 @@ public class ManageController {
         }
         return false;
         //qui dovrei gestire l'eccezione
+    }
+
+    public List<BookingsDisplay> getBookings(String trackName) {
+        List<BookingsDisplay> bookingBeans = new ArrayList<>();
+
+        TrackDao trackDao = FactoryDAO.getInstance().createTrackDao();
+        Track track = trackDao.getTrack(trackName);
+
+        List<BookingInterface> bookings = track.allBookings();
+        for (BookingInterface booking : bookings) {
+            BookingsDisplay bookingBean = new BookingsDisplay(booking.getSelectedDay());
+            bookingBean.setPersonal(String.valueOf(booking.getPersonal()));
+            bookingBean.setRental(String.valueOf(booking.getRental()));
+            bookingBean.setShift(String.valueOf(booking.getShift()));
+            bookingBean.setUser(booking.getUser().getUsername());
+            bookingBean.setCost(String.valueOf(booking.getCost()));
+            bookingBean.setDescription(booking.getDescription());
+            bookingBeans.add(bookingBean);
+        }
+
+        return bookingBeans;
     }
 
     public void createTrack(TrackBean track) {

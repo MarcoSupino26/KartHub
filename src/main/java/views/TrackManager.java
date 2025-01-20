@@ -45,4 +45,9 @@ public class TrackManager {
     public void manageTrack(){
         System.out.println("Working on it");
     }
+
+    @FXML
+    public void seeBookings(){
+        SceneManager.changeScene("/trackbookings.fxml");
+    }
 }

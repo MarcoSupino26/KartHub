@@ -115,6 +115,7 @@ public class BookManager {
         concreteBooking.setUser(SessionManager.getInstance().getLoggedUser());
         concreteBooking.setShift(options.getShifts());
         concreteBooking.setTrackName(track.getName());
+        concreteBooking.setSelectedDay(selectedDay);
 
         if(options.isRace()){
             booking = new RaceDecorator(booking, track.getCost(1));

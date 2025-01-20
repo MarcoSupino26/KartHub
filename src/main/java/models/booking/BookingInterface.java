@@ -2,6 +2,8 @@ package models.booking;
 
 import models.user.User;
 
+import java.time.LocalDate;
+
 public interface BookingInterface {
     String getDescription();
     double getCost();
@@ -11,4 +13,5 @@ public interface BookingInterface {
     User getUser();
     String getShift();
     String getTrackName();
+    LocalDate getSelectedDay();
 }

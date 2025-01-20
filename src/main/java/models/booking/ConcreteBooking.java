@@ -1,6 +1,7 @@
 package models.booking;
 import models.user.User;
 
+import java.time.LocalDate;
 import java.util.UUID;
 
 public class ConcreteBooking implements BookingInterface {
@@ -12,6 +13,7 @@ public class ConcreteBooking implements BookingInterface {
     private User user;
     private String shift;
     private String trackName;
+    private LocalDate selectedDay;
 
     public ConcreteBooking() {
         this.id = UUID.randomUUID().toString();
@@ -53,4 +55,9 @@ public class ConcreteBooking implements BookingInterface {
     public String getTrackName(){return trackName;}
 
     public void setTrackName(String trackName) {this.trackName = trackName;}
+
+    @Override
+    public LocalDate getSelectedDay() {return selectedDay;}
+
+    public void setSelectedDay(LocalDate selectedDay) {this.selectedDay = selectedDay;}
 }

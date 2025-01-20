@@ -16,8 +16,8 @@ public class TrackDaoMem extends TrackDao {
         tracks = new HashMap<>();
         Track track = new Track();
         track.setName("Supox autodrome");
-        track.setDescription("Se nel mondo esistesse un pò di bene");
-        track.setAddress("Via dalle palle 23");
+        track.setDescription("Venite a divertirvi da noi!");
+        track.setAddress("Via frattocchi 2");
         track.setAvailableKarts(11);
         List<TimeSlot> timeSlots = null;
         Image image = new Image("file:C:\\Users\\supin\\Desktop\\Università\\ISPW\\Interfacce\\tt racing.jpg");

@@ -2,6 +2,8 @@ package models.booking;
 
 import models.user.User;
 
+import java.time.LocalDate;
+
 public abstract class BookDecorator implements BookingInterface {
     protected BookingInterface booking;
 
@@ -34,5 +36,8 @@ public abstract class BookDecorator implements BookingInterface {
     public String getTrackName() {
         return booking.getTrackName();
     }
+
+    @Override
+    public LocalDate getSelectedDay() {return booking.getSelectedDay();}
 }
 

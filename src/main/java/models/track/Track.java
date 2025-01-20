@@ -69,6 +69,11 @@ public class Track {
         return bookings.get(bookingId);
     }
 
+    public List<BookingInterface> allBookings(){
+        List<BookingInterface> bookingList = new ArrayList<>(bookings.values());
+        return bookingList;
+    }
+
     public void addBooking(BookingInterface booking) {
         this.bookings.put(booking.getId(), booking);
     }
