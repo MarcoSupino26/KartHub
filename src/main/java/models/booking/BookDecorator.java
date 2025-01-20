@@ -24,5 +24,10 @@ public abstract class BookDecorator implements BookingInterface {
 
     @Override
     public User getUser(){return booking.getUser();}
+
+    @Override
+    public String getShift() {
+        return booking.getShift();
+    }
 }
 

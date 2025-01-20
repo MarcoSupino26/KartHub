@@ -10,9 +10,11 @@ public class ConcreteBooking implements BookingInterface {
     private int rental;
     private int personal;
     private User user;
+    private String shift;
 
     public ConcreteBooking() {
         this.id = UUID.randomUUID().toString();
+        this.description = "";
     }
 
     @Override
@@ -41,4 +43,8 @@ public class ConcreteBooking implements BookingInterface {
 
     public void setPersonal(int personal) {this.personal = personal;}
 
+    public void setShift(String shift) {this.shift = shift;}
+
+    @Override
+    public String getShift(){return shift;}
 }

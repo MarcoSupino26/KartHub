@@ -54,6 +54,17 @@ public class Track {
         this.timeSlots.put(date, timeSlots);
     }
 
+    public void setSlotAvailability(LocalDate date, int i, double startTime){
+        List<TimeSlot> daySlots = timeSlots.get(date);
+        for(TimeSlot timeSlot : daySlots){
+            if(timeSlot.getStartTime() == startTime){
+                for (int j = 0; j < i; j++) {
+                    daySlots.get(j).setAvailability(false);
+                }
+            }
+        }
+    }
+
     public BookingInterface getBooking(String bookingId) {
         return bookings.get(bookingId);
     }

@@ -1,5 +1,7 @@
 package beans;
 
+import java.time.LocalDate;
+
 public class OptionsBean {
     private boolean race;
     private boolean quali;
@@ -10,6 +12,9 @@ public class OptionsBean {
     private int rental;
     private int personal;
     private String shifts;
+    private double startTime;
+    private LocalDate selectedDay;
+
 
     public OptionsBean() {
     }
@@ -76,7 +81,17 @@ public class OptionsBean {
         return personal;
     }
 
+    public void setShifts(String shifts) {this.shifts = shifts;}
+
     public String getShifts() {
         return shifts;
     }
+
+    public void setStartTime(double startTime) {this.startTime = startTime;}
+
+    public double getStartTime() {return startTime;}
+
+    public void setDate(LocalDate selectedDay) {this.selectedDay = selectedDay;}
+
+    public LocalDate getDate() {return selectedDay;}
 }

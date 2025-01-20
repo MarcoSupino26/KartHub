@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class TrackDaoMem extends TrackDao {
-    private final HashMap<String, Track> tracks;
+    private HashMap<String, Track> tracks;
     private static TrackDaoMem instance;
 
     protected TrackDaoMem() {
@@ -51,5 +51,10 @@ public class TrackDaoMem extends TrackDao {
     @Override
     public List<Track> getAllTracks() {
         return new ArrayList<>(tracks.values());
+    }
+
+    @Override
+    public void updateTrack(Track track){
+        tracks.put(track.getName(), track);
     }
 }

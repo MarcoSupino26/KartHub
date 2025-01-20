@@ -6,4 +6,5 @@ public abstract class TrackDao {
     public abstract void insertTrack(Track track);
     public abstract Track getTrack(String name);
     public abstract List<Track> getAllTracks();
+    public abstract void updateTrack(Track track);
 }

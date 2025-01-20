@@ -9,4 +9,5 @@ public interface BookingInterface {
     int getRental();
     int getPersonal();
     User getUser();
+    String getShift();
 }

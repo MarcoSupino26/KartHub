@@ -76,10 +76,13 @@ public class BookManager {
         int requiredSlots = 0;
         List<TimeSlot> generatedSlots = timeSlots;
         List<TimeSlot> combinedSlots = new ArrayList<>();
+        String usr = SessionManager.getInstance().getLoggedUser().getUsername();
 
         if(race) requiredSlots += 2;
         if(quali) requiredSlots += 1;
         if(fp) requiredSlots += 1;
+
+        SessionManager.getInstance().getBookingSession(usr).setBookedSlots(requiredSlots);
 
         for (int i = 0; i <= generatedSlots.size() - requiredSlots; i++) {
             boolean allAvailable = true;
@@ -103,11 +106,14 @@ public class BookManager {
         String logged = SessionManager.getInstance().getLoggedUser().getUsername();
         BookingSession bookingSession = SessionManager.getInstance().getBookingSession(logged);
         Track track = bookingSession.getTrack();
+        int bookedSlots = bookingSession.getBookedSlots();
+        LocalDate selectedDay = options.getDate();
 
         ConcreteBooking concreteBooking = (ConcreteBooking) booking;
         concreteBooking.setRental(options.getRental());
         concreteBooking.setPersonal(options.getPersonal());
         concreteBooking.setUser(SessionManager.getInstance().getLoggedUser());
+        concreteBooking.setShift(options.getShifts());
 
         if(options.isRace()){
             booking = new RaceDecorator(booking, track.getCost(1));
@@ -137,6 +143,11 @@ public class BookManager {
         BookingDao bookDao = FactoryDAO.getInstance().createBookingDao();
         bookDao.addBooking(booking);
         System.out.println("Booking " + booking.getId() + " saved");
+
+        double startTime = options.getStartTime();
+        track.setSlotAvailability(selectedDay, bookedSlots, startTime);
+        TrackDao trackDao = FactoryDAO.getInstance().createTrackDao();
+        trackDao.updateTrack(track);
         SessionManager.getInstance().freeBookingSession();
     }
 }

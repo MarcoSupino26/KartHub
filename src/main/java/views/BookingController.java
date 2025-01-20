@@ -206,6 +206,13 @@ public class BookingController {
         optionsBean.setMedals(medals.isSelected());
         optionsBean.setChampagne(champagne.isSelected());
         optionsBean.setOnBoard(onBoard.isSelected());
+        optionsBean.setDate(day.getValue());
+
+        TimeSlot selectedSlot = (TimeSlot) slots.getValue();
+        String shift = String.format("%.2f - %.2f", selectedSlot.getStartTime(), selectedSlot.getEndTime());
+
+        optionsBean.setStartTime(selectedSlot.getStartTime());
+        optionsBean.setShifts(shift);
         new BookManager().saveBooking(optionsBean);
         SceneManager.changeScene("/main.fxml");
     }
