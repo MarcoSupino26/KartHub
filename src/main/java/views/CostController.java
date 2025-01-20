@@ -3,6 +3,7 @@ package views;
 import beans.CostBean;
 import controllers.ManageController;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import org.w3c.dom.Text;
 import utils.ManageSession;
@@ -36,6 +37,7 @@ public class CostController {
         cost.add(Double.parseDouble(onBoard.getText()));
         CostBean costBean = new CostBean(cost);
         ManageController.getInstance().saveTrack(costBean);
+        SceneManager.changeScene("/main.fxml");
     }
 
     @FXML

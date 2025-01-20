@@ -42,6 +42,14 @@ public class SessionManager {
         manageSessions.put(username, manageSession);
     }
 
+    public void freeBookingSession(){
+        manageSessions.remove(loggedUser.getUsername());
+    }
+
+    public void freeManageSession(){
+        manageSessions.remove(loggedUser.getUsername());
+    }
+
     public BookingSession getBookingSession(String username){
         return bookingSessions.get(username);
     }

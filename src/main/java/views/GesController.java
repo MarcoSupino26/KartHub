@@ -85,7 +85,7 @@ public class GesController {
         track.setName(trackName.getText());
         track.setDescription(description.getText());
         track.setAddress(address.getText());
-        ManageController.getInstance().saveTrack(track);
+        ManageController.getInstance().createTrack(track);
         SceneManager.changeScene("/slotchoice.fxml");
     }
 

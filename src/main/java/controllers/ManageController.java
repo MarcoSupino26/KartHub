@@ -41,8 +41,9 @@ public class ManageController {
         //qui dovrei gestire l'eccezione
     }
 
-    public void saveTrack(TrackBean track) {
+    public void createTrack(TrackBean track) {
         ManageSession manageSession = new ManageSession();
+        manageSession.setTrackName(track.getName());
         manageSession.setAddress(track.getAddress());
         manageSession.setDescription(track.getDescription());
         manageSession.setOwner(SessionManager.getInstance().getLoggedUser());
@@ -57,6 +58,7 @@ public class ManageController {
         manageSession.setAvailableKarts(shifts.getAvailableKarts());
         manageSession.setOpening(shifts.getOpeningHour());
         manageSession.setClosing(shifts.getClosingHour());
+        manageSession.setDuration(shifts.getDuration());
     }
 
     public void saveTrack(CostBean costBean){

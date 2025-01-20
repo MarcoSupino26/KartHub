@@ -72,6 +72,32 @@ public class BookManager {
         session.getTrack().addTimeSlots(timeSlots, date);
     }
 
+    public List<TimeSlot> getCombinedSlots(List<TimeSlot> timeSlots, boolean race, boolean quali, boolean fp){
+        int requiredSlots = 0;
+        List<TimeSlot> generatedSlots = timeSlots;
+        List<TimeSlot> combinedSlots = new ArrayList<>();
+
+        if(race) requiredSlots += 2;
+        if(quali) requiredSlots += 1;
+        if(fp) requiredSlots += 1;
+
+        for (int i = 0; i <= generatedSlots.size() - requiredSlots; i++) {
+            boolean allAvailable = true;
+            for (int j = 0; j < requiredSlots; j++) {
+                if (!generatedSlots.get(i + j).isAvailable()){
+                    allAvailable = false;
+                    break;
+                }
+            }
+            if (allAvailable){
+                TimeSlot start = generatedSlots.get(i);
+                TimeSlot end = generatedSlots.get(i + requiredSlots - 1);
+                combinedSlots.add(new TimeSlot(start.getStartTime(), end.getEndTime(), true));
+            }
+        }
+        return combinedSlots;
+    }
+
     public void saveBooking(OptionsBean options){
         BookingInterface booking = new ConcreteBooking();
         String logged = SessionManager.getInstance().getLoggedUser().getUsername();
@@ -111,5 +137,6 @@ public class BookManager {
         BookingDao bookDao = FactoryDAO.getInstance().createBookingDao();
         bookDao.addBooking(booking);
         System.out.println("Booking " + booking.getId() + " saved");
+        SessionManager.getInstance().freeBookingSession();
     }
 }
