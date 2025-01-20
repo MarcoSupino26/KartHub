@@ -107,7 +107,7 @@ public class Track {
     }
 
     public double getCost(int i){
-        return cost.get(i);
+        return cost.get(i-1);
     }
 
     public Image getImage() {

@@ -43,6 +43,9 @@ public class TrackBookings {
         bookingDisplayed.setSpacing(20);
         bookingDisplayed.setAlignment(Pos.CENTER_LEFT);
 
+        VBox bookingDetails = new VBox(10);
+        bookingDetails.setStyle("-fx-background-color: #000000; -fx-padding: 5px; -fx-border-radius: 10px");
+
         Text user = customize(new Text(booking.getUsr()));
         Text shift = customize(new Text(booking.getShift()));
         Text rental = customize(new Text(booking.getRental()));
@@ -50,9 +53,13 @@ public class TrackBookings {
         Text description = customize(new Text(booking.getDescription()));
         Text earnings = customize(new Text(booking.getCost()));
 
-        bookingDisplayed.getChildren().addAll(user, shift, rental, personal, description, earnings);
+        bookingDetails.getChildren().addAll(user, shift, rental, personal, description, earnings);
+
+        bookingDisplayed.getChildren().add(bookingDetails);
 
         bookingsContainer.getChildren().add(bookingDisplayed);
+
+        bookingsContainer.requestLayout();
     }
 
     public Text customize(Text text) {
