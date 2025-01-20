@@ -114,6 +114,7 @@ public class BookManager {
         concreteBooking.setPersonal(options.getPersonal());
         concreteBooking.setUser(SessionManager.getInstance().getLoggedUser());
         concreteBooking.setShift(options.getShifts());
+        concreteBooking.setTrackName(track.getName());
 
         if(options.isRace()){
             booking = new RaceDecorator(booking, track.getCost(1));
@@ -144,6 +145,7 @@ public class BookManager {
         bookDao.addBooking(booking);
         System.out.println("Booking " + booking.getId() + " saved");
 
+        bookingSession.setBooking(booking);
         double startTime = options.getStartTime();
         track.setSlotAvailability(selectedDay, bookedSlots, startTime);
         TrackDao trackDao = FactoryDAO.getInstance().createTrackDao();

@@ -11,6 +11,7 @@ public class ConcreteBooking implements BookingInterface {
     private int personal;
     private User user;
     private String shift;
+    private String trackName;
 
     public ConcreteBooking() {
         this.id = UUID.randomUUID().toString();
@@ -47,4 +48,9 @@ public class ConcreteBooking implements BookingInterface {
 
     @Override
     public String getShift(){return shift;}
+
+    @Override
+    public String getTrackName(){return trackName;}
+
+    public void setTrackName(String trackName) {this.trackName = trackName;}
 }

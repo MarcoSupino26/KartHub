@@ -29,5 +29,10 @@ public abstract class BookDecorator implements BookingInterface {
     public String getShift() {
         return booking.getShift();
     }
+
+    @Override
+    public String getTrackName() {
+        return booking.getTrackName();
+    }
 }
 

@@ -1,5 +1,6 @@
 package utils;
 
+import models.booking.BookingInterface;
 import models.track.Track;
 
 import java.time.LocalDate;
@@ -7,6 +8,7 @@ import java.time.LocalDate;
 public class BookingSession {
     private Track track;
     private int bookedSlots;
+    private BookingInterface booking;
 
     public BookingSession(Track track) {
         this.track = track;
@@ -24,4 +26,8 @@ public class BookingSession {
     public void setBookedSlots(int bookedSlots) {this.bookedSlots = bookedSlots;}
 
     public int getBookedSlots(){return bookedSlots;}
+
+    public void setBooking(BookingInterface booking) {this.booking = booking;}
+
+    public BookingInterface getBooking() {return booking;}
 }

@@ -214,6 +214,6 @@ public class BookingController {
         optionsBean.setStartTime(selectedSlot.getStartTime());
         optionsBean.setShifts(shift);
         new BookManager().saveBooking(optionsBean);
-        SceneManager.changeScene("/main.fxml");
+        SceneManager.changeScene("/bookingrecap.fxml");
     }
 }

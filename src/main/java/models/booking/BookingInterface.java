@@ -10,4 +10,5 @@ public interface BookingInterface {
     int getPersonal();
     User getUser();
     String getShift();
+    String getTrackName();
 }
