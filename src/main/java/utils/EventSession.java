@@ -10,6 +10,7 @@ public class EventSession {
     private KartEvent currentKartEvent;
     private int shoppedTickets;
     private double payment;
+    private String trackname;
 
     public EventSession() {
         shoppedTickets = 0;
@@ -35,4 +36,8 @@ public class EventSession {
     public double getPayment() {return payment;}
 
     public void setPayment(double payment) {this.payment = payment;}
+
+    public String getTrackname() {return trackname;}
+
+    public void setTrackname(String trackname) {this.trackname = trackname;}
 }

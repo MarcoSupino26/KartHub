@@ -100,6 +100,11 @@
                               <Font size="16.0" />
                            </font>
                         </Button>
+                        <Button mnemonicParsing="false" onAction="#showEvents" prefHeight="49.0" prefWidth="118.0" style="-fx-background-color: #c5151d;" text="Eventi" textAlignment="CENTER" textFill="WHITE">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Button>
                      </children>
                   </HBox>
                </children>

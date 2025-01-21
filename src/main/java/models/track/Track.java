@@ -2,6 +2,7 @@ package models.track;
 
 import javafx.scene.image.Image;
 import models.booking.BookingInterface;
+import models.event.KartEvent;
 import models.slots.TimeSlot;
 import models.user.User;
 
@@ -23,11 +24,13 @@ public class Track {
     private double openingHour;
     private double closingHour;
     private double shiftDuration;
+    private HashMap<String, KartEvent> events;
 
     public Track(){
         timeSlots = new HashMap<>();
         cost = new ArrayList<>();
         bookings = new HashMap<>();
+        events = new HashMap<>();
     }
 
     public String getName() {
@@ -128,4 +131,13 @@ public class Track {
     public double getClosingHour() {return closingHour;}
 
     public double getShiftDuration() {return shiftDuration;}
+
+    public KartEvent getEvent(String eventName) {return events.get(eventName);}
+
+    public void addEvent(KartEvent event) {events.put(event.getEventName(), event);}
+
+    public List<KartEvent> allEvents() {
+        List<KartEvent> eventList = new ArrayList<>(events.values());
+        return eventList;
+    }
 }

@@ -5,6 +5,7 @@ import controllers.ManageController;
 import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
+import utils.EventSession;
 import utils.SessionManager;
 
 public class TrackManager {
@@ -50,5 +51,13 @@ public class TrackManager {
     @FXML
     public void seeBookings(){
         SceneManager.changeScene("/trackbookings.fxml");
+    }
+
+    @FXML
+    public void showEvents(){
+        EventSession eventSession = new EventSession();
+        eventSession.setTrackname(trackName.getText());
+        SessionManager.getInstance().createEventSession(eventSession);
+        SceneManager.changeScene("/trackEvents.fxml");
     }
 }
