@@ -1,5 +1,6 @@
 package models.dao.factory;
 
+import models.event.KartEventDao;
 import models.track.TrackDao;
 import models.user.UserDao;
 import models.booking.BookingDao;
@@ -19,4 +20,6 @@ public abstract class FactoryDAO {
     public abstract TrackDao createTrackDao();
 
     public abstract BookingDao createBookingDao();
+
+    public abstract KartEventDao createKartEventDao();
 }

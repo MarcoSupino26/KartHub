@@ -9,10 +9,12 @@ public class SessionManager {
     private User loggedUser;
     private static HashMap<String, BookingSession> bookingSessions;
     private static HashMap<String, ManageSession> manageSessions;
+    private static HashMap<String, EventSession> eventSessions;
 
     protected SessionManager(){
         bookingSessions = new HashMap<>();
         manageSessions = new HashMap<>();
+        eventSessions = new HashMap<>();
     }
 
     public static SessionManager getInstance(){
@@ -55,4 +57,16 @@ public class SessionManager {
     }
 
     public ManageSession getManageSession(String username){return manageSessions.get(username);}
+
+    public void createEventSession(EventSession eventSession){
+        eventSessions.put(this.loggedUser.getUsername(), eventSession);
+    }
+
+    public EventSession getEventSession(){
+        return eventSessions.get(this.loggedUser.getUsername());
+    }
+
+    public void freeEventSession(){
+        eventSessions.remove(loggedUser.getUsername());
+    }
 }
