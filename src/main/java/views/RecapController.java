@@ -23,6 +23,8 @@ public class RecapController {
     private Text description;
     @FXML
     private Text trackName;
+    @FXML
+    private Text shift;
 
     public void initialize() {
         String usr = SessionManager.getInstance().getLoggedUser().getUsername();
@@ -35,9 +37,11 @@ public class RecapController {
         id.setText(String.valueOf(booking.getId()));
         description.setText(booking.getDescription());
         trackName.setText(booking.getTrackName());
+        shift.setText(booking.getShift());
+        SessionManager.getInstance().freeBookingSession();
     }
     @FXML
-    public void switchToEventi(ActionEvent event){
+    public void switchToEventi(){
         SessionManager.getInstance().freeBookingSession();
         SceneManager.changeScene("/eventi.fxml");
     }

@@ -9,6 +9,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
@@ -71,26 +72,38 @@
     <center>
         <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="850.0" style="-fx-alignment: center;" BorderPane.alignment="CENTER">
             <Pane prefHeight="538.0" prefWidth="850.0" style="-fx-background-color: #000000;">
-            <AnchorPane layoutX="279.0" layoutY="108.0" style="-fx-border-color: #c5151d; -fx-border-width: 5;">
+            <VBox alignment="CENTER" layoutX="206.0" layoutY="24.0" prefHeight="414.0" prefWidth="327.0" style="-fx-spacing: 30;">
                <children>
-                  <ImageView fx:id="trackPic" fitHeight="223.0" fitWidth="282.0" pickOnBounds="true" preserveRatio="true" />
+                  <Text fx:id="trackName" fill="WHITE" fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0" text="Trackname" textAlignment="CENTER">
+                     <font>
+                        <Font name="Futura-Medium" size="26.0" />
+                     </font>
+                  </Text>
+                  <AnchorPane prefHeight="332" prefWidth="437.6" style="-fx-border-color: #c5151d; -fx-padding: 10;-fx-border-width: 5;">
+                     <children>
+                         <StackPane layoutX="23.0" layoutY="22.0" prefHeight="279.0" prefWidth="384" style="-fx-background-color: transparent">
+                            <children>
+                                <ImageView fx:id="trackPic" fitHeight="279.0" fitWidth="321.0" layoutX="32.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true" />
+                            </children>
+                         </StackPane>
+                     </children>
+                  </AnchorPane>
+                  <HBox alignment="CENTER" prefHeight="73.0" prefWidth="384.0" style="-fx-spacing: 30;">
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#seeBookings" prefHeight="49.0" prefWidth="118.0" style="-fx-background-color: #c5151d;" text="Prenotazioni" textAlignment="CENTER" textFill="WHITE">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#manageTrack" prefHeight="49.0" prefWidth="118.0" style="-fx-background-color: #c5151d;" text="Gestisci" textAlignment="CENTER" textFill="WHITE">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </HBox>
                </children>
-            </AnchorPane>
-            <Text fx:id="trackName" fill="WHITE" fontSmoothingType="LCD" layoutX="365.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Trackname">
-               <font>
-                  <Font name="Futura-Medium" size="26.0" />
-               </font>
-            </Text>
-            <Button layoutX="247.0" layoutY="391.0" mnemonicParsing="false" onAction="#seeBookings" prefHeight="49.0" prefWidth="118.0" style="-fx-background-color: #c5151d;" text="Prenotazioni" textAlignment="CENTER" textFill="WHITE">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Button>
-            <Button layoutX="485.0" layoutY="391.0" mnemonicParsing="false" onAction="#manageTrack" prefHeight="49.0" prefWidth="118.0" style="-fx-background-color: #c5151d;" text="Gestisci" textAlignment="CENTER" textFill="WHITE">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Button>
+            </VBox>
             </Pane>
         </VBox>
     </center>

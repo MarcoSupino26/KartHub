@@ -8,8 +8,10 @@ public class UserDaoMem extends UserDao {
 
     protected UserDaoMem(){
         users = new HashMap<>();
-        users.put("marco", new User("marco", "ciao", "Proprietario"));
-        users.put("joao", new User("joao", "senna", "Utente"));
+        users.put("Marco", new User("Marco", "psw1", "Proprietario"));
+        users.put("Emanuele", new User("Emanuele", "psw2", "Proprietario"));
+        users.put("Simone", new User("Simone", "psw3", "Proprietario"));
+        users.put("Edoardo", new User("Edoardo", "psw4", "Utente"));
     }
 
 

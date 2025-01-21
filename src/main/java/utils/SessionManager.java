@@ -38,12 +38,12 @@ public class SessionManager {
         bookingSessions.put(username, bookingSession);
     }
 
-    public void createManageSession(ManageSession manageSession, String username){
-        manageSessions.put(username, manageSession);
+    public void createManageSession(ManageSession manageSession){
+        manageSessions.put(this.loggedUser.getUsername(), manageSession);
     }
 
     public void freeBookingSession(){
-        manageSessions.remove(loggedUser.getUsername());
+        bookingSessions.remove(loggedUser.getUsername());
     }
 
     public void freeManageSession(){

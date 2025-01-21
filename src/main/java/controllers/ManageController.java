@@ -32,6 +32,9 @@ public class ManageController {
         List<Track> tracks = trackDao.getAllTracks();
         for (Track track : tracks) {
             if (track.getOwner().equals(owner)) {
+                ManageSession mS = new ManageSession();
+                mS.setTrackName(track.getName());
+                SessionManager.getInstance().createManageSession(mS);
                 return true;
             }
         }
@@ -67,8 +70,7 @@ public class ManageController {
         manageSession.setDescription(track.getDescription());
         manageSession.setOwner(SessionManager.getInstance().getLoggedUser());
         manageSession.setImage(track.getImage());
-        String usr = SessionManager.getInstance().getLoggedUser().getUsername();
-        SessionManager.getInstance().createManageSession(manageSession,usr);
+        SessionManager.getInstance().createManageSession(manageSession);
     }
 
     public void saveShifts(ShiftsBean shifts) {

@@ -27,6 +27,7 @@ public class TrackManager {
 
     @FXML
     public void logout(){
+        SessionManager.getInstance().freeManageSession();
         SessionManager.getInstance().freeSession();
         SceneManager.changeScene("/main.fxml");
     }

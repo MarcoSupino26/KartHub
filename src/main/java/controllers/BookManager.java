@@ -47,6 +47,9 @@ public class BookManager {
     public void generateSlots(DateBean dateBean){
         BookingSession session = SessionManager.getInstance().getBookingSession(SessionManager.getInstance().getLoggedUser().getUsername());
         Track track = session.getTrack();
+        LocalDate date = dateBean.getDate();
+
+        if(session.getTrack().getTimeSlots(date) != null) return;
 
         double start = track.getOpeningHour();
         double end = track.getClosingHour();
@@ -64,7 +67,6 @@ public class BookManager {
             timeSlots.add(slot);
         }
 
-        LocalDate date = dateBean.getDate();
         TrackDao trackDao = FactoryDAO.getInstance().createTrackDao();
         track = trackDao.getTrack(track.getName());
         track.addTimeSlots(timeSlots, date);
@@ -151,6 +153,5 @@ public class BookManager {
         track.setSlotAvailability(selectedDay, bookedSlots, startTime);
         TrackDao trackDao = FactoryDAO.getInstance().createTrackDao();
         trackDao.updateTrack(track);
-        SessionManager.getInstance().freeBookingSession();
     }
 }

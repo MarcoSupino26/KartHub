@@ -212,6 +212,7 @@ public class BookingController {
         String shift = String.format("%.2f - %.2f", selectedSlot.getStartTime(), selectedSlot.getEndTime());
 
         optionsBean.setStartTime(selectedSlot.getStartTime());
+        System.out.println(selectedSlot.getStartTime());
         optionsBean.setShifts(shift);
         new BookManager().saveBooking(optionsBean);
         SceneManager.changeScene("/bookingrecap.fxml");
