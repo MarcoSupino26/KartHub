@@ -34,11 +34,6 @@ public class TrackManager {
     }
 
     @FXML
-    public void switchToEventi(){
-        SceneManager.changeScene("/eventi.fxml");
-    }
-
-    @FXML
     public void switchToHome(){
         SceneManager.changeScene("/main.fxml");
     }
@@ -54,10 +49,10 @@ public class TrackManager {
     }
 
     @FXML
-    public void showEvents(){
+    public void switchToEventi(){
         EventSession eventSession = new EventSession();
         eventSession.setTrackname(trackName.getText());
         SessionManager.getInstance().createEventSession(eventSession);
-        SceneManager.changeScene("/trackEvents.fxml");
+        SceneManager.changeScene("/trackevents.fxml");
     }
 }

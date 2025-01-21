@@ -127,7 +127,7 @@
                                 <font>
                                     <Font size="18.0" />
                                 </font></Text>
-                     <ComboBox fx:id="tickets" prefHeight="26.0" prefWidth="67.0" promptText="10" />
+                     <ComboBox fx:id="ticket" prefHeight="26.0" prefWidth="67.0" promptText="10" />
                         </HBox>
                         <HBox alignment="CENTER_LEFT" />
                         <HBox alignment="CENTER_LEFT" spacing="10.0" />

@@ -2,6 +2,7 @@ package views;
 
 import controllers.AuthController;
 import controllers.ManageController;
+import utils.Session;
 import utils.SessionManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -31,7 +32,7 @@ public class HomeController {
     }
 
     @FXML
-    public void switchToPrenota(ActionEvent event){
+    public void switchToPrenota(){
         User logged = SessionManager.getInstance().getLoggedUser();
         if(logged == null) {
             SceneManager.changeScene("/login.fxml");
@@ -48,12 +49,21 @@ public class HomeController {
     }
 
     @FXML
-    public void switchToEventi(ActionEvent event){
-        SceneManager.changeScene("/eventi.fxml");
+    public void switchToEventi(){
+        User logged = SessionManager.getInstance().getLoggedUser();
+        if(logged != null) {
+            if(logged.getType().equals("Proprietario")){
+                SceneManager.changeScene("/trackevents.fxml");
+            }else {
+                SceneManager.changeScene("/eventi.fxml");
+            }
+        }else {
+            SceneManager.changeScene("/login.fxml");
+        }
     }
 
     @FXML
-    public void switchToLogin(ActionEvent event) throws IOException {
+    public void switchToLogin() {
         if(SessionManager.getInstance().getLoggedUser() == null){
             SceneManager.changeScene("/login.fxml");
         }else {

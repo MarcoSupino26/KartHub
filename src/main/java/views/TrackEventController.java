@@ -79,11 +79,11 @@ public class TrackEventController {
 
     @FXML
     public void switchToManager(){
-        SceneManager.changeScene("/trackmanger.fxml");
+        SceneManager.changeScene("/trackmanager.fxml");
     }
 
     @FXML
     public void addEvent(){
-        System.out.println("Working on it");
+        SceneManager.changeScene("/eventcreation.fxml");
     }
 }

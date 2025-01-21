@@ -1,6 +1,7 @@
 package controllers;
 
 import beans.EventBean;
+import beans.EventBeanCreation;
 import models.dao.factory.FactoryDAO;
 import models.event.KartEvent;
 import models.event.KartEventDao;
@@ -29,7 +30,7 @@ public class EventManager {
         SessionManager.getInstance().createEventSession(eventSession);
     }
 
-    public List<EventBean> getAssociatedEvents(String trackName){
+    public List<EventBean> getAssociatedEvents(String trackName) {
         List<EventBean> eventBeans = new ArrayList<>();
 
         TrackDao trackDao = FactoryDAO.getInstance().createTrackDao();
@@ -37,7 +38,7 @@ public class EventManager {
 
 
         List<KartEvent> kartEventList = track.allEvents();
-        for(KartEvent kartEvent : kartEventList){
+        for (KartEvent kartEvent : kartEventList) {
             String eventName = kartEvent.getEventName();
             int tickets = kartEvent.getTickets();
             LocalDate date = kartEvent.getEventDate();
@@ -46,5 +47,19 @@ public class EventManager {
             eventBeans.add(eventBean);
         }
         return eventBeans;
+    }
+
+    public void saveEvent(EventBeanCreation eventBean) {
+        KartEventDao kartEventDao = FactoryDAO.getInstance().createKartEventDao();
+
+        KartEvent kartEvent = new KartEvent(eventBean.getEventName());
+        kartEvent.setTickets(eventBean.getAvailableTickets());
+        kartEvent.setEventDate(eventBean.getDate());
+        kartEvent.setEventTime(eventBean.getTime());
+        kartEvent.setCost(eventBean.getPrice());
+        kartEvent.setTrackName(eventBean.getTrack());
+        kartEvent.setEventTime(eventBean.getTime());
+
+        kartEventDao.addKartEvent(kartEvent);
     }
 }

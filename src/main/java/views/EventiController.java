@@ -65,7 +65,7 @@ public class EventiController {
         Text eventDate = customize(new Text(String.valueOf(kartEvent.getEventDate())));
         Text eventTime = customize(new Text(String.valueOf(kartEvent.getEventTime())));
         Text tickets = customize(new Text("Biglietti rimasti: " + String.valueOf(kartEvent.getTickets())));
-        String ticketCost = String.format("%.2f",String.valueOf(kartEvent.getTickets()));
+        String ticketCost = String.format("%.2f",kartEvent.getCost());
         Text cost = customize(new Text("Costo: €" + ticketCost));
 
         Button buyTicket = new Button("Buy Ticket");
@@ -76,6 +76,7 @@ public class EventiController {
         eventDetails.getChildren().addAll(eventName, eventType, trackName, eventDate, eventTime, tickets, cost);
 
         eventDisplayed.getChildren().add(eventDetails);
+        eventDisplayed.getChildren().add(buyTicket);
 
         eventsContainer.getChildren().add(eventDisplayed);
 
