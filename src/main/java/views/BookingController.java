@@ -151,56 +151,6 @@ public class BookingController {
         });
     }
 
-    /*@FXML
-    public void updateTimeSlotsListView2(List<SlotBean> slotsList, BookManager bM) {
-        boolean fpOption = false;
-        boolean qualiOption = false;
-        boolean raceOption = true;
-
-        if (race.isSelected()) {
-            if (quali.isSelected()) {
-                qualiOption = true;
-            }
-            if (fp.isSelected()) {
-                fpOption = true;
-            }
-            CombinedSlotsBean combinedSlotsBean = new CombinedSlotsBean(slotsList, raceOption, qualiOption, fpOption);
-            slotsList = bM.getCombinedSlots2(combinedSlotsBean);
-        }
-
-        slots.getItems().clear();
-        for (SlotBean slot : slotsList) {
-            if (slot.isFree()) {
-                String formattedSlot = String.format("%.2f - %.2f", slot.getSlotStart(), slot.getSlotEnd()).replace(",",".");
-                slots.getItems().add(formattedSlot);
-            }
-        }
-
-        slots.setCellFactory(comboBoxListView -> new ListCell<>() {
-            @Override
-            protected void updateItem(String item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty || item == null) {
-                    setText(null);
-                } else {
-                    setText(item);
-                }
-            }
-        });
-
-        slots.setButtonCell(new ListCell<>() {
-            @Override
-            protected void updateItem(String item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty || item == null) {
-                    setText(null);
-                } else {
-                    setText(item);
-                }
-            }
-        });
-    }*/
-
     @FXML
     public void bookTrack(Event event){
         SceneManager.changeScene("/trackChoice.fxml");
