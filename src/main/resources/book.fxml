@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.Group?>
 <?import javafx.scene.control.Button?>
@@ -12,7 +11,6 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Rectangle?>
@@ -21,7 +19,7 @@
 
 <BorderPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.BookingController">
     <top>
-        <fx:include source="usertopbar.fxml"/>
+        <fx:include source="usertopbar.fxml" />
     </top>
     <center>
         <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="850.0" style="-fx-alignment: center;" BorderPane.alignment="CENTER">
@@ -68,7 +66,7 @@
                            <Cursor fx:constant="OPEN_HAND" />
                         </cursor>
                      </ComboBox>
-                           <TextField fx:id="participants" layoutX="202.0" layoutY="257.0" prefHeight="30.0" prefWidth="86.0" promptText="N. Persone">
+                           <TextField fx:id="rental" layoutX="126.0" layoutY="257.0" prefHeight="30.0" prefWidth="86.0" promptText="N. Persone">
                         <cursor>
                            <Cursor fx:constant="OPEN_HAND" />
                         </cursor>
@@ -76,7 +74,7 @@
                            <Font size="14.0" />
                         </font>
                      </TextField>
-                           <CheckBox fx:id="check" layoutX="50.0" layoutY="257.0" onAction="#showOptions" prefHeight="30.0" prefWidth="142.0" style="-fx-text-fill: white;" text="Kart personali">
+                           <CheckBox fx:id="check" layoutX="11.0" layoutY="316.0" onAction="#showOptions" prefHeight="30.0" prefWidth="142.0" style="-fx-text-fill: white;" text="Kart personali">
                         <font>
                            <Font name="Futura-Medium" size="18.0" />
                         </font>
@@ -92,15 +90,9 @@
                            <Font name="Futura-Medium" size="18.0" />
                         </font>
                      </Button>
-                     <Group fx:id="optional" layoutX="50.0" layoutY="299.0">
+                     <Group fx:id="optional" layoutX="65.0" layoutY="301.0">
                         <children>
-                           <TextField fx:id="rental" layoutY="20.107421875" prefHeight="25.0" prefWidth="100.0" />
                            <TextField fx:id="personal" layoutX="138.0" layoutY="20.107421875" prefHeight="25.0" prefWidth="100.0" />
-                           <Text fx:id="first" fill="WHITE" fontSmoothingType="LCD" layoutX="21.0" layoutY="17.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Noleggio">
-                              <font>
-                                 <Font size="14.0" />
-                              </font>
-                           </Text>
                            <Text fx:id="second" fill="WHITE" fontSmoothingType="LCD" layoutX="160.0" layoutY="16.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Personali">
                               <font>
                                  <Font size="14.0" />

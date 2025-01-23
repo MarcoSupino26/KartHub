@@ -25,6 +25,8 @@ public class TrackBookings {
         List<BookingsDisplayBean> bookings;
         VBox bookingsContainer = new VBox(10);
         bookingsContainer.setStyle("-fx-background-color: #000000; -fx-padding: 10px");
+        bookingsContainer.setPrefWidth(500);
+        bookingsContainer.setPrefHeight(100);
 
         bookings = new ManageController().getBookings();
         for(BookingsDisplayBean booking : bookings) {
@@ -34,21 +36,28 @@ public class TrackBookings {
     }
 
     public void displayBookings(BookingsDisplayBean booking, VBox bookingsContainer) {
-        HBox bookingDisplayed = new HBox(10);
+        HBox bookingDisplayed = new HBox();
         bookingDisplayed.setPrefWidth(500);
-        bookingDisplayed.setStyle("-fx-background-color: #000000; -fx-padding: 10px; -fx-border-radius: 10px");
-        bookingDisplayed.setSpacing(20);
+        bookingDisplayed.setPrefHeight(100);
+        bookingDisplayed.setStyle("-fx-background-color: #000000; -fx-padding: 10px; -fx-border-color: #c5151d; -fx-border-radius: 10px");
+        bookingDisplayed.setSpacing(10);
         bookingDisplayed.setAlignment(Pos.CENTER_LEFT);
 
         VBox bookingDetails = new VBox(10);
         bookingDetails.setStyle("-fx-background-color: #000000; -fx-padding: 5px; -fx-border-radius: 10px");
+        bookingDetails.setPrefWidth(500);
+        bookingDetails.setPrefHeight(100);
 
-        Text user = customize(new Text(booking.getUsr()));
+        Text user = new Text(booking.getUsr());
+        user.setFont(Font.font("Futura-Medium", 20));
+        user.setFill(Color.WHITE);
+
         Text shift = customize(new Text(booking.getShift()));
-        Text rental = customize(new Text(booking.getRental()));
-        Text personal = customize(new Text(booking.getPersonal()));
+        Text rental = customize(new Text("Kart noleggiati: " + booking.getRental()));
+        Text personal = customize(new Text("Personali: " + booking.getPersonal()));
         Text description = customize(new Text(booking.getDescription()));
-        Text earnings = customize(new Text(booking.getCost()));
+        double cost = Double.parseDouble(booking.getCost());
+        Text earnings = customize(new Text(String.format("€%.2f", cost)));
 
         bookingDetails.getChildren().addAll(user, shift, rental, personal, description, earnings);
 
@@ -60,8 +69,8 @@ public class TrackBookings {
     }
 
     public Text customize(Text text) {
-        text.setFont(Font.font("Futura-Medium", 22));
-        text.setFill(Color.WHITE);
+        text.setFont(Font.font("Futura-Medium", 16));
+        text.setFill(Color.LIGHTGRAY);
         return text;
     }
 }

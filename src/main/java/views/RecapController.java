@@ -34,7 +34,7 @@ public class RecapController {
         usrname.setText(usr + ", ecco la tua prenotazione");
         rental.setText(String.valueOf(booking.getRental()));
         personal.setText(String.valueOf(booking.getPersonal()));
-        cost.setText(String.format("%.2f", booking.getCost()));
+        cost.setText(String.format("€%.2f", booking.getCost()));
         id.setText(String.valueOf(booking.getId()));
         description.setText(booking.getDescription());
         trackName.setText(booking.getTrackName());

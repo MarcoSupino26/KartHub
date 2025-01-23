@@ -4,20 +4,16 @@ import beans.*;
 import controllers.BookManager;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.control.*;
 
-import models.slots.TimeSlot;
-import utils.BookingSession;
-import utils.SessionManager;
-
 import javafx.scene.image.ImageView;
 
 import java.time.LocalDate;
 import java.util.List;
+
 
 public class BookingController {
 
@@ -30,9 +26,7 @@ public class BookingController {
     @FXML
     private Group form;
     @FXML
-    private ComboBox slots;
-    @FXML
-    private TextField participants;
+    private ComboBox<String> slots;
     @FXML
     private TextField rental;
     @FXML
@@ -80,7 +74,7 @@ public class BookingController {
             ChangeListener<Boolean> optionsListener = (observable, oldValue, newValue) -> {
                 boolean selected = race.isSelected() || quali.isSelected() || fp.isSelected();
                 day.setDisable(!selected);
-                if(day.getValue() != null) updateTimeSlots();
+                if(day.getValue() != null) /*updateTimeSlots()*/updateTimeSlots2();
             };
 
             race.selectedProperty().addListener(optionsListener);
@@ -90,7 +84,7 @@ public class BookingController {
             day.valueProperty().addListener(new ChangeListener<LocalDate>() {
                 @Override
                 public void changed(ObservableValue<? extends LocalDate> observable, LocalDate oldValue, LocalDate newValue) {
-                    if(newValue != null) updateTimeSlots();
+                    if(newValue != null) /*updateTimeSlots()*/updateTimeSlots2();
                 }
             });
 
@@ -102,68 +96,65 @@ public class BookingController {
     }
 
     @FXML
-    public void updateTimeSlots() {
+    public void updateTimeSlots2(){
         LocalDate selectedDay = day.getValue();
-        DateBean dateBean = new DateBean(selectedDay);
-        BookManager bM = new  BookManager();
-        bM.generateSlots(dateBean);
-        SlotsBean slotsBean = bM.getSlots(selectedDay);
-        List <TimeSlot> timeSlotList = slotsBean.getTimeSlots();
-        updateTimeSlotsListView(timeSlotList, bM);
+        BookManager bookManager = new BookManager();
+        bookManager.generateSlots2(selectedDay);
+
+        List<SlotBean> slotsList = bookManager.getSlots2(selectedDay);
+        updateTimeSlotsListView2(slotsList, bookManager);
     }
 
     @FXML
-    public void updateTimeSlotsListView(List<TimeSlot> timeSlotList, BookManager bM) {
+    public void updateTimeSlotsListView2(List<SlotBean> slotsList, BookManager bM) {
         boolean fpOption = false;
         boolean qualiOption = false;
         boolean raceOption = false;
 
-        if(race.isSelected()){
-            if(quali.isSelected()){
+        if (race.isSelected()) {
+            if (quali.isSelected()) {
                 qualiOption = true;
             }
-            if(fp.isSelected()){
+            if (fp.isSelected()) {
                 fpOption = true;
             }
             raceOption = true;
-            CombineSlotsBean combineSlotsBean = new CombineSlotsBean(timeSlotList, raceOption, qualiOption, fpOption);
-            SlotsBean updatedSlots = bM.getCombinedSlots(combineSlotsBean);
-            timeSlotList = updatedSlots.getTimeSlots();
+            CombinedSlotsBean2 combinedSlotsBean = new CombinedSlotsBean2(slotsList, raceOption, qualiOption, fpOption);
+            slotsList = bM.getCombinedSlots2(combinedSlotsBean);
         }
+
         slots.getItems().clear();
-        slots.getItems().addAll(
-                timeSlotList.stream()
-                        .filter(TimeSlot::isAvailable)
-                        .toList()
-        );
-        slots.setCellFactory(comboBoxListView -> new ListCell<TimeSlot>() {
+        for (SlotBean slot : slotsList) {
+            if (slot.isFree()) {
+                String formattedSlot = String.format("%.2f - %.2f", slot.getSlotStart(), slot.getSlotEnd()).replace(",",".");
+                slots.getItems().add(formattedSlot);
+            }
+        }
+
+        slots.setCellFactory(comboBoxListView -> new ListCell<String>() {
             @Override
-            protected void updateItem(TimeSlot item, boolean empty) {
+            protected void updateItem(String item, boolean empty) {
                 super.updateItem(item, empty);
-                if(empty || item == null) {
+                if (empty || item == null) {
                     setText(null);
                 } else {
-                    String startTime = String.format("%.2f", item.getStartTime());
-                    String endTime = String.format("%.2f", item.getEndTime());
-                    setText(startTime + " - " + endTime);
+                    setText(item);
                 }
             }
         });
-        slots.setButtonCell(new ListCell<TimeSlot>() {
+
+        slots.setButtonCell(new ListCell<String>() {
             @Override
-            protected void updateItem(TimeSlot item, boolean empty){
+            protected void updateItem(String item, boolean empty) {
                 super.updateItem(item, empty);
-                if(empty || item == null) {
+                if (empty || item == null) {
                     setText(null);
                 } else {
-                    String startTime = String.format("%.2f", item.getStartTime());
-                    String endTime = String.format("%.2f", item.getEndTime());
-                    setText(startTime + " - " + endTime);
+                    setText(item);
                 }
             }
         });
     }
-
 
     @FXML
     public void bookTrack(Event event){
@@ -180,8 +171,15 @@ public class BookingController {
     @FXML
     public void confirmBooking() {
         OptionsBean optionsBean = new OptionsBean();
-        optionsBean.setPersonal(Integer.parseInt(personal.getText()));
-        optionsBean.setRental(Integer.parseInt(rental.getText()));
+
+        int rentalKarts = Integer.parseInt(rental.getText());
+        if(check.isSelected()) {
+            int personalKarts = Integer.parseInt(personal.getText());
+            rentalKarts = rentalKarts - personalKarts;
+            optionsBean.setPersonal(personalKarts);
+        }else optionsBean.setPersonal(0);
+
+        optionsBean.setRental(rentalKarts);
         optionsBean.setRace(race.isSelected());
         optionsBean.setQuali(quali.isSelected());
         optionsBean.setFp(fp.isSelected());
@@ -190,12 +188,11 @@ public class BookingController {
         optionsBean.setOnBoard(onBoard.isSelected());
         optionsBean.setDate(day.getValue());
 
-        TimeSlot selectedSlot = (TimeSlot) slots.getValue();
-        String shift = String.format("%.2f - %.2f", selectedSlot.getStartTime(), selectedSlot.getEndTime());
+        String slot = slots.getValue();
+        String[] parts = slot.split("-");
 
-        optionsBean.setStartTime(selectedSlot.getStartTime());
-        System.out.println(selectedSlot.getStartTime());
-        optionsBean.setShifts(shift);
+        optionsBean.setStartTime((Double.parseDouble(parts[0])));
+        optionsBean.setShifts(slot);
         new BookManager().saveBooking(optionsBean);
         SceneManager.changeScene("/bookingrecap.fxml");
     }

@@ -84,10 +84,85 @@ public class BookManager {
         session.getTrack().addTimeSlots(timeSlots, date);
     }
 
+    public void generateSlots2(LocalDate selectedDate){
+        BookingSession session = SessionManager.getInstance().getBookingSession();
+        Track track = session.getTrack();
+
+        if(session.getTrack().getTimeSlots(selectedDate) != null) return;
+
+        double start = track.getOpeningHour();
+        double end = track.getClosingHour();
+        double duration = track.getShiftDuration();
+
+        int totalMinutes = (int) ((end - start) * 60);
+        int numberofSlots = totalMinutes / (int) duration;
+
+        List <TimeSlot> timeSlots = new ArrayList<TimeSlot>();
+
+        for(int i = 0; i < numberofSlots; i++){
+            double startSlot = start + ((duration * i) % 60)/100.0 + (int) (i / (60/duration));
+            double endSlot = start + ((duration * (i+1)) % 60)/100.0 + (int) ((i+1) / (60/duration));
+            TimeSlot slot = new TimeSlot(startSlot, endSlot, true);
+            timeSlots.add(slot);
+        }
+
+        TrackDao trackDao = FactoryDAO.getInstance().createTrackDao();
+        track = trackDao.getTrack(track.getName());
+        //track.addTimeSlots(timeSlots, selectedDate);
+
+        session.getTrack().addTimeSlots(timeSlots, selectedDate);
+    }
+
     public SlotsBean getSlots(LocalDate day){
         BookingSession session = SessionManager.getInstance().getBookingSession();
         SlotsBean bean = new SlotsBean(session.getTrack().getTimeSlots(day));
         return bean;
+    }
+
+    public List<SlotBean> getSlots2(LocalDate day){
+        BookingSession session = SessionManager.getInstance().getBookingSession();
+        List<TimeSlot> timeSlots = session.getTrack().getTimeSlots(day);
+        List<SlotBean> daySlots = new ArrayList<>();
+
+        for(TimeSlot timeSlot : timeSlots){
+            double start = timeSlot.getStartTime();
+            double end = timeSlot.getEndTime();
+            boolean available = timeSlot.isAvailable();
+            SlotBean slotBean = new SlotBean(start, end, available);
+            daySlots.add(slotBean);
+        }
+
+        return daySlots;
+    }
+
+    public List<SlotBean> getCombinedSlots2(CombinedSlotsBean2 bean){
+        int requiredSlots = 0;
+        List<SlotBean> generatedSlots = bean.getGeneratedSlots();
+        List<SlotBean> combinedSlots = new ArrayList<>();
+        String usr = SessionManager.getInstance().getLoggedUser().getUsername();
+
+        if(bean.isRaceChecked()) requiredSlots += 2;
+        if(bean.isQualiChecked()) requiredSlots += 1;
+        if(bean.isFpChecked()) requiredSlots += 1;
+
+        SessionManager.getInstance().getBookingSession().setBookedSlots(requiredSlots);
+
+        for (int i = 0; i <= generatedSlots.size() - requiredSlots; i++) {
+            boolean allAvailable = true;
+            for(int j = 0; j < requiredSlots; j++){
+                if(!generatedSlots.get(i+j).isFree()){
+                    allAvailable = false;
+                    break;
+                }
+            }
+            if (allAvailable){
+                SlotBean start = generatedSlots.get(i);
+                SlotBean end = generatedSlots.get(i + requiredSlots - 1);
+
+                combinedSlots.add(new SlotBean(start.getSlotStart(), end.getSlotEnd(), true));
+            }
+        }
+        return combinedSlots;
     }
 
     public SlotsBean getCombinedSlots(CombineSlotsBean bean){
