@@ -1,15 +1,15 @@
 package views;
 
-import beans.EventBean;
+import beans.TrackEventBean;
 import controllers.EventManager;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import utils.EventSession;
 import utils.SessionManager;
 import java.util.List;
 
@@ -21,65 +21,56 @@ public class TrackEventController {
 
     @FXML
     public void initialize() {
-        List <EventBean> eventBeanList = new ArrayList<>();
+        List <TrackEventBean> trackEventsList;
         EventManager eventManager = new EventManager();
-        EventSession eventSession = SessionManager.getInstance().getEventSession();
+
+        eventManager.startEventSession();
 
         VBox eventsContainer = new VBox(10);
-        eventsContainer.setStyle("-fx-background-color: #000000; -fx-padding: 10;");
+        eventsContainer.setPrefWidth(500);
+        eventsContainer.setPrefHeight(100);
+        eventsContainer.setStyle("-fx-background-color: #000000; -fx-padding: 10");
 
-        eventBeanList = eventManager.getAssociatedEvents(eventSession.getTrackname());
-        for (EventBean eventBean : eventBeanList) {
-            displayEvent(eventBean, eventsContainer);
+        trackEventsList = eventManager.getAssociatedEvents();
+        for (TrackEventBean trackEventBean : trackEventsList) {
+            displayEvent(trackEventBean, eventsContainer);
         }
         scrollPane.setContent(eventsContainer);
+
+        scrollPane.requestFocus();
     }
 
-    public void displayEvent(EventBean eventBean, VBox eventsContainer) {
-        HBox displayedEvent = new HBox(10);
+    public void displayEvent(TrackEventBean trackEvent, VBox eventsContainer) {
+        HBox displayedEvent = new HBox();
         displayedEvent.setPrefWidth(500);
         displayedEvent.setPrefHeight(100);
+        displayedEvent.setStyle("-fx-background-color: #000000; -fx-padding: 10; -fx-border-radius: 10; -fx-border-color: #c5151d");
         displayedEvent.setSpacing(10);
-        displayedEvent.setStyle("-fx-background-color: #000000; -fx-padding: 10; -fx-border-radius: 10");
         displayedEvent.setAlignment(Pos.CENTER_LEFT);
 
         VBox eventDetails  = new VBox(10);
         eventDetails.setStyle("-fx-background-color: #000000; -fx-padding: 5; -fx-border-radius: 10;");
+        eventDetails.setPrefWidth(500);
+        eventDetails.setPrefHeight(100);
 
-        Text eventName = customize(new Text(eventBean.getEventName()));
-        Text tickets = customize(new Text("Biglietti rimasti:" + String.valueOf(eventBean.getTickets())));
-        Text eventDate = customize(new Text(String.valueOf(eventBean.getEventDate())));
-        Text eventTime = customize(new Text(String.valueOf(eventBean.getEventTime())));
+        Text eventName = new Text(trackEvent.getTrackEventName());
+        eventName.setFont(Font.font("Futura-Medium", 22));
+        eventName.setFill(Color.WHITE);
+        Text tickets = customize(new Text(String.format("Biglietti rimasti:" + trackEvent.getEventTickets())));
+        Text eventDate = customize(new Text(String.valueOf(trackEvent.getDay())));
+        Text eventTime = customize(new Text(String.valueOf(trackEvent.getStartHour())));
 
         eventDetails.getChildren().addAll(eventName, tickets, eventDate, eventTime);
 
         displayedEvent.getChildren().addAll(eventDetails);
 
         eventsContainer.getChildren().add(displayedEvent);
-        eventsContainer.requestLayout();
     }
 
     public Text customize(Text text) {
-        text.setStyle("-fx-background-color: #000000; -fx-font-size:18px; -fx-fill: white");
-        text.setFont(Font.font("Futura-Medium"));
+        text.setFont(Font.font("Futura-Medium",16));
+        text.setFill(Color.LIGHTGRAY);
         return text;
-    }
-
-    @FXML
-    public void switchToHome(){
-        SceneManager.changeScene("/main.fxml");
-    }
-
-    @FXML
-    public void logout(){
-        SessionManager.getInstance().freeEventSession();
-        SessionManager.getInstance().freeSession();
-        SceneManager.changeScene("/main.fxml");
-    }
-
-    @FXML
-    public void switchToManager(){
-        SceneManager.changeScene("/trackmanager.fxml");
     }
 
     @FXML

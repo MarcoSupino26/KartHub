@@ -36,23 +36,7 @@ public class CostController {
         cost.add(Double.parseDouble(medals.getText()));
         cost.add(Double.parseDouble(onBoard.getText()));
         CostBean costBean = new CostBean(cost);
-        ManageController.getInstance().saveTrack(costBean);
-        SceneManager.changeScene("/main.fxml");
-    }
-
-    @FXML
-    public void switchToHome(){
-        SceneManager.changeScene("/main.fxml");
-    }
-
-    @FXML
-    public void switchToEventi(){
-        SceneManager.changeScene("/eventi.fxml");
-    }
-
-    @FXML
-    public void logout(){
-        SessionManager.getInstance().setLoggedUser(null);
+        new ManageController().saveTrack(costBean);
         SceneManager.changeScene("/main.fxml");
     }
 }

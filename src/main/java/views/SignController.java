@@ -22,17 +22,6 @@ public class SignController {
     private PasswordField psw;
 
     @FXML
-    public void switchToHome(Event event){
-        SceneManager.changeScene("/main.fxml");
-    }
-
-    public void initialize(){
-        ToggleGroup toggle = new ToggleGroup();
-        opt1.setToggleGroup(toggle);
-        opt2.setToggleGroup(toggle);
-    }
-
-    @FXML
     public void registrazione(ActionEvent event){
         RadioButton selected = (RadioButton) opt1.getToggleGroup().getSelectedToggle();
         LoginBean signBean = LoginBean.getInstance();

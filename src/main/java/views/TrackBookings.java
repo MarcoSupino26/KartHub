@@ -1,12 +1,13 @@
 package views;
 
-import beans.BookingsDisplay;
+import beans.BookingsDisplayBean;
 import controllers.ManageController;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import utils.ManageSession;
@@ -21,22 +22,18 @@ public class TrackBookings {
 
     @FXML
     public void initialize() {
-        String usr = SessionManager.getInstance().getLoggedUser().getUsername();
-        ManageSession mS = SessionManager.getInstance().getManageSession(usr);
-        String trackName = mS.getTrackName();
-
-        List<BookingsDisplay> bookings;
+        List<BookingsDisplayBean> bookings;
         VBox bookingsContainer = new VBox(10);
         bookingsContainer.setStyle("-fx-background-color: #000000; -fx-padding: 10px");
-        ManageController mC = ManageController.getInstance();
-        bookings = mC.getBookings(trackName);
-        for(BookingsDisplay booking : bookings) {
+
+        bookings = new ManageController().getBookings();
+        for(BookingsDisplayBean booking : bookings) {
             displayBookings(booking, bookingsContainer);
         }
         scrollPane.setContent(bookingsContainer);
     }
 
-    public void displayBookings(BookingsDisplay booking, VBox bookingsContainer) {
+    public void displayBookings(BookingsDisplayBean booking, VBox bookingsContainer) {
         HBox bookingDisplayed = new HBox(10);
         bookingDisplayed.setPrefWidth(500);
         bookingDisplayed.setStyle("-fx-background-color: #000000; -fx-padding: 10px; -fx-border-radius: 10px");
@@ -63,24 +60,8 @@ public class TrackBookings {
     }
 
     public Text customize(Text text) {
-        text.setStyle("-fx-background-color: #000000; -fx-font-size:18px; -fx-fill: white");
-        text.setFont(Font.font("Futura-Medium"));
+        text.setFont(Font.font("Futura-Medium", 22));
+        text.setFill(Color.WHITE);
         return text;
-    }
-
-    @FXML
-    public void switchToHome(){
-        SceneManager.changeScene("/main.fxml");
-    }
-
-    @FXML
-    public void switchToEventi(){
-        SceneManager.changeScene("/eventi.fxml");
-    }
-
-    @FXML
-    public void logout(){
-        SessionManager.getInstance().setLoggedUser(null);
-        SceneManager.changeScene("/main.fxml");
     }
 }

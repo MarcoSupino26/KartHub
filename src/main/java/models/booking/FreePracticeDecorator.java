@@ -17,8 +17,8 @@ public class FreePracticeDecorator extends BookDecorator {
 
     @Override
     public String getDescription() {
-        String addedFormat = null;
-        if(super.getDescription() != null){
+        String addedFormat = "";
+        if(!super.getDescription().equals("")){
             addedFormat = " + ";
         }
         return super.getDescription() + addedFormat + "Prova libera";

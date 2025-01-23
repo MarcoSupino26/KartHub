@@ -28,30 +28,14 @@ public class ShiftsController {
     }
 
     @FXML
-    public void switchToHome(){
-        SceneManager.changeScene("/main.fxml");
-    }
-
-    @FXML
-    public void switchToEventi(){
-        SceneManager.changeScene("/eventi.fxml");
-    }
-
-    @FXML
-    public void logout(){
-        SessionManager.getInstance().setLoggedUser(null);
-        SceneManager.changeScene("/main.fxml");
-    }
-
-    @FXML
     public void switchToCost(){
         double opHour = Double.parseDouble(opening.getText());
         double clHour = Double.parseDouble(closing.getText());
         int shiftsDuration = Integer.parseInt(duration.getText());
         int avKarts = Integer.parseInt(karts.getText());
         ShiftsBean shifts = new ShiftsBean(avKarts, opHour, clHour, shiftsDuration);
-        ManageController.getInstance().saveShifts(shifts);
-        SceneManager.changeScene("/costchoice.fxml");
+        new ManageController().saveShifts(shifts);
+        SceneManager.changeScene("/costChoice.fxml");
     }
 
 }

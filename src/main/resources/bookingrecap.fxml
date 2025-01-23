@@ -15,59 +15,7 @@
 
 <BorderPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.RecapController">
     <top>
-        <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="80.0" prefWidth="850.0" style="-fx-alignment: CENTER; -fx-background-color: #c5151d;" BorderPane.alignment="CENTER">
-            <HBox prefHeight="98.0" prefWidth="235.0" style="-fx-alignment: center; -fx-translate-x: -140;">
-
-                <cursor>
-                    <Cursor fx:constant="DEFAULT" />
-                </cursor>
-                <ImageView fitHeight="80.0" fitWidth="90.0" onMouseClicked="#switchToHome" pickOnBounds="true" preserveRatio="true">
-
-                    <Image url="@images/HubLogo.png" />
-                    <cursor>
-                        <Cursor fx:constant="HAND" />
-                    </cursor>
-                </ImageView>
-                <Text strokeWidth="0.0" text="KartHub" textAlignment="CENTER" wrappingWidth="116.53674507141113">
-                    <strokeType>OUTSIDE</strokeType>
-                    <font>
-                        <Font name="Futura-Medium" size="30.0" />
-                    </font>
-                    <HBox.margin>
-                        <Insets />
-                    </HBox.margin>
-                    <cursor>
-                        <Cursor fx:constant="DEFAULT" />
-                    </cursor>
-                </Text>
-            </HBox>
-            <HBox style="-fx-alignment: center;">
-                <Button blendMode="COLOR_BURN" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0" style="-fx-background-color: transparent;" text="Prenota" underline="true">
-                    <font>
-                        <Font name="Futura-Medium" size="25.0" />
-                    </font>
-                    <cursor>
-                        <Cursor fx:constant="HAND" />
-                    </cursor>
-                </Button>
-                <Button blendMode="COLOR_BURN" contentDisplay="CENTER" mnemonicParsing="false" onAction="#switchToEventi" prefHeight="30.0" prefWidth="120.0" style="-fx-background-color: transparent;" text="Eventi">
-                    <font>
-                        <Font name="Futura-Medium" size="25.0" />
-                    </font>
-                    <cursor>
-                        <Cursor fx:constant="HAND" />
-                    </cursor>
-                </Button>
-                <Button blendMode="COLOR_BURN" contentDisplay="CENTER" mnemonicParsing="false" onAction="#logout" prefHeight="52.0" prefWidth="120.0" style="-fx-background-color: transparent;" text="Logout">
-                    <font>
-                        <Font name="Futura-Medium" size="25.0" />
-                    </font>
-                    <cursor>
-                        <Cursor fx:constant="HAND" />
-                    </cursor>
-                </Button>
-            </HBox>
-        </HBox>
+       <fx:include source="usertopbar.fxml"/>
     </top>
     <center>
         <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="850.0" style="-fx-alignment: center;" BorderPane.alignment="CENTER">
@@ -154,7 +102,7 @@
                             </children>
                         </HBox>
                     </VBox>
-                    <Button layoutX="385.0" layoutY="404.0" mnemonicParsing="false" onAction="#proceed" prefHeight="49.0" prefWidth="107.0" style="-fx-background-color: #c5151d;" text="Conferma" textFill="WHITE">
+                    <Button layoutX="385.0" layoutY="404.0" mnemonicParsing="false" onAction="#proceed" prefHeight="49.0" prefWidth="107.0" style="-fx-background-color: #c5151d;" text="Continua" textFill="WHITE">
                         <font>
                             <Font name="Futura-Medium" size="18.0" />
                         </font>

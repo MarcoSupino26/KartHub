@@ -1,5 +1,6 @@
 package views;
 
+import controllers.EventManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import utils.EventSession;
@@ -12,28 +13,12 @@ public class PaymentDone {
     private Button book;
 
     @FXML
-    public void initialize(){
-        EventSession eventSession = SessionManager.getInstance().getEventSession();
-        if(eventSession != null){
-            events.setStyle("-fx-underline: true");
-        }else {
-            book.setStyle("-fx-underline: false");
-        }
+    public void initialize() {
+        new EventManager().clearSession();
     }
 
     @FXML
     public void switchToHome() {
         SceneManager.changeScene("/main.fxml");
-    }
-
-    @FXML
-    public void logout(){
-        EventSession eventSession = SessionManager.getInstance().getEventSession();
-        if (eventSession != null) {
-            SessionManager.getInstance().freeEventSession();
-        }else {
-            SessionManager.getInstance().freeBookingSession();
-        }
-        SessionManager.getInstance().freeEventSession();
     }
 }

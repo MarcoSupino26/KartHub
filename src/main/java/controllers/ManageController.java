@@ -3,28 +3,24 @@ package controllers;
 import beans.*;
 import models.booking.BookingInterface;
 import models.dao.factory.FactoryDAO;
-import models.slots.TimeSlot;
 import models.track.Track;
 import models.track.TrackDao;
 import models.user.User;
 import utils.ManageSession;
 import utils.SessionManager;
 
-import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ManageController {
-    private static ManageController instance;
 
-    protected ManageController() {}
+    public ManageController() {}
 
-    public static ManageController getInstance() {
-        if (instance == null) {
-            instance = new ManageController();
-        }
-        return instance;
-    }
+    /*public void startManageSession(String trackName){
+        ManageSession manageSession = new ManageSession();
+        manageSession.setTrackName(trackName);
+        SessionManager.getInstance().createManageSession(manageSession);
+    }*/
 
     public boolean registeredTrack() { //controlla se l'owner ha un tracciato associato
         TrackDao trackDao = FactoryDAO.getInstance().createTrackDao();
@@ -39,18 +35,17 @@ public class ManageController {
             }
         }
         return false;
-        //qui dovrei gestire l'eccezione
     }
 
-    public List<BookingsDisplay> getBookings(String trackName) {
-        List<BookingsDisplay> bookingBeans = new ArrayList<>();
-
+    public List<BookingsDisplayBean> getBookings() {
+        List<BookingsDisplayBean> bookingBeans = new ArrayList<>();
+        String trackName = SessionManager.getInstance().getManageSession().getTrackName();
         TrackDao trackDao = FactoryDAO.getInstance().createTrackDao();
         Track track = trackDao.getTrack(trackName);
 
         List<BookingInterface> bookings = track.allBookings();
         for (BookingInterface booking : bookings) {
-            BookingsDisplay bookingBean = new BookingsDisplay(booking.getSelectedDay());
+            BookingsDisplayBean bookingBean = new BookingsDisplayBean(booking.getSelectedDay());
             bookingBean.setPersonal(String.valueOf(booking.getPersonal()));
             bookingBean.setRental(String.valueOf(booking.getRental()));
             bookingBean.setShift(String.valueOf(booking.getShift()));
@@ -75,7 +70,7 @@ public class ManageController {
 
     public void saveShifts(ShiftsBean shifts) {
         String usr = SessionManager.getInstance().getLoggedUser().getUsername();
-        ManageSession manageSession = SessionManager.getInstance().getManageSession(usr);
+        ManageSession manageSession = SessionManager.getInstance().getManageSession();
         manageSession.setAvailableKarts(shifts.getAvailableKarts());
         manageSession.setOpening(shifts.getOpeningHour());
         manageSession.setClosing(shifts.getClosingHour());
@@ -85,7 +80,7 @@ public class ManageController {
     public void saveTrack(CostBean costBean){
         Track newTrack = new Track();
         String usr = SessionManager.getInstance().getLoggedUser().getUsername();
-        ManageSession ms = SessionManager.getInstance().getManageSession(usr);
+        ManageSession ms = SessionManager.getInstance().getManageSession();
         newTrack.setOwner(ms.getOwner());
         newTrack.setShiftDuration(ms.getDuration());
         newTrack.setOpeningHour(ms.getOpening());
@@ -101,13 +96,15 @@ public class ManageController {
         trackDao.insertTrack(newTrack);
     }
 
-    public InfoBean getTrackInfo(){
+    public TrackProfileBean getTrackInfo(){
         TrackDao trackDao = FactoryDAO.getInstance().createTrackDao();
         User owner = SessionManager.getInstance().getLoggedUser();
         List<Track> tracks = trackDao.getAllTracks();
         for (Track track : tracks) {
             if (track.getOwner().equals(owner)) {
-                return new InfoBean(track.getImage(), track.getName());
+                ManageSession mS = new ManageSession();
+                mS.setTrackName(track.getName());
+                return new TrackProfileBean(track.getImage(), track.getName());
             }
         }
         return null;

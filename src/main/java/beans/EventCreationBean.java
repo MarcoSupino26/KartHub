@@ -3,7 +3,7 @@ package beans;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-public class EventBeanCreation {
+public class EventCreationBean {
     private String name;
     private String type;
     private double price;
@@ -12,7 +12,7 @@ public class EventBeanCreation {
     private int availableTickets;
     private String track;
 
-    public EventBeanCreation(String name) {
+    public EventCreationBean(String name) {
         this.name = name;
     }
 

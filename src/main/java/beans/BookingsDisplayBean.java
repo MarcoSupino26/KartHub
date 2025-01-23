@@ -1,11 +1,8 @@
 package beans;
 
-import javafx.scene.layout.VBox;
-
 import java.time.LocalDate;
-import java.util.List;
 
-public class BookingsDisplay{
+public class BookingsDisplayBean {
     private String description;
     private final LocalDate date;
     private String shift;
@@ -14,7 +11,7 @@ public class BookingsDisplay{
     private String user;
     private String cost;
 
-    public BookingsDisplay(LocalDate selectedDay){
+    public BookingsDisplayBean(LocalDate selectedDay){
         this.date = selectedDay;
     }
 

@@ -15,6 +15,8 @@ public class BookingSession {
         this.bookedSlots = 0;
     }
 
+    public void setTrack(){this.track = new Track();}
+
     public Track getTrack() {
         return track;
     }

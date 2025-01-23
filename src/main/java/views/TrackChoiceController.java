@@ -16,7 +16,7 @@ import javafx.fxml.FXML;
 
 import java.util.List;
 
-public class ChoiceController {
+public class TrackChoiceController {
 
     @FXML
     private ScrollPane scrollPane;
@@ -28,6 +28,7 @@ public class ChoiceController {
         tracksContainer.setStyle("-fx-background-color: #000000; -fx-padding: 10px");
         tracksContainer.setPrefWidth(500);
         tracksContainer.setPrefHeight(100);
+
         BookManager bookManager = new BookManager();
         profiles = bookManager.getTracks();
         for (DisplayBean displayBean : profiles) {
@@ -40,8 +41,8 @@ public class ChoiceController {
         HBox trackProfile = new HBox();
         trackProfile.setPrefWidth(500);
         trackProfile.setPrefHeight(100);
-        trackProfile.setStyle("-fx-background-color: #000000; -fx-padding: 10px; -fx-border-radius: 10px;");
-        trackProfile.setSpacing(20);
+        trackProfile.setStyle("-fx-background-color: #000000; -fx-padding: 10px; -fx-border-radius: 10px; -fx-border-color: #c5151d");
+        trackProfile.setSpacing(10);
         trackProfile.setAlignment(Pos.CENTER_LEFT);
 
         ImageView trackPic = new ImageView(display.getImage());
@@ -49,45 +50,34 @@ public class ChoiceController {
         trackPic.setFitHeight(100);
         trackPic.setPreserveRatio(true);
 
-        Text name = customize(new Text(display.getName()));
-        Text description = customize(new Text(display.getDescription()));
+        VBox trackDetails = new VBox(10);
+        trackDetails.setStyle("-fx-background-color: #000000; -fx-padding: 5; -fx-border-radius: 10;");
+        trackDetails.setPrefWidth(500);
+        trackDetails.setPrefHeight(100);
 
-        Button selectTrack = new Button("Select Track");
+        Text name = new Text(display.getName());
+        name.setFont(Font.font("Futura-Medium", 22));
+        name.setFill(Color.WHITE);
+        Text description = new Text(display.getDescription());
+        description.setFont(Font.font("Futura-Medium", 16));
+        description.setFill(Color.LIGHTGRAY);
+        description.setWrappingWidth(350);
+        trackDetails.getChildren().addAll(name, description);
+
+        Button selectTrack = new Button("Seleziona");
         selectTrack.setStyle("-fx-background-color: #c5151d; -fx-text-fill: white;");
-        selectTrack.setFont(Font.font("Futura-Medium"));
-        selectTrack.setOnAction(event->onSelectClicked(event, name.getText()));
+        selectTrack.setFont(Font.font("Futura-Medium", 18));
+        selectTrack.setOnAction(event->onSelectClicked(event, name.getText()));;
 
-        trackProfile.getChildren().addAll(trackPic, description, selectTrack);
+        trackProfile.getChildren().addAll(trackPic, trackDetails, selectTrack);
         tracksContainer.getChildren().add(trackProfile);
-    }
-
-    public Text customize(Text text){
-        text.setFont(Font.font("Futura-Medium", 22));
-        text.setFill(Color.WHITE);
-        return text;
-    }
-
-    @FXML
-    public void switchToHome(){
-        SceneManager.changeScene("/main.fxml");
-    }
-
-    @FXML
-    public void logout(){
-        SessionManager.getInstance().freeSession();
-        SceneManager.changeScene("/main.fxml");
-    }
-
-    @FXML
-    public void switchToEventi(){
-        SceneManager.changeScene("/eventi.fxml");
     }
 
     @FXML
     public void onSelectClicked(ActionEvent event, String name) {
         BookManager bookManager = new BookManager();
         bookManager.setBookingSession(name);
-        SceneManager.changeScene("/prenota.fxml");
+        SceneManager.changeScene("/book.fxml");
     }
 
 }

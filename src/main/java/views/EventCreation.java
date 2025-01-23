@@ -1,6 +1,6 @@
 package views;
 
-import beans.EventBeanCreation;
+import beans.EventCreationBean;
 import controllers.EventManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.DatePicker;
@@ -9,7 +9,6 @@ import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
 import utils.SessionManager;
 
-import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class EventCreation {
@@ -35,20 +34,15 @@ public class EventCreation {
 
     @FXML
     public void createEvent() {
-        EventBeanCreation bean = new EventBeanCreation(eventName.getText());
+        EventCreationBean bean = new EventCreationBean(eventName.getText());
         bean.setDate(eventDate.getValue());
         bean.setPrice(Double.parseDouble(ticketCost.getText()));
         bean.setType(eventType.getText());
-        bean.setAvailableTickets((Integer) tickets.getValue());
+        bean.setAvailableTickets(tickets.getValue());
         bean.setTime(LocalTime.parse(eventTime.getText()));
-        bean.setTrack(SessionManager.getInstance().getEventSession().getTrackname());
-        new EventManager().saveEvent(bean);
-        SessionManager.getInstance().freeEventSession();
-        SceneManager.changeScene("/main.fxml");
-    }
 
-    @FXML
-    public void switchToHome(){
+        new EventManager().saveEvent(bean);
+
         SceneManager.changeScene("/main.fxml");
     }
 }

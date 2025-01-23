@@ -1,9 +1,7 @@
 package controllers;
 
-import beans.DateBean;
-import beans.OptionsBean;
-import beans.DisplayBean;
-import beans.SlotsBean;
+import beans.*;
+import javafx.scene.image.Image;
 import models.booking.*;
 import models.dao.factory.FactoryDAO;
 import models.slots.TimeSlot;
@@ -19,6 +17,11 @@ import java.util.List;
 
 public class BookManager {
 
+    public boolean isSessionOpen(){
+        if(SessionManager.getInstance().getBookingSession()!=null) return true;
+        else return false;
+    }
+
     public List<DisplayBean> getTracks(){
         List<DisplayBean> disBeans = new ArrayList<DisplayBean>();
         List<Track> tracks;
@@ -31,8 +34,15 @@ public class BookManager {
             disBeans.add(displayBean);
         }
         return disBeans;
-
     }
+
+    public TrackProfileBean getSelectedTrack(){
+        BookingSession bookingSession = SessionManager.getInstance().getBookingSession();
+        String selectedTrack = bookingSession.getTrack().getName();
+        Image trackPic = bookingSession.getTrack().getImage();
+        return new TrackProfileBean(trackPic, selectedTrack);
+    }
+
     public void setBookingSession(String trackName) {
         List<Track> tracks;
         tracks = FactoryDAO.getInstance().createTrackDao().getAllTracks();
@@ -40,12 +50,12 @@ public class BookManager {
             if (track.getName().equals(trackName)) {
                 BookingSession bookingSession = new BookingSession(track);
                 String logged = SessionManager.getInstance().getLoggedUser().getUsername();
-                SessionManager.getInstance().createBookingSession(bookingSession, logged);
+                SessionManager.getInstance().createBookingSession(bookingSession);
             }
         }
     }
     public void generateSlots(DateBean dateBean){
-        BookingSession session = SessionManager.getInstance().getBookingSession(SessionManager.getInstance().getLoggedUser().getUsername());
+        BookingSession session = SessionManager.getInstance().getBookingSession();
         Track track = session.getTrack();
         LocalDate date = dateBean.getDate();
 
@@ -74,17 +84,23 @@ public class BookManager {
         session.getTrack().addTimeSlots(timeSlots, date);
     }
 
-    public List<TimeSlot> getCombinedSlots(List<TimeSlot> timeSlots, boolean race, boolean quali, boolean fp){
+    public SlotsBean getSlots(LocalDate day){
+        BookingSession session = SessionManager.getInstance().getBookingSession();
+        SlotsBean bean = new SlotsBean(session.getTrack().getTimeSlots(day));
+        return bean;
+    }
+
+    public SlotsBean getCombinedSlots(CombineSlotsBean bean){
         int requiredSlots = 0;
-        List<TimeSlot> generatedSlots = timeSlots;
+        List<TimeSlot> generatedSlots = bean.getGeneratedSlots();
         List<TimeSlot> combinedSlots = new ArrayList<>();
         String usr = SessionManager.getInstance().getLoggedUser().getUsername();
 
-        if(race) requiredSlots += 2;
-        if(quali) requiredSlots += 1;
-        if(fp) requiredSlots += 1;
+        if(bean.isRaceChecked()) requiredSlots += 2;
+        if(bean.isQualiChecked()) requiredSlots += 1;
+        if(bean.isFpChecked()) requiredSlots += 1;
 
-        SessionManager.getInstance().getBookingSession(usr).setBookedSlots(requiredSlots);
+        SessionManager.getInstance().getBookingSession().setBookedSlots(requiredSlots);
 
         for (int i = 0; i <= generatedSlots.size() - requiredSlots; i++) {
             boolean allAvailable = true;
@@ -100,13 +116,12 @@ public class BookManager {
                 combinedSlots.add(new TimeSlot(start.getStartTime(), end.getEndTime(), true));
             }
         }
-        return combinedSlots;
+        return new SlotsBean(combinedSlots);
     }
 
     public void saveBooking(OptionsBean options){
         BookingInterface booking = new ConcreteBooking();
-        String logged = SessionManager.getInstance().getLoggedUser().getUsername();
-        BookingSession bookingSession = SessionManager.getInstance().getBookingSession(logged);
+        BookingSession bookingSession = SessionManager.getInstance().getBookingSession();
         Track track = bookingSession.getTrack();
         int bookedSlots = bookingSession.getBookedSlots();
         LocalDate selectedDay = options.getDate();

@@ -1,5 +1,7 @@
 package views;
 
+import beans.PaymentBean;
+import controllers.EventManager;
 import controllers.PaymentManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -10,6 +12,8 @@ import utils.EventSession;
 import utils.SessionManager;
 
 import java.awt.*;
+
+import static java.lang.Integer.parseInt;
 
 public class PaymentController {
     @FXML
@@ -24,38 +28,25 @@ public class PaymentController {
     private TextField expiryDate;
     @FXML
     private TextField cvv;
-    @FXML
-    private Button events;
-    @FXML
-    private Button book;
 
     @FXML
     public void initialize() {
-        EventSession eventSession = SessionManager.getInstance().getEventSession();
-        if(eventSession != null) {
-            events.setStyle("-fx-underline: true");
-            int amount = eventSession.getShoppedTickets();
-            amount = amount * eventSession.getShoppedTickets();
-            cost.setText(String.valueOf(amount));
-        }else {
-            book.setStyle("-fx-underline: true");
-        }
-    }
-
-    @FXML
-    public void switchToHome() {
-        SceneManager.changeScene("/main.fxml");
+        EventManager eventManager = new EventManager();
+        double amount = eventManager.getTicketCost();
+        amount = amount * eventManager.getSoldTickets();
+        cost.setText(String.format("€%.2f",amount));
     }
 
     @FXML
     public void makePayment() {
         PaymentManager paymentManager = new PaymentManager();
-        String cardName = name.getText();
-        String cardSurname = surname.getText();
-        String card = cardNumber.getText();
-        String expirationDate = expiryDate.getText();
-        String securityCode = cvv.getText();
-        paymentManager.processPayment(cardName, cardSurname, card, expirationDate, securityCode);
+        PaymentBean paymentBean = new PaymentBean();
+        paymentBean.setCardName(name.getText());
+        paymentBean.setCardSurname(surname.getText());
+        paymentBean.setCardNumber(cardNumber.getText());
+        paymentBean.setExpiryMonth(expiryDate.getText());
+        paymentBean.setSecurityCode(cvv.getText());
+        paymentManager.processPayment(paymentBean);
         SceneManager.changeScene("/paymentdone.fxml");
     }
 }

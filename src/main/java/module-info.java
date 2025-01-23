@@ -8,5 +8,7 @@ module karthub{
 
     exports views;
     exports start;
+    exports views.topbar;
+    opens views.topbar to javafx.fxml;
     opens views to javafx.fxml;
 }

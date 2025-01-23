@@ -36,8 +36,8 @@ public class SessionManager {
         this.loggedUser = null;
     }
 
-    public void createBookingSession(BookingSession bookingSession, String username){
-        bookingSessions.put(username, bookingSession);
+    public void createBookingSession(BookingSession bookingSession){
+        bookingSessions.put(this.loggedUser.getUsername(), bookingSession);
     }
 
     public void createManageSession(ManageSession manageSession){
@@ -52,11 +52,11 @@ public class SessionManager {
         manageSessions.remove(loggedUser.getUsername());
     }
 
-    public BookingSession getBookingSession(String username){
-        return bookingSessions.get(username);
+    public BookingSession getBookingSession(){
+        return bookingSessions.get(this.loggedUser.getUsername());
     }
 
-    public ManageSession getManageSession(String username){return manageSessions.get(username);}
+    public ManageSession getManageSession(){return manageSessions.get(this.loggedUser.getUsername());}
 
     public void createEventSession(EventSession eventSession){
         eventSessions.put(this.loggedUser.getUsername(), eventSession);

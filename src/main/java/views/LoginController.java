@@ -30,12 +30,6 @@ public class LoginController {
             SceneManager.changeScene("/login.fxml");
         }
     }
-
-    @FXML
-    public void switchToHome(MouseEvent event){
-        SceneManager.changeScene("/main.fxml");
-    }
-
     @FXML public void switchToSign(Event event){
         SceneManager.changeScene("/sign.fxml");
     }

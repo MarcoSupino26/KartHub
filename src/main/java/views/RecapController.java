@@ -3,6 +3,7 @@ package views;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.text.Text;
 import models.booking.BookingInterface;
 import utils.BookingSession;
@@ -28,40 +29,20 @@ public class RecapController {
 
     public void initialize() {
         String usr = SessionManager.getInstance().getLoggedUser().getUsername();
-        BookingSession bS = SessionManager.getInstance().getBookingSession(usr);
+        BookingSession bS = SessionManager.getInstance().getBookingSession();
         BookingInterface booking = bS.getBooking();
         usrname.setText(usr + ", ecco la tua prenotazione");
         rental.setText(String.valueOf(booking.getRental()));
         personal.setText(String.valueOf(booking.getPersonal()));
-        cost.setText(String.valueOf(booking.getCost()));
+        cost.setText(String.format("%.2f", booking.getCost()));
         id.setText(String.valueOf(booking.getId()));
         description.setText(booking.getDescription());
         trackName.setText(booking.getTrackName());
         shift.setText(booking.getShift());
         SessionManager.getInstance().freeBookingSession();
     }
-    @FXML
-    public void switchToEventi(){
-        SessionManager.getInstance().freeBookingSession();
-        SceneManager.changeScene("/eventi.fxml");
-    }
 
-    @FXML
-    public void switchToHome(){
-        SessionManager.getInstance().freeBookingSession();
-        SceneManager.changeScene("/main.fxml");
-    }
-
-    @FXML
-    public void logout(Event event){
-        SessionManager.getInstance().freeBookingSession();
-        SessionManager.getInstance().freeSession();
-        SceneManager.changeScene("/main.fxml");
-    }
-
-    @FXML
     public void proceed(){
-        SessionManager.getInstance().freeBookingSession();
-        switchToHome();
+        SceneManager.changeScene("/main.fxml");
     }
 }
