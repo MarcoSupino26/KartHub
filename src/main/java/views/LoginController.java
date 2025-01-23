@@ -20,10 +20,8 @@ public class LoginController {
 
         AuthController authenticator = new AuthController();
         if(authenticator.authUser(logBean)){
-            System.out.println("Benvenuto " + logBean.getUsername());
             SceneManager.changeScene("/home.fxml");
         }else {
-            System.out.println("Login fallito");
             SceneManager.changeScene("/login.fxml");
         }
     }

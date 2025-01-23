@@ -7,7 +7,8 @@ public class PaymentBean {
     private String expiryMonth;
     private String securityCode;
 
-    public PaymentBean() {}
+    public PaymentBean() {//La new non ha bisogno di un parametro
+    }
 
     public String getCardName() {
         return cardName;

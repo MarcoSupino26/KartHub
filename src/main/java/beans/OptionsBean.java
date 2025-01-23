@@ -16,7 +16,7 @@ public class OptionsBean {
     private LocalDate selectedDay;
 
 
-    public OptionsBean() {
+    public OptionsBean() {//La new non ha bisogno di un parametro
     }
 
     public void setRace(boolean race) {

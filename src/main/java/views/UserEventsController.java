@@ -52,19 +52,20 @@ public class UserEventsController {
         eventDetails.setPrefHeight(100);
 
         Text eventName = new Text(bean.getEvent());
-        eventName.setFont(Font.font("Futura-Medium", 22));
+        String fontName = "Futura-Medium";
+        eventName.setFont(Font.font(fontName, 22));
         eventName.setFill(Color.WHITE);
-        Text eventType = customize(new Text(bean.getType()));
-        Text trackName = customize(new Text(bean.getPlace()));
-        Text eventDate = customize(new Text(String.valueOf(bean.getEventDay())));
-        Text eventTime = customize(new Text(String.valueOf(bean.getEventStart())));
-        Text tickets = customize(new Text("Biglietti rimasti: " + bean.getRemainingTickets()));
+        Text eventType = customize(new Text(bean.getType()), fontName);
+        Text trackName = customize(new Text(bean.getPlace()), fontName);
+        Text eventDate = customize(new Text(String.valueOf(bean.getEventDay())), fontName);
+        Text eventTime = customize(new Text(String.valueOf(bean.getEventStart())), fontName);
+        Text tickets = customize(new Text("Biglietti rimasti: " + bean.getRemainingTickets()), fontName);
         String ticketCost = String.format("%.2f",bean.getTicketPrice());
-        Text cost = customize(new Text("Costo: €" + ticketCost));
+        Text cost = customize(new Text("Costo: €" + ticketCost), fontName);
 
         Button buyTicket = new Button("Compra");
         buyTicket.setStyle("-fx-background-color: #c5151d; -fx-text-fill: white;");
-        buyTicket.setFont(Font.font("Futura-Medium", 18));
+            buyTicket.setFont(Font.font(fontName, 18));
         buyTicket.setOnAction(event->ticketShop(event, bean));
 
         eventDetails.getChildren().addAll(eventName, eventType, trackName, eventDate, eventTime, tickets, cost);
@@ -77,8 +78,8 @@ public class UserEventsController {
         eventsContainer.requestLayout();
     }
 
-    public Text customize(Text text) {
-        text.setFont(Font.font("Futura-Medium", 16));
+    public Text customize(Text text, String fontName) {
+        text.setFont(Font.font(fontName, 16));
         text.setFill(Color.LIGHTGRAY);
         return text;
     }

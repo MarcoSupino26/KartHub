@@ -173,7 +173,6 @@ public class BookManager {
         track.addBooking(booking);
         BookingDao bookDao = FactoryDAO.getInstance().createBookingDao();
         bookDao.addBooking(booking);
-        System.out.println("Booking " + booking.getId() + " saved");
 
         bookingSession.setBooking(booking);
         double startTime = options.getStartTime();

@@ -14,7 +14,8 @@ import java.util.List;
 
 public class ManageController {
 
-    public ManageController() {}
+    public ManageController() {//La new non ha bisogno di un parametro
+    }
 
     public boolean registeredTrack() { //controlla se l'owner ha un tracciato associato
         TrackDao trackDao = FactoryDAO.getInstance().createTrackDao();

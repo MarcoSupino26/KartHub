@@ -5,7 +5,8 @@ public class LoginBean {
     private String password;
     private String type;
 
-    public LoginBean(){}
+    public LoginBean(){//La new non ha bisogno di un parametro
+    }
 
 
     public String getUsername() {

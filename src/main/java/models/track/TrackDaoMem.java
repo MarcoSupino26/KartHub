@@ -88,8 +88,6 @@ public class TrackDaoMem extends TrackDao {
         String name = track.getName();
         if(!tracks.containsKey(name)){
             tracks.put(track.getName(), track);
-        }else {
-            System.out.println("Il tracciato " + name + " è già esistente!");
         }
     }
 

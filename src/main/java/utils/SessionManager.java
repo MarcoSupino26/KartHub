@@ -7,9 +7,9 @@ import java.util.HashMap;
 public class SessionManager {
     private static SessionManager instance;
     private User loggedUser;
-    private static HashMap<String, BookingSession> bookingSessions;
-    private static HashMap<String, ManageSession> manageSessions;
-    private static HashMap<String, EventSession> eventSessions;
+    private HashMap<String, BookingSession> bookingSessions;
+    private HashMap<String, ManageSession> manageSessions;
+    private HashMap<String, EventSession> eventSessions;
 
     protected SessionManager(){
         bookingSessions = new HashMap<>();

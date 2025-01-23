@@ -7,6 +7,9 @@ public class DisplayBean {
     private String name;
     private String description;
 
+    public DisplayBean(){//La new non ha bisogno di un parametro
+    }
+
     public Image getImage() {
         return image;
     }

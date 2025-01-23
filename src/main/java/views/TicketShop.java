@@ -49,13 +49,12 @@ public class TicketShop {
     @FXML
     public void pay(){
         int selectedTickets = ticket.getValue();
-        System.out.println("Stai acquistando " + ticket.getValue() + "biglietti");
         new EventManager().setSoldTickets(selectedTickets);
         SceneManager.changeScene("/pay.fxml");
     }
 
     @FXML
     public double updatePrice(int selectedTickets, double price) {
-        return price * (double) selectedTickets;
+        return price * selectedTickets;
     }
 }

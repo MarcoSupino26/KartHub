@@ -54,7 +54,7 @@ public class TrackEventController {
         Text eventName = new Text(trackEvent.getTrackEventName());
         eventName.setFont(Font.font("Futura-Medium", 22));
         eventName.setFill(Color.WHITE);
-        Text tickets = customize(new Text(String.format("Biglietti rimasti:" + trackEvent.getEventTickets())));
+        Text tickets = customize(new Text(String.format("Biglietti rimasti:%d", trackEvent.getEventTickets())));
         Text eventDate = customize(new Text(String.valueOf(trackEvent.getDay())));
         Text eventTime = customize(new Text(String.valueOf(trackEvent.getStartHour())));
 

@@ -9,7 +9,8 @@ import java.io.IOException;
 public class SceneManager {
     private static Stage initialStage;
 
-    public SceneManager(){}
+    public SceneManager(){//la new non richiede alcun parametro
+    }
 
     //Inizializzazione riferimento allo stage principale
     public static void setInitialStage(Stage stage) {
@@ -27,18 +28,6 @@ public class SceneManager {
             initialStage.show();
         } catch (IOException e) {
             e.printStackTrace();
-            System.err.println("Caricamento di" + fxmlPath + "fallito");
         }
     }
-
-    /*public static <T> T getController(String fxmlPath){
-        try{
-            FXMLLoader loader = new FXMLLoader(SceneManager.class.getResource(fxmlPath));
-            loader.load();
-            return loader.getController();
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Caricamento di" + fxmlPath + "fallito");
-        }
-    }*/
 }

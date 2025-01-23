@@ -17,7 +17,8 @@ import java.util.List;
 
 public class EventManager {
 
-    public EventManager() {}
+    public EventManager() {//La new non ha bisogno di un parametro
+    }
 
 
     public void startEventSession() {

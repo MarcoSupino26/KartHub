@@ -9,7 +9,8 @@ public class TrackEventBean {
     private LocalDate day;
     private LocalTime startHour;
 
-    public TrackEventBean() {}
+    public TrackEventBean() {//la new non ha bisogno di un parametro
+    }
 
     public String getTrackEventName() {
         return trackEventName;

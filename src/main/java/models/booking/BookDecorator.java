@@ -7,7 +7,7 @@ import java.time.LocalDate;
 public abstract class BookDecorator implements BookingInterface {
     protected BookingInterface booking;
 
-    public BookDecorator(BookingInterface booking) {this.booking = booking;}
+    protected BookDecorator(BookingInterface booking) {this.booking = booking;}
 
     @Override
     public double getCost() {return booking.getCost();}

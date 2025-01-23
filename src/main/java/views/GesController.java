@@ -34,10 +34,11 @@ public class GesController {
 
     @FXML
     public void initialize() {
+        String style = "-fx-text-fill: white; -fx-background-color: transparent;";
         User logged = SessionManager.getInstance().getLoggedUser();
-        trackName.setStyle("-fx-text-fill: white; -fx-background-color: transparent;");
-        description.setStyle("-fx-text-fill: white; -fx-background-color: transparent;");
-        address.setStyle("-fx-text-fill: white; -fx-background-color: transparent;");
+        trackName.setStyle(style);
+        description.setStyle(style);
+        address.setStyle(style);
         registration.setVisible(false);
         profile.setText(logged.getUsername() + ",");
         absentTrack.setVisible(true);

@@ -24,8 +24,7 @@ public class TrackManager {
     }
 
     @FXML
-    public void manageTrack(){
-        System.out.println("Working on it");
+    public void manageTrack(){ //dummy
     }
 
     @FXML

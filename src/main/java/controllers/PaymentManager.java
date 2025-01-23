@@ -4,7 +4,7 @@ import beans.PaymentBean;
 
 public class PaymentManager {
 
-    public PaymentManager() {
+    public PaymentManager() {//La new non ha bisogno di un parametro
     }
 
     public boolean processPayment(PaymentBean payment) {

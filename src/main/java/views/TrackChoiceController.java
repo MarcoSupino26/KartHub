@@ -55,17 +55,18 @@ public class TrackChoiceController {
         trackDetails.setPrefHeight(100);
 
         Text name = new Text(display.getName());
-        name.setFont(Font.font("Futura-Medium", 22));
+        String fontName = "Futura-Medium";
+        name.setFont(Font.font(fontName, 22));
         name.setFill(Color.WHITE);
         Text description = new Text(display.getDescription());
-        description.setFont(Font.font("Futura-Medium", 16));
+        description.setFont(Font.font(fontName, 16));
         description.setFill(Color.LIGHTGRAY);
         description.setWrappingWidth(350);
         trackDetails.getChildren().addAll(name, description);
 
         Button selectTrack = new Button("Seleziona");
         selectTrack.setStyle("-fx-background-color: #c5151d; -fx-text-fill: white;");
-        selectTrack.setFont(Font.font("Futura-Medium", 18));
+        selectTrack.setFont(Font.font(fontName, 18));
         selectTrack.setOnAction(event->onSelectClicked(event, name.getText()));
 
         trackProfile.getChildren().addAll(trackPic, trackDetails, selectTrack);

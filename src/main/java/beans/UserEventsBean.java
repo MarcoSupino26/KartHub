@@ -12,7 +12,8 @@ public class UserEventsBean {
     private int remainingTickets;
     private double ticketPrice;
 
-    public UserEventsBean(){}
+    public UserEventsBean(){//La new non ha bisogno di un parametro
+    }
 
     public String getEvent() {
         return event;

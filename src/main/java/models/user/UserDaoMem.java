@@ -8,10 +8,11 @@ public class UserDaoMem extends UserDao {
 
     protected UserDaoMem(){
         users = new HashMap<>();
-        users.put("Marco", new User("Marco", "psw1", "Proprietario"));
-        users.put("Emanuele", new User("Emanuele", "psw2", "Proprietario"));
-        users.put("Simone", new User("Simone", "psw3", "Proprietario"));
-        users.put("Edoardo", new User("Edoardo", "psw4", "Utente"));
+        String own = "Proprietario";
+        users.put("Marco", new User("Marco", "psw1", own));
+        users.put("Emanuele", new User("Emanuele", "psw2", own));
+        users.put("Simone", new User("Simone", "psw3", own));
+        users.put("Edoardo", new User("Edoardo", "psw4", own));
     }
 
 
@@ -27,8 +28,6 @@ public class UserDaoMem extends UserDao {
     public void addUser(String username, User user){
         if(!users.containsKey(username)){
             users.put(username, user);
-        }else {
-            System.out.println("L'utente " + username + " è già esistente!");
         }
     }
 

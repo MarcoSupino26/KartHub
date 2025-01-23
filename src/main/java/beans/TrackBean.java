@@ -8,7 +8,7 @@ public class TrackBean {
     private String description;
     private String address;
 
-    public TrackBean() {
+    public TrackBean() {//La new non ha bisogno di un parametro
     }
 
     public String getName() {
