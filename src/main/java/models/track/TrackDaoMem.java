@@ -14,13 +14,19 @@ public class TrackDaoMem extends TrackDao {
         tracks = new HashMap<>();
 
         // Dati per il primo tracciato
+        String name = "name";
+        String description = "description";
+        String address = "address";
+        String availableKarts = "availableKarts";
+        String image = "image";
+        String owner = "owner";
         Map<String, Object> trackDetails1 = new HashMap<>();
-        trackDetails1.put("name", "Kartodromo Supox");
-        trackDetails1.put("description", "Prezzi stracciati e divertimento assicurato vi aspettano nel nostro tracciato!");
-        trackDetails1.put("address", "Via dei laghi, 2");
-        trackDetails1.put("availableKarts", 14);
-        trackDetails1.put("image", new Image("file:C:\\Users\\supin\\Desktop\\Università\\ISPW\\Interfacce\\tt racing.jpg"));
-        trackDetails1.put("owner", FactoryDAO.getInstance().createUserDao().getUser("Marco", "psw1"));
+        trackDetails1.put(name, "Kartodromo Supox");
+        trackDetails1.put(description, "Prezzi stracciati e divertimento assicurato vi aspettano nel nostro tracciato!");
+        trackDetails1.put(address, "Via dei laghi, 2");
+        trackDetails1.put(availableKarts, 14);
+        trackDetails1.put(image, new Image("file:C:\\Users\\supin\\Desktop\\Università\\ISPW\\Interfacce\\tt racing.jpg"));
+        trackDetails1.put(owner, FactoryDAO.getInstance().createUserDao().getUser("Marco", "psw1"));
 
         double[] timings1 = {10.00, 18.00, 15.00};
         Track demoTrack1 = saveDemoTrack(new Track(), trackDetails1, timings1);
@@ -29,12 +35,12 @@ public class TrackDaoMem extends TrackDao {
 
         // Dati per il secondo tracciato
         Map<String, Object> trackDetails2 = new HashMap<>();
-        trackDetails2.put("name", "Kartodromo da Leleh");
-        trackDetails2.put("description", "Un pomeriggio all'insegna del divertimento e in mezzo alla natura vi attendono!");
-        trackDetails2.put("address", "Via di Palestrina, 21");
-        trackDetails2.put("availableKarts", 12);
-        trackDetails2.put("image", new Image("file:C:\\Users\\supin\\Desktop\\Università\\ISPW\\Interfacce\\artena.jpg"));
-        trackDetails2.put("owner", FactoryDAO.getInstance().createUserDao().getUser("Emanuele", "psw2"));
+        trackDetails2.put(name, "Kartodromo da Leleh");
+        trackDetails2.put(description, "Un pomeriggio all'insegna del divertimento e in mezzo alla natura vi attendono!");
+        trackDetails2.put(address, "Via di Palestrina, 21");
+        trackDetails2.put(availableKarts, 12);
+        trackDetails2.put(image, new Image("file:C:\\Users\\supin\\Desktop\\Università\\ISPW\\Interfacce\\artena.jpg"));
+        trackDetails2.put(owner, FactoryDAO.getInstance().createUserDao().getUser("Emanuele", "psw2"));
 
         double[] timings2 = {11.00, 18.00, 20.00};
         Track demoTrack2 = saveDemoTrack(new Track(), trackDetails2, timings2);
@@ -43,12 +49,12 @@ public class TrackDaoMem extends TrackDao {
 
         // Dati per il terzo tracciato
         Map<String, Object> trackDetails3 = new HashMap<>();
-        trackDetails3.put("name", "Simon's Track");
-        trackDetails3.put("description", "Che fate? Non venite a divertirvi al nostro kartodromo? Beh, vi perdete molto!");
-        trackDetails3.put("address", "Via Rocca di Papa, 14");
-        trackDetails3.put("availableKarts", 15);
-        trackDetails3.put("image", new Image("file:C:\\Users\\supin\\Desktop\\Università\\ISPW\\Interfacce\\holykartroma.jpg"));
-        trackDetails3.put("owner", FactoryDAO.getInstance().createUserDao().getUser("Simone", "psw3"));
+        trackDetails3.put(name, "Simon's Track");
+        trackDetails3.put(description, "Che fate? Non venite a divertirvi al nostro kartodromo? Beh, vi perdete molto!");
+        trackDetails3.put(address, "Via Rocca di Papa, 14");
+        trackDetails3.put(availableKarts, 15);
+        trackDetails3.put(image, new Image("file:C:\\Users\\supin\\Desktop\\Università\\ISPW\\Interfacce\\pomezia.jpg"));
+        trackDetails3.put(owner, FactoryDAO.getInstance().createUserDao().getUser("Simone", "psw3"));
 
         double[] timings3 = {12.00, 17.00, 10.00};
         Track demoTrack3 = saveDemoTrack(new Track(), trackDetails3, timings3);

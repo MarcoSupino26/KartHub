@@ -107,6 +107,52 @@ public class BookingController {
 
     @FXML
     public void updateTimeSlotsListView2(List<SlotBean> slotsList, BookManager bM) {
+        slotsList = updateCombinedSlots(slotsList, bM);
+        populateSlotsListView(slotsList);
+        setupSlotsCellFactory();
+    }
+
+
+    private List<SlotBean> updateCombinedSlots(List<SlotBean> slotsList, BookManager bM) {
+        if (race.isSelected()) {
+            boolean qualiOption = quali.isSelected();
+            boolean fpOption = fp.isSelected();
+            CombinedSlotsBean combinedSlotsBean = new CombinedSlotsBean(slotsList, true, qualiOption, fpOption);
+            slotsList = bM.getCombinedSlots2(combinedSlotsBean);
+        }
+        return slotsList;
+    }
+
+    private void populateSlotsListView(List<SlotBean> slotsList) {
+        slots.getItems().clear();
+        for (SlotBean slot : slotsList) {
+            if (slot.isFree()) {
+                String formattedSlot = String.format("%.2f - %.2f", slot.getSlotStart(), slot.getSlotEnd()).replace(",", ".");
+                slots.getItems().add(formattedSlot);
+            }
+        }
+    }
+
+    private void setupSlotsCellFactory() {
+        slots.setCellFactory(comboBoxListView -> new ListCell<>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                setText(empty || item == null ? null : item);
+            }
+        });
+
+        slots.setButtonCell(new ListCell<>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                setText(empty || item == null ? null : item);
+            }
+        });
+    }
+
+    /*@FXML
+    public void updateTimeSlotsListView2(List<SlotBean> slotsList, BookManager bM) {
         boolean fpOption = false;
         boolean qualiOption = false;
         boolean raceOption = true;
@@ -153,7 +199,7 @@ public class BookingController {
                 }
             }
         });
-    }
+    }*/
 
     @FXML
     public void bookTrack(Event event){

@@ -12,7 +12,7 @@ public class UserDaoMem extends UserDao {
         users.put("Marco", new User("Marco", "psw1", own));
         users.put("Emanuele", new User("Emanuele", "psw2", own));
         users.put("Simone", new User("Simone", "psw3", own));
-        users.put("Edoardo", new User("Edoardo", "psw4", own));
+        users.put("Edoardo", new User("Edoardo", "psw4", "Cliente"));
     }
 
 
