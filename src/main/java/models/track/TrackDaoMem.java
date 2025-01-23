@@ -4,9 +4,7 @@ import javafx.scene.image.Image;
 import models.dao.factory.FactoryDAO;
 import models.user.User;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class TrackDaoMem extends TrackDao {
     private final HashMap<String, Track> tracks;
@@ -14,67 +12,63 @@ public class TrackDaoMem extends TrackDao {
 
     protected TrackDaoMem() {
         tracks = new HashMap<>();
-        double opHour = 10.00;
-        double clHour = 18.00;
-        double duration = 15.00;
 
-        Track demoTrack1 = new Track();
-        String desc1 = "Prezzi stracciati e divertimento assicurato vi aspettano nel nostro tracciato!";
-        Image img1 = new Image("file:C:\\Users\\supin\\Desktop\\Università\\ISPW\\Interfacce\\tt racing.jpg");
-        User owner1 = FactoryDAO.getInstance().createUserDao().getUser("Marco", "psw1");
-        String name = "Kartodromo Supox";
-        demoTrack1 = saveDemoTrack(demoTrack1, name, desc1, "Via dei laghi, 2", 14, img1, owner1, opHour, clHour, duration);
-        List<Double> costs1 = new ArrayList<>();
-        for (int i = 0; i < 6; i++) {
-            costs1.add(10.00);
-        }
-        demoTrack1.setCost(costs1);
+        // Dati per il primo tracciato
+        Map<String, Object> trackDetails1 = new HashMap<>();
+        trackDetails1.put("name", "Kartodromo Supox");
+        trackDetails1.put("description", "Prezzi stracciati e divertimento assicurato vi aspettano nel nostro tracciato!");
+        trackDetails1.put("address", "Via dei laghi, 2");
+        trackDetails1.put("availableKarts", 14);
+        trackDetails1.put("image", new Image("file:C:\\Users\\supin\\Desktop\\Università\\ISPW\\Interfacce\\tt racing.jpg"));
+        trackDetails1.put("owner", FactoryDAO.getInstance().createUserDao().getUser("Marco", "psw1"));
+
+        double[] timings1 = {10.00, 18.00, 15.00};
+        Track demoTrack1 = saveDemoTrack(new Track(), trackDetails1, timings1);
+        demoTrack1.setCost(new ArrayList<>(Collections.nCopies(6, 10.00)));
         tracks.put(demoTrack1.getName(), demoTrack1);
 
-        Track demoTrack2 = new Track();
-        String desc2 = "Un pomeriggio all'insegna del divertimento e in mezzo alla natura vi attendono!";
-        Image img2 = new Image("file:C:\\Users\\supin\\Desktop\\Università\\ISPW\\Interfacce\\artena.jpg");
-        User owner2 = FactoryDAO.getInstance().createUserDao().getUser("Emanuele", "psw2");
-        String name2 = "Kartodromo da Leleh";
-        opHour = 11.00;
-        duration = 20.00;
-        demoTrack2 = saveDemoTrack(demoTrack2, name2, desc2, "Via di Palestrina, 21", 12, img2, owner2, opHour, clHour, duration);
-        List<Double> costs2 = new ArrayList<>();
-        for (int i = 0; i < 6; i++) {
-            costs2.add(15.00);
-        }
-        demoTrack2.setCost(costs2);
+        // Dati per il secondo tracciato
+        Map<String, Object> trackDetails2 = new HashMap<>();
+        trackDetails2.put("name", "Kartodromo da Leleh");
+        trackDetails2.put("description", "Un pomeriggio all'insegna del divertimento e in mezzo alla natura vi attendono!");
+        trackDetails2.put("address", "Via di Palestrina, 21");
+        trackDetails2.put("availableKarts", 12);
+        trackDetails2.put("image", new Image("file:C:\\Users\\supin\\Desktop\\Università\\ISPW\\Interfacce\\artena.jpg"));
+        trackDetails2.put("owner", FactoryDAO.getInstance().createUserDao().getUser("Emanuele", "psw2"));
+
+        double[] timings2 = {11.00, 18.00, 20.00};
+        Track demoTrack2 = saveDemoTrack(new Track(), trackDetails2, timings2);
+        demoTrack2.setCost(new ArrayList<>(Collections.nCopies(6, 15.00)));
         tracks.put(demoTrack2.getName(), demoTrack2);
 
-        Track demoTrack3 = new Track();
-        String desc3 = "Che fate? Non venite a divertirvi al nostro kartodromo? Beh, vi perdete molto!";
-        Image img3 = new Image("file:C:\\Users\\supin\\Desktop\\Università\\ISPW\\Interfacce\\holykartroma.jpg\"");
-        User owner3 = FactoryDAO.getInstance().createUserDao().getUser("Simone", "psw3");
-        String name3 = "Simon's Track";
-        opHour = 12.00;
-        clHour = 17.00;
-        duration = 10.00;
-        demoTrack3 = saveDemoTrack(demoTrack3, name3, desc3, "Via Rocca di Papa, 14", 15, img3, owner3, opHour, clHour, duration);
-        List<Double> costs3 = new ArrayList<>();
-        for (int i = 0; i < 6; i++) {
-            costs3.add(20.00);
-        }
-        demoTrack3.setCost(costs3);
+        // Dati per il terzo tracciato
+        Map<String, Object> trackDetails3 = new HashMap<>();
+        trackDetails3.put("name", "Simon's Track");
+        trackDetails3.put("description", "Che fate? Non venite a divertirvi al nostro kartodromo? Beh, vi perdete molto!");
+        trackDetails3.put("address", "Via Rocca di Papa, 14");
+        trackDetails3.put("availableKarts", 15);
+        trackDetails3.put("image", new Image("file:C:\\Users\\supin\\Desktop\\Università\\ISPW\\Interfacce\\holykartroma.jpg"));
+        trackDetails3.put("owner", FactoryDAO.getInstance().createUserDao().getUser("Simone", "psw3"));
+
+        double[] timings3 = {12.00, 17.00, 10.00};
+        Track demoTrack3 = saveDemoTrack(new Track(), trackDetails3, timings3);
+        demoTrack3.setCost(new ArrayList<>(Collections.nCopies(6, 20.00)));
         tracks.put(demoTrack3.getName(), demoTrack3);
     }
 
-    protected Track saveDemoTrack(Track demo, String name, String desc, String addr, int avKarts, Image image, User owner, double opHour, double clHour, double duration){
-        demo.setName(name);
-        demo.setDescription(desc);
-        demo.setAddress(addr);
-        demo.setAvailableKarts(avKarts);
-        demo.setImage(image);
-        demo.setOwner(owner);
-        demo.setOpeningHour(opHour);
-        demo.setClosingHour(clHour);
-        demo.setShiftDuration(duration);
+    protected Track saveDemoTrack(Track demo, Map<String, Object> trackDetails, double[] timings) {
+        demo.setName((String) trackDetails.get("name"));
+        demo.setDescription((String) trackDetails.get("description"));
+        demo.setAddress((String) trackDetails.get("address"));
+        demo.setAvailableKarts((int) trackDetails.get("availableKarts"));
+        demo.setImage((Image) trackDetails.get("image"));
+        demo.setOwner((User) trackDetails.get("owner"));
+        demo.setOpeningHour(timings[0]);
+        demo.setClosingHour(timings[1]);
+        demo.setShiftDuration(timings[2]);
         return demo;
     }
+
 
     public static TrackDaoMem getInstance() {
         if (instance == null) {

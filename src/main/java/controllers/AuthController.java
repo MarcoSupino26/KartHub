@@ -7,7 +7,8 @@ import models.user.User;
 
 public class AuthController {
 
-    public AuthController(){}
+    public AuthController(){//la new non richiede alcun parametro
+    }
 
     public boolean authUser(LoginBean logBean){
         UserDao userDAO = FactoryDAO.getInstance().createUserDao();

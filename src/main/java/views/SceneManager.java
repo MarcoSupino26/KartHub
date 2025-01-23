@@ -9,7 +9,7 @@ import java.io.IOException;
 public class SceneManager {
     private static Stage initialStage;
 
-    public SceneManager(){//la new non richiede alcun parametro
+    private SceneManager(){//la classe non deve essere istanzia
     }
 
     //Inizializzazione riferimento allo stage principale

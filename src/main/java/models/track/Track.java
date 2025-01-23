@@ -8,6 +8,7 @@ import models.user.User;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -46,11 +47,9 @@ public class Track {
     }
 
     public List<TimeSlot> getTimeSlots(LocalDate date) {
-        if(!timeSlots.containsKey(date)){
-            return null;
-        }
-        return timeSlots.get(date);
+        return timeSlots.getOrDefault(date, Collections.emptyList());
     }
+
 
     public void addTimeSlots(List<TimeSlot> timeSlots, LocalDate date) {
         this.timeSlots.put(date, timeSlots);
