@@ -1,7 +1,6 @@
 package views;
 
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
@@ -31,8 +30,8 @@ public class SceneManager {
             System.err.println("Caricamento di" + fxmlPath + "fallito");
         }
     }
-    //Getter controller schermata
-    public static <T> T getController(String fxmlPath){
+
+    /*public static <T> T getController(String fxmlPath){
         try{
             FXMLLoader loader = new FXMLLoader(SceneManager.class.getResource(fxmlPath));
             loader.load();
@@ -41,5 +40,5 @@ public class SceneManager {
             e.printStackTrace();
             throw new RuntimeException("Caricamento di" + fxmlPath + "fallito");
         }
-    }
+    }*/
 }

@@ -1,19 +1,12 @@
 package beans;
 
 public class LoginBean {
-    private static LoginBean instance;
     private String username;
     private String password;
     private String type;
 
-    protected LoginBean(){}
+    public LoginBean(){}
 
-    public static LoginBean getInstance(){
-        if(instance == null){
-            instance = new LoginBean();
-        }
-        return instance;
-    }
 
     public String getUsername() {
         return username;

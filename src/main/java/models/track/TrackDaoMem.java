@@ -2,17 +2,14 @@ package models.track;
 
 import javafx.scene.image.Image;
 import models.dao.factory.FactoryDAO;
-import models.slots.TimeSlot;
 import models.user.User;
-import models.user.UserDao;
-import models.user.UserDaoMem;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class TrackDaoMem extends TrackDao {
-    private HashMap<String, Track> tracks;
+    private final HashMap<String, Track> tracks;
     private static TrackDaoMem instance;
 
     protected TrackDaoMem() {
@@ -40,7 +37,6 @@ public class TrackDaoMem extends TrackDao {
         User owner2 = FactoryDAO.getInstance().createUserDao().getUser("Emanuele", "psw2");
         String name2 = "Kartodromo da Leleh";
         opHour = 11.00;
-        clHour = 18.00;
         duration = 20.00;
         demoTrack2 = saveDemoTrack(demoTrack2, name2, desc2, "Via di Palestrina, 21", 12, img2, owner2, opHour, clHour, duration);
         List<Double> costs2 = new ArrayList<>();

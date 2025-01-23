@@ -118,11 +118,6 @@ public class EventManager {
         SessionManager.getInstance().freeEventSession();
     }
 
-    public int getUnsoldTickets() {
-        EventSession eventSession = SessionManager.getInstance().getEventSession();
-        return eventSession.getShoppedTickets();
-    }
-
     public void setSoldTickets(int soldTickets) {
         EventSession eventSession = SessionManager.getInstance().getEventSession();
         eventSession.setShoppedTickets(soldTickets);
@@ -134,7 +129,6 @@ public class EventManager {
         KartEventDao kartEventDao = FactoryDAO.getInstance().createKartEventDao();
         for (KartEvent kartEvent : kartEvents) {
             if(kartEvent.getEventName().equals(eventSession.getCurrentKartEvent().getEventName())){
-                System.out.println("Modificando biglietti");
                 kartEvent.setTickets(kartEvent.getTickets() - soldTickets);
                 kartEventDao.addKartEvent(kartEvent);
                 eventSession.setCurrentKartEvent(kartEvent);

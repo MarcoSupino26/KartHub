@@ -1,16 +1,14 @@
 package beans;
 
-import models.slots.TimeSlot;
-
 import java.util.List;
 
-public class CombinedSlotsBean2 {
-    private List<SlotBean> generatedSlots;
-    private boolean raceChecked;
-    private boolean fpChecked;
-    private boolean qualiChecked;
+public class CombinedSlotsBean {
+    private final List<SlotBean> generatedSlots;
+    private final boolean raceChecked;
+    private final boolean fpChecked;
+    private final boolean qualiChecked;
 
-    public CombinedSlotsBean2(List<SlotBean> generatedSlots, boolean raceChecked, boolean fpChecked, boolean qualiChecked) {
+    public CombinedSlotsBean(List<SlotBean> generatedSlots, boolean raceChecked, boolean fpChecked, boolean qualiChecked) {
         this.generatedSlots = generatedSlots;
         this.raceChecked = raceChecked;
         this.fpChecked = fpChecked;

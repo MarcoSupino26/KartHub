@@ -9,7 +9,10 @@ public class OwnerTopBarController {
 
     @FXML
     public void switchToHome(){
-        SceneManager.changeScene("/main.fxml");
+        SessionManager sessionManager = SessionManager.getInstance();
+        if(sessionManager.getEventSession()!=null) sessionManager.freeEventSession();
+        if(sessionManager.getManageSession()!=null) sessionManager.freeManageSession();
+        SceneManager.changeScene("/home.fxml");
     }
 
     @FXML
@@ -20,8 +23,11 @@ public class OwnerTopBarController {
 
     @FXML
     public void logout(){
+        SessionManager sessionManager = SessionManager.getInstance();
+        if(sessionManager.getEventSession()!=null) sessionManager.freeEventSession();
+        if(sessionManager.getManageSession()!=null) sessionManager.freeManageSession();
         SessionManager.getInstance().freeSession();
-        SceneManager.changeScene("/main.fxml");
+        SceneManager.changeScene("/home.fxml");
     }
 
     @FXML

@@ -15,8 +15,8 @@ public class Track {
     private String name;
     private String description;
     private int availableKarts;
-    private HashMap<LocalDate, List<TimeSlot>> timeSlots;
-    private HashMap<String, BookingInterface> bookings;
+    private final HashMap<LocalDate, List<TimeSlot>> timeSlots;
+    private final HashMap<String, BookingInterface> bookings;
     private User owner;
     private String address;
     private Image image;
@@ -24,7 +24,7 @@ public class Track {
     private double openingHour;
     private double closingHour;
     private double shiftDuration;
-    private HashMap<String, KartEvent> events;
+    private final HashMap<String, KartEvent> events;
 
     public Track(){
         timeSlots = new HashMap<>();
@@ -73,8 +73,7 @@ public class Track {
     }
 
     public List<BookingInterface> allBookings(){
-        List<BookingInterface> bookingList = new ArrayList<>(bookings.values());
-        return bookingList;
+        return new ArrayList<>(bookings.values());
     }
 
     public void addBooking(BookingInterface booking) {
@@ -100,6 +99,8 @@ public class Track {
     public void setAddress(String address){
         this.address = address;
     }
+
+    public String getAddress(){return address;}
 
     public void setImage(Image image){
         this.image = image;
@@ -137,7 +138,6 @@ public class Track {
     public void addEvent(KartEvent event) {events.put(event.getEventName(), event);}
 
     public List<KartEvent> allEvents() {
-        List<KartEvent> eventList = new ArrayList<>(events.values());
-        return eventList;
+        return new ArrayList<>(events.values());
     }
 }

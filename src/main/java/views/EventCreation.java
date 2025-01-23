@@ -7,8 +7,6 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
-import utils.SessionManager;
-
 import java.time.LocalTime;
 
 public class EventCreation {
@@ -28,7 +26,7 @@ public class EventCreation {
     @FXML
     public void initialize(){
         eventDate.setStyle("-fx-font-family: 'Futura-Medium'; -fx-font-size: 18");
-        tickets.setStyle("-fx-font-family: 'Futura-Medium'; -fx-font-size: 18");
+        tickets.setStyle("-fx-font-family: 'Futura-Medium'; -fx-font-size: 18; -fx-border-radius: 10; -fx-background-color: #000000");
         tickets.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1,100,0));
     }
 
@@ -43,6 +41,6 @@ public class EventCreation {
 
         new EventManager().saveEvent(bean);
 
-        SceneManager.changeScene("/main.fxml");
+        SceneManager.changeScene("/home.fxml");
     }
 }

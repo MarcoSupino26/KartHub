@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class KartEvent {
-    private String eventName;
+    private final String eventName;
     private String eventType;
     private double cost;
     private LocalDate eventDate;

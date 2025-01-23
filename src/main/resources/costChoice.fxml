@@ -1,97 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.Cursor?>
-<?import javafx.scene.Group?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.shape.Line?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
 <BorderPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.CostController">
     <top>
-        <fx:include source="ownertopbar.fxml"
+        <fx:include source="ownertopbar.fxml" />
     </top>
     <center>
         <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="850.0" style="-fx-alignment: center;" BorderPane.alignment="CENTER">
             <Pane prefHeight="538.0" prefWidth="850.0" style="-fx-background-color: #000000;">
                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c4161600" height="420.0" layoutX="63.0" layoutY="40.0" stroke="#c5151d" strokeLineCap="ROUND" strokeType="OUTSIDE" strokeWidth="5.0" width="724.0" />
-                <Group fx:id="shifts" layoutX="90.0" layoutY="170.0">
-                    <children>
-                        <Line endX="26.199981689453125" endY="1.52587890625E-5" fill="#e4dada" layoutX="139.0" layoutY="44.0" startX="-123.19998168945312" startY="1.52587890625E-5" stroke="#c5151d" strokeWidth="5.0" />
-                        <TextField fx:id="race" alignment="CENTER" layoutX="-77.0" layoutY="-2.0" prefHeight="46.0" prefWidth="335.0" promptText="Gara" style="-fx-background-color: transparent;">
+                <VBox layoutX="63.0" layoutY="40.0" prefHeight="420.0" prefWidth="724.0" spacing="20.0" style="-fx-alignment: center; -fx-spacing: 50;">
+                    <Text fx:id="ownerName" fill="WHITE" fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0" text="Scegli i costi" textAlignment="CENTER" wrappingWidth="298.1366882324219">
+                        <font>
+                            <Font name="Futura-Medium" size="28.0" />
+                        </font>
+                    </Text>
+                    <HBox alignment="CENTER" spacing="20.0">
+                        <TextField fx:id="race" alignment="CENTER" prefWidth="150.0" promptText="Gara (€)" style="-fx-background-color: transparent; -fx-border-color: #c5151d; -fx-text-fill: white; -fx-border-radius: 5;">
                             <font>
-                                <Font name="Futura-Medium" size="22.0" />
+                                <Font name="Futura-Medium" size="18.0" />
                             </font>
-                            <cursor>
-                                <Cursor fx:constant="HAND" />
-                            </cursor>
                         </TextField>
-                        <Line endX="26.199981689453125" endY="1.52587890625E-5" fill="#e4dada" layoutX="626.0" layoutY="42.0" startX="-123.19998168945312" startY="1.52587890625E-5" stroke="#c5151d" strokeWidth="5.0" />
-                        <TextField fx:id="fp" alignment="CENTER" layoutX="411.0" layoutY="-4.0" prefHeight="46.0" prefWidth="335.0" promptText="Prova Libera" style="-fx-background-color: transparent;">
+                        <TextField fx:id="fp" alignment="CENTER" prefWidth="150.0" promptText="Prova Libera (€)" style="-fx-background-color: transparent; -fx-border-color: #c5151d; -fx-text-fill: white; -fx-border-radius: 5;">
                             <font>
-                                <Font name="Futura-Medium" size="22.0" />
+                                <Font name="Futura-Medium" size="18.0" />
                             </font>
-                            <cursor>
-                                <Cursor fx:constant="HAND" />
-                            </cursor>
                         </TextField>
-                        <Line endX="26.199981689453125" endY="1.52587890625E-5" fill="#e4dada" layoutX="139.0" layoutY="154.0" startX="-123.19998168945312" startY="1.52587890625E-5" stroke="#c5151d" strokeWidth="5.0" />
-                        <TextField fx:id="medals" alignment="CENTER" layoutX="-77.0" layoutY="110.0" prefHeight="46.0" prefWidth="335.0" promptText="Premiazione" style="-fx-background-color: transparent;">
+                    </HBox>
+                    <HBox alignment="CENTER" spacing="20.0">
+                        <TextField fx:id="quali" alignment="CENTER" prefWidth="150.0" promptText="Qualifica (€)" style="-fx-background-color: transparent; -fx-border-color: #c5151d; -fx-text-fill: white; -fx-border-radius: 5;">
                             <font>
-                                <Font name="Futura-Medium" size="22.0" />
+                                <Font name="Futura-Medium" size="18.0" />
                             </font>
-                            <cursor>
-                                <Cursor fx:constant="HAND" />
-                            </cursor>
                         </TextField>
-                        <Button fx:id="saving" layoutX="289.0" layoutY="205.0" mnemonicParsing="false" onAction="#saveCost" style="-fx-background-color: #c5151d;" text="Procedi" textFill="WHITE">
+                        <TextField fx:id="champagne" alignment="CENTER" prefWidth="150.0" promptText="Champagne (€)" style="-fx-background-color: transparent; -fx-border-color: #c5151d; -fx-text-fill: white; -fx-border-radius: 5;">
                             <font>
-                                <Font size="18.0" />
+                                <Font name="Futura-Medium" size="18.0" />
                             </font>
-                        </Button>
-                        <Text fx:id="ownerName" fill="WHITE" layoutX="217.0" layoutY="-60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Scegli i costi" wrappingWidth="235.73672485351562">
-                            <font>
-                                <Font size="26.0" />
-                            </font>
-                        </Text>
-                        <Line endX="26.199981689453125" endY="1.52587890625E-5" fill="#e4dada" layoutX="627.0" layoutY="153.0" startX="-123.19998168945312" startY="1.52587890625E-5" stroke="#c5151d" strokeWidth="5.0" />
-                        <TextField fx:id="onBoard" alignment="CENTER" layoutX="411.0" layoutY="109.0" prefHeight="46.0" prefWidth="335.0" promptText="OnBoard" style="-fx-background-color: transparent;">
-                            <font>
-                                <Font name="Futura-Medium" size="22.0" />
-                            </font>
-                            <cursor>
-                                <Cursor fx:constant="HAND" />
-                            </cursor>
                         </TextField>
-                  <Line endX="26.199981689453125" endY="1.52587890625E-5" fill="#e4dada" layoutX="379.0" layoutY="44.0" startX="-123.19998168945312" startY="1.52587890625E-5" stroke="#c5151d" strokeWidth="5.0" />
-                  <TextField fx:id="quali" alignment="CENTER" layoutX="163.0" layoutY="-2.0" prefHeight="46.0" prefWidth="335.0" promptText="Qualifica" style="-fx-background-color: transparent;">
-                     <font>
-                        <Font name="Futura-Medium" size="22.0" />
-                     </font>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </TextField>
-                  <Line endX="26.199981689453125" endY="1.52587890625E-5" fill="#e4dada" layoutX="379.0" layoutY="153.0" startX="-123.19998168945312" startY="1.52587890625E-5" stroke="#c5151d" strokeWidth="5.0" />
-                  <TextField fx:id="champagne" alignment="CENTER" layoutX="163.0" layoutY="107.0" prefHeight="46.0" prefWidth="335.0" promptText="Champagne" style="-fx-background-color: transparent;">
-                     <font>
-                        <Font name="Futura-Medium" size="22.0" />
-                     </font>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </TextField>
-                    </children>
-                </Group>
+                    </HBox>
+                    <HBox alignment="CENTER" spacing="20.0">
+                        <TextField fx:id="medals" alignment="CENTER" prefWidth="150.0" promptText="Premiazione (€)" style="-fx-background-color: transparent; -fx-border-color: #c5151d; -fx-text-fill: white; -fx-border-radius: 5;">
+                            <font>
+                                <Font name="Futura-Medium" size="18.0" />
+                            </font>
+                        </TextField>
+                        <TextField fx:id="onBoard" alignment="CENTER" prefWidth="150.0" promptText="OnBoard (€)" style="-fx-background-color: transparent; -fx-border-color: #c5151d; -fx-text-fill: white; -fx-border-radius: 5;">
+                            <font>
+                                <Font name="Futura-Medium" size="18.0" />
+                            </font>
+                        </TextField>
+                    </HBox>
+                    <Button fx:id="saving" mnemonicParsing="false" onAction="#saveCost" style="-fx-background-color: #c5151d;" text="Procedi" textFill="WHITE">
+                        <font>
+                            <Font size="18.0" />
+                        </font>
+                    </Button>
+                </VBox>
             </Pane>
         </VBox>
     </center>

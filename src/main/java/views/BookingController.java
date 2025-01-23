@@ -60,7 +60,7 @@ public class BookingController {
             day.setDisable(true);
             quali.setDisable(true); // Impedisce la selezione iniziale
 
-            race.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            race.selectedProperty().addListener(new ChangeListener<>() {
                 @Override
                 public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
                     // Abilita o disabilita la checkbox Qualifica in base alla selezione della Gara
@@ -81,7 +81,7 @@ public class BookingController {
             quali.selectedProperty().addListener(optionsListener);
             fp.selectedProperty().addListener(optionsListener);
 
-            day.valueProperty().addListener(new ChangeListener<LocalDate>() {
+            day.valueProperty().addListener(new ChangeListener<>() {
                 @Override
                 public void changed(ObservableValue<? extends LocalDate> observable, LocalDate oldValue, LocalDate newValue) {
                     if(newValue != null) /*updateTimeSlots()*/updateTimeSlots2();
@@ -109,7 +109,7 @@ public class BookingController {
     public void updateTimeSlotsListView2(List<SlotBean> slotsList, BookManager bM) {
         boolean fpOption = false;
         boolean qualiOption = false;
-        boolean raceOption = false;
+        boolean raceOption = true;
 
         if (race.isSelected()) {
             if (quali.isSelected()) {
@@ -118,8 +118,7 @@ public class BookingController {
             if (fp.isSelected()) {
                 fpOption = true;
             }
-            raceOption = true;
-            CombinedSlotsBean2 combinedSlotsBean = new CombinedSlotsBean2(slotsList, raceOption, qualiOption, fpOption);
+            CombinedSlotsBean combinedSlotsBean = new CombinedSlotsBean(slotsList, raceOption, qualiOption, fpOption);
             slotsList = bM.getCombinedSlots2(combinedSlotsBean);
         }
 
@@ -131,7 +130,7 @@ public class BookingController {
             }
         }
 
-        slots.setCellFactory(comboBoxListView -> new ListCell<String>() {
+        slots.setCellFactory(comboBoxListView -> new ListCell<>() {
             @Override
             protected void updateItem(String item, boolean empty) {
                 super.updateItem(item, empty);
@@ -143,7 +142,7 @@ public class BookingController {
             }
         });
 
-        slots.setButtonCell(new ListCell<String>() {
+        slots.setButtonCell(new ListCell<>() {
             @Override
             protected void updateItem(String item, boolean empty) {
                 super.updateItem(item, empty);

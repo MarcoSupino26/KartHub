@@ -7,13 +7,7 @@ import models.user.User;
 
 public class AuthController {
 
-    public AuthController(){
-        //il construttore non ha bisogno di inizializzare nulla
-    }
-
-    public void sessionEnd(){
-        SessionManager.getInstance().freeSession();
-    }
+    public AuthController(){}
 
     public boolean authUser(LoginBean logBean){
         UserDao userDAO = FactoryDAO.getInstance().createUserDao();

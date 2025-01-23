@@ -2,7 +2,6 @@ package models.dao.factory;
 
 import models.booking.BookingDao;
 import models.booking.BookingDaoMem;
-import models.event.KartEvent;
 import models.event.KartEventDao;
 import models.event.KartEventDaoMem;
 import models.track.TrackDao;

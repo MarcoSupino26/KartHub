@@ -1,10 +1,9 @@
 package beans;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CostBean {
-    private List<Double> cost;
+    private final List<Double> cost;
 
     public CostBean(List<Double> cost) {
         this.cost = cost;

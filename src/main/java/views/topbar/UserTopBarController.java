@@ -18,11 +18,18 @@ public class UserTopBarController {
 
     @FXML
     public void switchToHome(){
-        SceneManager.changeScene("/main.fxml");
+        SessionManager sessionManager = SessionManager.getInstance();
+        if(sessionManager.getLoggedUser()!=null) {
+            if (sessionManager.getBookingSession() != null) sessionManager.freeBookingSession();
+            if (sessionManager.getEventSession() != null) sessionManager.freeEventSession();
+        }
+        SceneManager.changeScene("/home.fxml");
     }
 
     @FXML
     public void switchToPrenota(){
+        SessionManager sessionManager = SessionManager.getInstance();
+        if(sessionManager.getEventSession()!=null) sessionManager.freeEventSession();
         if(SessionManager.getInstance().getLoggedUser()!=null){SceneManager.changeScene("/book.fxml");}
         else switchToLogin();
     }
@@ -38,8 +45,11 @@ public class UserTopBarController {
         if(SessionManager.getInstance().getLoggedUser() == null){
             SceneManager.changeScene("/login.fxml");
         }else {
-            SessionManager.getInstance().freeSession();
-            SceneManager.changeScene("/main.fxml");
+            SessionManager sessionManager = SessionManager.getInstance();
+            if(sessionManager.getBookingSession()!=null) sessionManager.freeBookingSession();
+            if(sessionManager.getEventSession()!=null) sessionManager.freeEventSession();
+            sessionManager.freeSession();
+            SceneManager.changeScene("/home.fxml");
         }
     }
 }

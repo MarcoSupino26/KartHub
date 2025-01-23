@@ -1,10 +1,6 @@
 package models.slots;
 
-
-import java.time.LocalDate;
-
 public class TimeSlot{
-    LocalDate date;
     private double startTime;
     private double endTime;
     private boolean available;
@@ -13,7 +9,6 @@ public class TimeSlot{
         this.startTime = startTime;
         this.endTime = endTime;
         this.available = available;
-        LocalDate now = LocalDate.now();
     }
 
     public double getStartTime() {

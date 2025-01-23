@@ -1,12 +1,9 @@
 package views;
 
-import controllers.AuthController;
-import controllers.ManageController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.BorderPane;
 import utils.SessionManager;
 import javafx.fxml.FXML;
-import models.user.User;
 
 import java.io.IOException;
 

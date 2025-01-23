@@ -18,7 +18,7 @@ public class MedalsDecorator extends BookDecorator {
     @Override
     public String getDescription(){
         String addedFormat = "";
-        if(!super.getDescription().equals("")){
+        if(!super.getDescription().isEmpty()){
             addedFormat = " + ";
         }
         return super.getDescription() + addedFormat + "Premiazione Medaglia";

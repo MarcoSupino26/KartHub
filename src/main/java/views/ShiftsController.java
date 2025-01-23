@@ -19,12 +19,10 @@ public class ShiftsController {
     private TextField karts;
     @FXML
     private Text ownerName;
-    @FXML
-    private Text success;
+
     @FXML
     public void initialize() {
-        success.setVisible(false);
-        ownerName.setText(SessionManager.getInstance().getLoggedUser().getUsername() + " ci siamo quasi...");
+        ownerName.setText(SessionManager.getInstance().getLoggedUser().getUsername() + ", imposta gli orari");
     }
 
     @FXML

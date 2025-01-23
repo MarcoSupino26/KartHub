@@ -2,13 +2,8 @@ package views;
 
 import beans.LoginBean;
 import controllers.AuthController;
-import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 
 public class SignController {
 
@@ -20,17 +15,26 @@ public class SignController {
     private TextField usr;
     @FXML
     private PasswordField psw;
+    @FXML
+    private DatePicker birthDate;
+
+    public void initialize() {
+        ToggleGroup group = new ToggleGroup();
+        opt1.setToggleGroup(group);
+        opt2.setToggleGroup(group);
+        birthDate.setStyle("-fx-font-family: 'Futura-Medium'; -fx-font-size: 14");
+    }
 
     @FXML
-    public void registrazione(ActionEvent event){
+    public void registrazione(){
         RadioButton selected = (RadioButton) opt1.getToggleGroup().getSelectedToggle();
-        LoginBean signBean = LoginBean.getInstance();
+        LoginBean signBean = new LoginBean();
         signBean.setUsername(usr.getText());
         signBean.setPassword(psw.getText());
         signBean.setType(selected.getText());
 
         AuthController auth = new AuthController();
         auth.registerUser(signBean);
-        SceneManager.changeScene("/main.fxml");
+        SceneManager.changeScene("/home.fxml");
     }
 }

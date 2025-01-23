@@ -11,7 +11,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import utils.SessionManager;
 import javafx.fxml.FXML;
 
 import java.util.List;
@@ -67,7 +66,7 @@ public class TrackChoiceController {
         Button selectTrack = new Button("Seleziona");
         selectTrack.setStyle("-fx-background-color: #c5151d; -fx-text-fill: white;");
         selectTrack.setFont(Font.font("Futura-Medium", 18));
-        selectTrack.setOnAction(event->onSelectClicked(event, name.getText()));;
+        selectTrack.setOnAction(event->onSelectClicked(event, name.getText()));
 
         trackProfile.getChildren().addAll(trackPic, trackDetails, selectTrack);
         tracksContainer.getChildren().add(trackProfile);

@@ -3,8 +3,8 @@ package beans;
 import javafx.scene.image.Image;
 
 public class TrackProfileBean {
-    private Image image;
-    private String name;
+    private final Image image;
+    private final String name;
 
     public TrackProfileBean(Image image, String name) {
         this.image = image;

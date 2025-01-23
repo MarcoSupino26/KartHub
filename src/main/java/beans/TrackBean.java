@@ -1,10 +1,6 @@
 package beans;
 
 import javafx.scene.image.Image;
-import models.slots.TimeSlot;
-import models.user.User;
-
-import java.util.List;
 
 public class TrackBean {
     private String name;

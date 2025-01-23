@@ -4,16 +4,8 @@ import beans.PaymentBean;
 import controllers.EventManager;
 import controllers.PaymentManager;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
-import org.w3c.dom.events.Event;
-import utils.EventSession;
-import utils.SessionManager;
-
-import java.awt.*;
-
-import static java.lang.Integer.parseInt;
 
 public class PaymentController {
     @FXML
@@ -46,7 +38,7 @@ public class PaymentController {
         paymentBean.setCardNumber(cardNumber.getText());
         paymentBean.setExpiryMonth(expiryDate.getText());
         paymentBean.setSecurityCode(cvv.getText());
-        paymentManager.processPayment(paymentBean);
-        SceneManager.changeScene("/paymentdone.fxml");
+        if(paymentManager.processPayment(paymentBean)) SceneManager.changeScene("/paymentdone.fxml");
+        else SceneManager.changeScene("/home.fxml");
     }
 }

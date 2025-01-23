@@ -16,12 +16,6 @@ public class ManageController {
 
     public ManageController() {}
 
-    /*public void startManageSession(String trackName){
-        ManageSession manageSession = new ManageSession();
-        manageSession.setTrackName(trackName);
-        SessionManager.getInstance().createManageSession(manageSession);
-    }*/
-
     public boolean registeredTrack() { //controlla se l'owner ha un tracciato associato
         TrackDao trackDao = FactoryDAO.getInstance().createTrackDao();
         User owner = SessionManager.getInstance().getLoggedUser();
@@ -45,17 +39,22 @@ public class ManageController {
 
         List<BookingInterface> bookings = track.allBookings();
         for (BookingInterface booking : bookings) {
-            BookingsDisplayBean bookingBean = new BookingsDisplayBean(booking.getSelectedDay());
-            bookingBean.setPersonal(String.valueOf(booking.getPersonal()));
-            bookingBean.setRental(String.valueOf(booking.getRental()));
-            bookingBean.setShift(String.valueOf(booking.getShift()));
-            bookingBean.setUser(booking.getUser().getUsername());
-            bookingBean.setCost(String.valueOf(booking.getCost()));
-            bookingBean.setDescription(booking.getDescription());
+            BookingsDisplayBean bookingBean = getBookingsDisplayBean(booking);
             bookingBeans.add(bookingBean);
         }
 
         return bookingBeans;
+    }
+
+    private static BookingsDisplayBean getBookingsDisplayBean(BookingInterface booking) {
+        BookingsDisplayBean bookingBean = new BookingsDisplayBean(booking.getSelectedDay());
+        bookingBean.setPersonal(String.valueOf(booking.getPersonal()));
+        bookingBean.setRental(String.valueOf(booking.getRental()));
+        bookingBean.setShift(String.valueOf(booking.getShift()));
+        bookingBean.setUser(booking.getUser().getUsername());
+        bookingBean.setCost(String.valueOf(booking.getCost()));
+        bookingBean.setDescription(booking.getDescription());
+        return bookingBean;
     }
 
     public void createTrack(TrackBean track) {
@@ -69,7 +68,6 @@ public class ManageController {
     }
 
     public void saveShifts(ShiftsBean shifts) {
-        String usr = SessionManager.getInstance().getLoggedUser().getUsername();
         ManageSession manageSession = SessionManager.getInstance().getManageSession();
         manageSession.setAvailableKarts(shifts.getAvailableKarts());
         manageSession.setOpening(shifts.getOpeningHour());
@@ -79,7 +77,6 @@ public class ManageController {
 
     public void saveTrack(CostBean costBean){
         Track newTrack = new Track();
-        String usr = SessionManager.getInstance().getLoggedUser().getUsername();
         ManageSession ms = SessionManager.getInstance().getManageSession();
         newTrack.setOwner(ms.getOwner());
         newTrack.setShiftDuration(ms.getDuration());

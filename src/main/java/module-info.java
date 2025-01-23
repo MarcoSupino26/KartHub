@@ -6,6 +6,8 @@ module karthub{
     requires java.sql;
 
 
+    exports controllers;
+    exports beans;
     exports views;
     exports start;
     exports views.topbar;

@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class EventCreationBean {
-    private String name;
+    private final String name;
     private String type;
     private double price;
     private LocalDate date;

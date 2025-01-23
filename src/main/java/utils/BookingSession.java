@@ -3,7 +3,6 @@ package utils;
 import models.booking.BookingInterface;
 import models.track.Track;
 
-import java.time.LocalDate;
 
 public class BookingSession {
     private Track track;

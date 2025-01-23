@@ -1,9 +1,6 @@
 package views;
 
-import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.scene.text.Text;
 import models.booking.BookingInterface;
 import utils.BookingSession;
@@ -43,6 +40,6 @@ public class RecapController {
     }
 
     public void proceed(){
-        SceneManager.changeScene("/main.fxml");
+        SceneManager.changeScene("/home.fxml");
     }
 }

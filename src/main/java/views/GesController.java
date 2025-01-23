@@ -14,8 +14,6 @@ import utils.SessionManager;
 
 import java.io.File;
 
-import static java.lang.Integer.parseInt;
-
 public class GesController {
     @FXML
     private Text profile;

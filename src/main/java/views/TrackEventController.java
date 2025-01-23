@@ -10,10 +10,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import utils.SessionManager;
 import java.util.List;
 
-import java.util.ArrayList;
 
 public class TrackEventController {
     @FXML
