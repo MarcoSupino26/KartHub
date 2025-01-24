@@ -15,6 +15,7 @@ public class SlotChoiceCLI {
     private String karts;
 
     public void start() {
+        System.out.println("-------------------------");
         System.out.println("Imposta gli orari:");
 
         System.out.print("Orario di apertura (formato 24 ore): ");
@@ -29,14 +30,12 @@ public class SlotChoiceCLI {
         System.out.print("Numero di kart disponibili: ");
         karts = scanner.nextLine();
 
-        // Conferma dei dati inseriti
         System.out.println("\nHai inserito i seguenti dati:");
         System.out.println("Orario di apertura: " + opening);
         System.out.println("Orario di chiusura: " + closing);
         System.out.println("Durata dei turni: " + duration + " minuti");
         System.out.println("Kart disponibili: " + karts);
 
-        // Chiedi conferma per salvare i dati
         System.out.print("\nVuoi salvare questi dati? (s/n): ");
         String confirmation = scanner.nextLine();
 

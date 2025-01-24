@@ -22,45 +22,23 @@ public class EventCreationCLI {
     }
 
     private void createEvent() {
+        System.out.println("-------------------------");
         System.out.print("Inserisci il nome dell'evento: ");
         eventName = scanner.nextLine();
         System.out.print("Inserisci il tipo di evento: ");
         eventType = scanner.nextLine();
         System.out.print("Inserisci il costo del biglietto: ");
         ticketCost = Double.parseDouble(scanner.nextLine());
-        System.out.print("Inserisci l'orario dell'evento (HH:mm): ");
+        System.out.print("Inserisci l'orario dell'evento (HH:MM): ");
         eventTime = LocalTime.parse(scanner.nextLine());
-        System.out.print("Inserisci la data dell'evento (yyyy-MM-dd): ");
+        System.out.print("Inserisci la data dell'evento (YYYY-MM-DD): ");
         eventDate = java.time.LocalDate.parse(scanner.nextLine());
         System.out.print("Inserisci il numero di biglietti disponibili: ");
         availableTickets = Integer.parseInt(scanner.nextLine());
 
         saveEvent();
 
-        ownerTopBarCLI.displayMenu();
-        String choice = scanner.nextLine();
-
-        handleChoice(choice);
-    }
-
-    private void handleChoice(String choice) {
-        switch (choice) {
-            case "1":
-                ownerTopBarCLI.switchToHome();
-                break;
-            case "2":
-                ownerTopBarCLI.switchToManager();
-                break;
-            case "3":
-                ownerTopBarCLI.switchToEventi();
-                break;
-            case "4":
-                ownerTopBarCLI.logout();
-                break;
-            default:
-                System.out.println("Opzione non valida. Riprova");
-                break;
-        }
+        new HomeCLI().start();
     }
 
     private void saveEvent() {
@@ -75,7 +53,5 @@ public class EventCreationCLI {
         eventManager.saveEvent(bean);
 
         System.out.println("Evento creato con successo!");
-
-        ownerTopBarCLI.displayMenu();
     }
 }

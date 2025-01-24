@@ -4,11 +4,10 @@ import controllers.ManageController;
 import utils.SessionManager;
 import views.SceneManager;
 
-import java.util.Scanner;
-
 public class OwnerTopBarCLI {
 
     public void displayMenu() {
+        System.out.println("-------------------------");
         System.out.println("1. Home");
         System.out.println("2. Gestisci");
         System.out.println("3. Eventi");
@@ -24,7 +23,7 @@ public class OwnerTopBarCLI {
 
     public void switchToManager() {
         if(new ManageController().registeredTrack()) new TrackManagerCLI().start();
-        //else new TrackCreationCLI().start;
+        else new TrackCreationCLI().start();
     }
 
     public void logout() {
@@ -36,7 +35,10 @@ public class OwnerTopBarCLI {
     }
 
     public void switchToEventi() {
-        if(new ManageController().registeredTrack()) new TrackManagerCLI().start();
-        //else new TrackCreationCLI().start();
+        if(new ManageController().registeredTrack()) new TrackEventsCLI().start();
+        else {
+            System.out.println("Devi prima creare un tracciato per vedere gli eventi");
+            new TrackCreationCLI().start();
+        }
     }
 }

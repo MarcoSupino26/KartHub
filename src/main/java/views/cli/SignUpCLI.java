@@ -9,6 +9,7 @@ public class SignUpCLI {
     private Scanner scanner = new Scanner(System.in);
 
     public void start() {
+        System.out.println("-------------------------");
         System.out.print("Inserisci il tuo nome utente: ");
         String username = scanner.nextLine();
 

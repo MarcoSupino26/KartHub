@@ -19,12 +19,13 @@ public class CostChoiceCLI {
     private String medalsCost;
 
     public void start() {
+        System.out.println("-------------------------");
         System.out.println("Imposta i costi:");
 
         System.out.print("Costo gara : ");
         raceCost = scanner.nextLine();
 
-        System.out.print("Costo ualifiche: ");
+        System.out.print("Costo qualifiche: ");
         qualiCost = scanner.nextLine();
 
         System.out.print("Costo prova libera: ");

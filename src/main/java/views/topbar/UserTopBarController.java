@@ -29,8 +29,10 @@ public class UserTopBarController {
     @FXML
     public void switchToPrenota(){
         SessionManager sessionManager = SessionManager.getInstance();
-        if(sessionManager.getEventSession()!=null) sessionManager.freeEventSession();
-        if(SessionManager.getInstance().getLoggedUser()!=null){SceneManager.changeScene("/book.fxml");}
+        if(SessionManager.getInstance().getLoggedUser()!=null){
+            if(sessionManager.getEventSession()!=null) sessionManager.freeEventSession();
+            SceneManager.changeScene("/book.fxml");
+        }
         else switchToLogin();
     }
 

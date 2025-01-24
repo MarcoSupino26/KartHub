@@ -12,11 +12,12 @@ public class TrackManagerCLI {
     public void start() {
         displayTrackInfo();
 
-        ownerTopBarCLI.displayMenu();
-
-        displayTrackManagerMenu();
-        String choice = scanner.nextLine();
-        handleChoice(choice);
+        while (true) {
+            ownerTopBarCLI.displayMenu();
+            displayTrackManagerMenu();
+            String choice = scanner.nextLine();
+            handleChoice(choice);
+        }
     }
 
     private void displayTrackManagerMenu() {

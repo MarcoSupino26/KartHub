@@ -13,7 +13,8 @@ public class LoginCLI {
 
     public void start() {
         while (true) {
-            System.out.println("1. Login");
+            System.out.println("-------------------------");
+            System.out.println("1. Log in");
             System.out.println("2. Registrati");
             System.out.print("Seleziona un'opzione: ");
             String choice = scanner.nextLine();
@@ -31,6 +32,7 @@ public class LoginCLI {
     }
 
     private void accedi() {
+        System.out.println("-------------------------");
         System.out.print("Inserisci il tuo nome utente: ");
         String username = scanner.nextLine();
 

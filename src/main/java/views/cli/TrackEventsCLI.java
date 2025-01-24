@@ -13,16 +13,18 @@ public class TrackEventsCLI {
     private OwnerTopBarCLI ownerTopBarCLI = new OwnerTopBarCLI();
 
     public void start() {
-        displayMenu();
+        while (true) {
+            ownerTopBarCLI.displayMenu();
+            displayMenu();
+            String choice = scanner.nextLine();
+            handleChoice(choice);
+        }
     }
 
     private void displayMenu() {
         System.out.println("5. Visualizza Eventi");
         System.out.println("6. Aggiungi Evento");
         System.out.print("-> ");
-
-        String choice = scanner.nextLine();
-        handleChoice(choice);
     }
 
     private void handleChoice(String choice) {

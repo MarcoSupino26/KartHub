@@ -13,12 +13,13 @@ public class TrackBookingsCLI {
 
     public void start() {
         OwnerTopBarCLI ownerTopBarCLI = new OwnerTopBarCLI();
-
         displayBookings();
-
-        ownerTopBarCLI.displayMenu();
-        String choice = scanner.nextLine();
-        handleChoice(choice);
+        while(true) {
+            ownerTopBarCLI.displayMenu();
+            System.out.print("\n-> ");
+            String choice = scanner.nextLine();
+            handleChoice(choice);
+        }
     }
 
     private void displayBookings() {
@@ -39,7 +40,7 @@ public class TrackBookingsCLI {
         System.out.println("Kart noleggiati: " + booking.getRental());
         System.out.println("Kart personali: " + booking.getPersonal());
         System.out.println("Descrizione: " + booking.getDescription());
-        System.out.println("Earnings: €" + String.format("%.2f", Double.parseDouble(booking.getCost())));
+        System.out.println("Incasso: €" + String.format("%.2f", Double.parseDouble(booking.getCost())));
         System.out.println("-------------------------------------");
     }
 

@@ -2,14 +2,17 @@ package views.cli;
 
 import utils.SessionManager;
 import views.SceneManager;
-import java.util.Scanner;
 
 public class UserTopBarCLI {
     public void displayMenu() {
+        System.out.println("-------------------------");
+        String log;
         System.out.println("1. Home");
         System.out.println("2. Prenota");
         System.out.println("3. Eventi");
-        System.out.println("4. Logout");
+        if(SessionManager.getInstance().getLoggedUser() != null) log = "Logout";
+        else log = "Log in";
+        System.out.println("4. " + log);
     }
 
     public void switchToHome() {
@@ -23,26 +26,26 @@ public class UserTopBarCLI {
 
     public void switchToPrenota() {
         SessionManager sessionManager = SessionManager.getInstance();
-        if (sessionManager.getEventSession() != null) sessionManager.freeEventSession();
-        if (sessionManager.getLoggedUser() != null) {
-            new BookingCLI().start();
-        } else {
-            switchToLogin();
+        if(SessionManager.getInstance().getLoggedUser()!=null){
+            if(sessionManager.getEventSession()!=null) sessionManager.freeEventSession();
+            new TrackChoiceCLI().start();
         }
+        else new LoginCLI().start();
     }
 
     public void switchToEventi() {
         if (SessionManager.getInstance().getLoggedUser() != null) {
-            SceneManager.changeScene("/eventi.fxml");
+            new UserEventsCLI().start();
         } else {
-            SceneManager.changeScene("/login.fxml");
+            System.out.println("Devi prima registrarti per comprare un biglietto");
+            switchToLogin();
         }
     }
 
     public void switchToLogin() {
         if (SessionManager.getInstance().getLoggedUser() == null) {
             new LoginCLI().start();
-        } else {
+        } else {//logout
             SessionManager sessionManager = SessionManager.getInstance();
             if (sessionManager.getBookingSession() != null) sessionManager.freeBookingSession();
             if (sessionManager.getEventSession() != null) sessionManager.freeEventSession();

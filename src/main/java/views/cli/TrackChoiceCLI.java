@@ -2,6 +2,8 @@ package views.cli;
 
 import controllers.BookManager;
 import beans.DisplayBean;
+import models.track.Track;
+import utils.SessionManager;
 
 import java.util.List;
 import java.util.Scanner;
@@ -12,10 +14,12 @@ public class TrackChoiceCLI {
     UserTopBarCLI userTopBarCLI = new UserTopBarCLI();
 
     public void start() {
-        userTopBarCLI.displayMenu();
-        displayMenu();
-        String choice = scanner.nextLine();
-        handleChoice(choice);
+        while (true) {
+            userTopBarCLI.displayMenu();
+            displayMenu();
+            String choice = scanner.nextLine();
+            handleChoice(choice);
+        }
     }
     private void handleChoice(String choice) {
         switch (choice) {
@@ -41,19 +45,18 @@ public class TrackChoiceCLI {
     }
     private void displayMenu() {
         System.out.println("5. Seleziona tracciato");
-        System.out.println("-> ");
+        System.out.print("-> ");
     }
 
     private void displayTrackProfile(DisplayBean displayBean, int index) {
         System.out.println("\n" + index + ". " + displayBean.getName());
         System.out.println("Descrizione: " + displayBean.getDescription());
-        System.out.println("-------------------------");
+        System.out.print("-------------------------");
     }
 
     private void onSelectClicked(String trackName) {
         BookManager bookManager = new BookManager();
         bookManager.setBookingSession(trackName);
-        System.out.println("Hai selezionato il tracciato: " + trackName);
         new BookingCLI().start();
     }
 
@@ -65,15 +68,13 @@ public class TrackChoiceCLI {
             System.out.println("Nessun tracciato disponibile.");
             return;
         }
-
-        System.out.println("Seleziona un tracciato:");
-
+        System.out.println("-------------------------");
         for (int i = 0; i < profiles.size(); i++) {
             DisplayBean displayBean = profiles.get(i);
             displayTrackProfile(displayBean, i + 1);
         }
 
-        System.out.print("Inserisci il numero del tracciato che vuoi selezionare: ");
+        System.out.print("\nSeleziona tracciato: ");
         int selectedTrackIndex = Integer.parseInt(scanner.nextLine()) - 1;
 
         if (selectedTrackIndex >= 0 && selectedTrackIndex < profiles.size()) {

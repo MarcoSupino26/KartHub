@@ -1,8 +1,5 @@
 package views.cli;
 
-import java.awt.print.Book;
-import java.util.Scanner;
-
 import beans.BookRecapBean;
 import controllers.BookManager;
 import utils.SessionManager;
@@ -14,6 +11,7 @@ public class RecapCLI {
         BookManager bookManager = new BookManager();
         BookRecapBean recap = bookManager.getBookRecap();
 
+        System.out.println("-------------------------");
         System.out.println(username + ", ecco la tua prenotazione:");
 
         System.out.println("Numero di kart a noleggio: " + recap.getRentalKarts());

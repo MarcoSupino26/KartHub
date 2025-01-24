@@ -12,6 +12,7 @@ public class TicketShopCLI {
         EventCreationBean bean = eventManager.getPaymentInfo();
 
         int availableTickets = bean.getAvailableTickets();
+        System.out.println("-------------------------");
         System.out.println("Biglietti disponibili: " + availableTickets);
         System.out.println("Nome evento: " + bean.getEventName());
         System.out.println("Tipo di evento: " + bean.getType());
@@ -35,7 +36,7 @@ public class TicketShopCLI {
             double totalCost = updatePrice(selectedTickets, bean.getPrice());
             System.out.println("Totale da pagare: €" + String.format("%.2f", totalCost));
 
-            System.out.print("Vuoi modificare il numero di biglietti? (S/N): ");
+            System.out.print("Vuoi modificare il numero di biglietti? (s/n): ");
             String modify = scanner.next();
 
             if (modify.equalsIgnoreCase("N")) {
@@ -43,10 +44,10 @@ public class TicketShopCLI {
             }
         }
 
-        System.out.print("Confermi l'acquisto dei biglietti? (S/N): ");
+        System.out.print("Confermi l'acquisto dei biglietti? (s/n): ");
         String confirm = scanner.next();
 
-        if (confirm.equalsIgnoreCase("S")) {
+        if (confirm.equalsIgnoreCase("s")) {
             pay(selectedTickets);
             System.out.println("Acquisto completato con successo!");
         } else {

@@ -18,6 +18,7 @@ public class PaymentCLI {
         int soldTickets = eventManager.getSoldTickets();
         double totalCost = ticketCost * soldTickets;
 
+        System.out.println("-------------------------");
         System.out.println("Costo totale da pagare: €" + String.format("%.2f", totalCost));
         System.out.println("Inserisci i dati della carta per procedere al pagamento:");
 

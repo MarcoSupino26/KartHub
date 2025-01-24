@@ -2,8 +2,6 @@ package views.cli;
 
 import beans.UserEventsBean;
 import controllers.EventManager;
-
-import javax.swing.text.Style;
 import java.util.List;
 import java.util.Scanner;
 
@@ -13,11 +11,17 @@ public class UserEventsCLI {
 
     Scanner scanner = new Scanner(System.in);
     public void start() {
-        userTopBarCLI.displayMenu();
+        while (true) {
+            userTopBarCLI.displayMenu();
+            displayMenu();
+            String choice = scanner.nextLine();
+            handleChoice(choice);
+        }
+    }
+
+    private void displayMenu() {
         System.out.println("5. Acquista biglietto");
-        System.out.println("-> ");
-        String choice = scanner.nextLine();
-        handleChoice(choice);
+        System.out.print("-> ");
     }
 
     private void handleChoice(String choice) {
@@ -52,14 +56,14 @@ public class UserEventsCLI {
         System.out.println("Orario di inizio: " + bean.getEventStart());
         System.out.println("Biglietti rimasti: " + bean.getRemainingTickets());
         System.out.println("Costo biglietto: €" + String.format("%.2f", bean.getTicketPrice()));
-        System.out.println();
+        System.out.println("-------------------------");
     }
 
     public void ticketShop(UserEventsBean bean) {
         System.out.println("Hai scelto l'evento: " + bean.getEvent());
         System.out.println("Prezzo biglietto: €" + String.format("%.2f", bean.getTicketPrice()));
         new EventManager().setCurrentEvent(bean);
-
+        new TicketShopCLI().start();
     }
 
     private void selectEvent() {

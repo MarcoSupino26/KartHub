@@ -7,9 +7,9 @@ import java.util.Scanner;
 public class HomeCLI {
 
     private Scanner scanner = new Scanner(System.in);
-    OwnerTopBarCLI ownerTopBarCLI = new OwnerTopBarCLI();
 
     public void start() {
+        System.out.println("-------------------------");
         System.out.println("Benvenuto in KartHub!");
         System.out.println("Lo strumento per gli appassionati di kart");
         loadTopBar();
@@ -18,37 +18,60 @@ public class HomeCLI {
     private void loadTopBar() {
         String userType = (SessionManager.getInstance().getLoggedUser() != null)
                 ? SessionManager.getInstance().getLoggedUser().getType()
-                : "Nessuno";
-
-        System.out.println("Tipo utente: " + userType);
+                : "None";
 
         if ("Proprietario".equals(userType)) {
-            OwnerTopBarCLI ownerTopBar = new OwnerTopBarCLI();
-            ownerTopBar.displayMenu();
-            System.out.print("-> ");
-            String choice = scanner.nextLine();
-            handleOwnerChoice(choice);
+            OwnerTopBarCLI ownerTopBarCLI = new OwnerTopBarCLI();
+            while (true) {
+                ownerTopBarCLI.displayMenu();
+                System.out.print("-> ");
+                String choice = scanner.nextLine();
+                handleOwnerChoice(choice, ownerTopBarCLI);
+            }
         } else {
-            UserTopBarCLI userTopBar = new UserTopBarCLI();
-            System.out.print("-> ");
-            String choice = scanner.nextLine();
-            userTopBar.displayMenu();
+            UserTopBarCLI userTopBarCLI = new UserTopBarCLI();
+            while (true) {
+                userTopBarCLI.displayMenu();
+                System.out.print("-> ");
+                String choice = scanner.nextLine();
+                handleUserChoice(choice, userTopBarCLI);
+            }
         }
     }
 
-    private void handleOwnerChoice(String choice) {
+    private void handleOwnerChoice(String choice, OwnerTopBarCLI ownerTopBar) {
         switch (choice) {
             case "1":
-                ownerTopBarCLI.switchToHome();
+                ownerTopBar.switchToHome();
                 break;
             case "2":
-                ownerTopBarCLI.switchToManager();
+                ownerTopBar.switchToManager();
                 break;
             case "3":
-                ownerTopBarCLI.switchToEventi();
+                ownerTopBar.switchToEventi();
                 break;
             case "4":
-                ownerTopBarCLI.logout();
+                ownerTopBar.logout();
+                break;
+            default:
+                System.out.println("Opzione non valida. Riprova");
+                break;
+        }
+    }
+
+    private void handleUserChoice(String choice, UserTopBarCLI userTopBar) {
+        switch (choice) {
+            case "1":
+                userTopBar.switchToHome();
+                break;
+            case "2":
+                userTopBar.switchToPrenota();
+                break;
+            case "3":
+                userTopBar.switchToEventi();
+                break;
+            case "4":
+                userTopBar.switchToLogin();
                 break;
             default:
                 System.out.println("Opzione non valida. Riprova");

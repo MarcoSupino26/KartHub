@@ -1,5 +1,6 @@
 package views.cli;
 
+import beans.CombinedSlotsBean;
 import controllers.BookManager;
 import beans.OptionsBean;
 import beans.SlotBean;
@@ -29,10 +30,11 @@ public class BookingCLI {
         TrackProfileBean selectedTrack = bookManager.getSelectedTrack();
 
         System.out.println("Tracciato selezionato: " + selectedTrack.getName());
-
         boolean continueBooking = true;
 
         while (continueBooking) {
+            showOptions();
+
             System.out.print("Inserisci la data della prenotazione (YYYY-MM-DD): ");
             selectedDay = LocalDate.parse(scanner.nextLine());
 
@@ -40,24 +42,23 @@ public class BookingCLI {
 
             System.out.println("\nVuoi scegliere un altro giorno o proseguire?");
             System.out.println("1. Selezionare un altro giorno");
-            System.out.println("2. Proseguire con la registrazione");
+            System.out.println("2. Proseguire con la prenotazione");
 
             System.out.print("Scegli un'opzione (1/2): ");
             String option = scanner.nextLine();
 
             if ("2".equals(option)) {
                 continueBooking = false;
-                showOptions();
+                confirmBooking();
             } else if (!"1".equals(option)) {
                 System.out.println("Scelta non valida");
             }
         }
     }
 
-
     private void showOptions() {
-        System.out.println("La qualifica non può essere selezionata senza la gara.");
-        System.out.print("Seleziona le opzioni:\n1. Gara\n2. Qualifiche\n3. Prova Libera\n4. Medaglie\n5. Champagne\n6. On-Board\n");
+        System.out.println("-------------------------");
+        System.out.print("Seleziona le opzioni:\n1. Gara\n2. Qualifiche (non selezionabile senza gara)\n3. Prova Libera\n4. Medaglie\n5. Champagne\n6. On-Board\n");
         System.out.print("Seleziona le opzioni (separate da virgola): ");
         String[] options = scanner.nextLine().split(",");
 
@@ -68,20 +69,18 @@ public class BookingCLI {
         champagneSelected = optionsListContains(options, "5");
         onBoardSelected = optionsListContains(options, "6");
 
+        System.out.print("Numero di persone: ");
+        rentalKarts = Integer.parseInt(scanner.nextLine());
         System.out.print("Usate kart personali? (s/n): ");
         checkSelected = "s".equalsIgnoreCase(scanner.nextLine());
 
         if (checkSelected) {
-            System.out.print("Inserisci il numero di kart a noleggio: ");
-            rentalKarts = Integer.parseInt(scanner.nextLine());
-
             System.out.print("Inserisci il numero di kart personali: ");
             personalKarts = Integer.parseInt(scanner.nextLine());
+            rentalKarts = rentalKarts - personalKarts;
         } else {
-            rentalKarts = Integer.parseInt(scanner.nextLine());
             personalKarts = 0;
         }
-        confirmBooking();
     }
 
     private boolean optionsListContains(String[] options, String option) {
@@ -98,17 +97,43 @@ public class BookingCLI {
         bookManager.generateSlots2(selectedDay);
 
         List<SlotBean> slotsList = bookManager.getSlots2(selectedDay);
+        if (slotsList.isEmpty()) {
+            System.out.println("Nessuno slot disponibile");
+        }else updateTimeSlotsList(slotsList, bookManager);
+    }
+
+    private void updateTimeSlotsList(List<SlotBean> slotsList, BookManager bookManager) {
+        slotsList = updateCombinedSlots(slotsList, bookManager);
         populateSlotsListView(slotsList);
+    }
+
+    private List<SlotBean> updateCombinedSlots(List<SlotBean>slotsList, BookManager bookManager) {
+        if(raceSelected) {
+            CombinedSlotsBean combinedSlots = new CombinedSlotsBean(slotsList, true, qualiSelected, fpSelected);
+            slotsList = bookManager.getCombinedSlots2(combinedSlots);
+        }
+        return slotsList;
     }
 
     private void populateSlotsListView(List<SlotBean> slotsList) {
         System.out.println("Slot disponibili:");
 
+        int i = 1;
         for (SlotBean slot : slotsList) {
             if (slot.isFree()) {
-                String formattedSlot = String.format("%.2f - %.2f", slot.getSlotStart(), slot.getSlotEnd()).replace(",", ".");
+                String formattedSlot = String.format("%d: %.2f - %.2f", i, slot.getSlotStart(), slot.getSlotEnd()).replace(",", ".");
                 System.out.println(formattedSlot);
+                i++;
             }
+        }
+        System.out.print("Seleziona un turno: ");
+        int selectedIndex = Integer.parseInt(scanner.nextLine()) - 1;
+        if (selectedIndex >= 0 && selectedIndex < slotsList.size()) {
+            SlotBean selected = slotsList.get(selectedIndex);
+            selectedSlot = String.format("%.2f - %.2f", selected.getSlotStart(), selected.getSlotEnd());
+        } else {
+            System.out.println("Scelta non valida, riprova.");
+            populateSlotsListView(slotsList);
         }
     }
 
@@ -126,7 +151,8 @@ public class BookingCLI {
         optionsBean.setDate(selectedDay);
 
         String[] parts = selectedSlot.split("-");
-        optionsBean.setStartTime(Double.parseDouble(parts[0]));
+        String startTime = parts[0].replace(",",".");
+        optionsBean.setStartTime(Double.parseDouble(startTime));
         optionsBean.setShifts(selectedSlot);
 
         new BookManager().saveBooking(optionsBean);

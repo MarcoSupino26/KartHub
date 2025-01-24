@@ -56,13 +56,9 @@ public class BookManager {
         BookingSession session = SessionManager.getInstance().getBookingSession();
         Track track = session.getTrack();
 
-        if(session.getTrack().getTimeSlots(selectedDate) != null) return;
+        if(!session.getTrack().getTimeSlots(selectedDate).isEmpty()) return;
 
         List<TimeSlot> timeSlots = getTimeSlotList(track);
-
-        TrackDao trackDao = FactoryDAO.getInstance().createTrackDao();
-        track = trackDao.getTrack(track.getName());
-        track.addTimeSlots(timeSlots, selectedDate);
 
         session.getTrack().addTimeSlots(timeSlots, selectedDate);
     }

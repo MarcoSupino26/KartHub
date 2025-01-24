@@ -3,10 +3,6 @@ package views.cli;
 import beans.TrackBean;
 import controllers.ManageController;
 import javafx.scene.image.Image;
-import models.user.User;
-import utils.SessionManager;
-
-import java.io.File;
 import java.util.Scanner;
 
 public class TrackCreationCLI {
@@ -15,15 +11,17 @@ public class TrackCreationCLI {
     OwnerTopBarCLI ownerTopBarCLI = new OwnerTopBarCLI();
 
     public void start() {
-        ownerTopBarCLI.displayMenu();
-        displayMenu();
-        String choice  = scanner.nextLine();
-        handleChoice(choice);
+        while (true) {
+            ownerTopBarCLI.displayMenu();
+            displayMenu();
+            String choice  = scanner.nextLine();
+            handleChoice(choice);
+        }
     }
 
     private void displayMenu() {
-        System.out.println("5. Imposta un nuovo tracciato");
-        System.out.println("-> ");
+        System.out.println("5. Inserisci tracciato");
+        System.out.print("-> ");
     }
 
     private void handleChoice(String choice) {
@@ -48,6 +46,7 @@ public class TrackCreationCLI {
                 break;
         }
     }
+
     private void setRegistration() {
         System.out.print("Nome del tracciato: ");
         String trackName = scanner.nextLine();
@@ -58,7 +57,7 @@ public class TrackCreationCLI {
         System.out.print("Indirizzo del tracciato: ");
         String address = scanner.nextLine();
 
-        System.out.print("Scegli il percorso dell'immagine per il tracciato (image//path)");
+        System.out.print("Scegli il percorso dell'immagine per il tracciato (image//path): ");
         String imagePath = scanner.nextLine();
         Image image = new Image("file:" + imagePath);
 
