@@ -180,4 +180,21 @@ public class BookManager {
         TrackDao trackDao = FactoryDAO.getInstance().createTrackDao();
         trackDao.updateTrack(track);
     }
+
+    public BookRecapBean getBookRecap(){
+        BookingInterface booking = SessionManager.getInstance().getBookingSession().getBooking();
+        BookRecapBean bean = new BookRecapBean();
+        bean.setRentalKarts(booking.getRental());
+        bean.setPersonalKarts(booking.getPersonal());
+        bean.setBookingCost(booking.getCost());
+        bean.setBookingID(booking.getId());
+        bean.setBookingDesc(booking.getDescription());
+        bean.setBookedTrack(booking.getTrackName());
+        bean.setShift(booking.getShift());
+        return bean;
+    }
+
+    public void clearSession(){
+        SessionManager.getInstance().freeBookingSession();
+    }
 }

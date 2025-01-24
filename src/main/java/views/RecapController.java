@@ -1,5 +1,7 @@
 package views;
 
+import beans.BookRecapBean;
+import controllers.BookManager;
 import javafx.fxml.FXML;
 import javafx.scene.text.Text;
 import models.booking.BookingInterface;
@@ -26,17 +28,17 @@ public class RecapController {
 
     public void initialize() {
         String usr = SessionManager.getInstance().getLoggedUser().getUsername();
-        BookingSession bS = SessionManager.getInstance().getBookingSession();
-        BookingInterface booking = bS.getBooking();
+        BookManager bookManager = new BookManager();
+        BookRecapBean recap = bookManager.getBookRecap();
         usrname.setText(usr + ", ecco la tua prenotazione");
-        rental.setText(String.valueOf(booking.getRental()));
-        personal.setText(String.valueOf(booking.getPersonal()));
-        cost.setText(String.format("€%.2f", booking.getCost()));
-        id.setText(String.valueOf(booking.getId()));
-        description.setText(booking.getDescription());
-        trackName.setText(booking.getTrackName());
-        shift.setText(booking.getShift());
-        SessionManager.getInstance().freeBookingSession();
+        rental.setText(String.valueOf(recap.getRentalKarts()));
+        personal.setText(String.valueOf(recap.getPersonalKarts()));
+        cost.setText(String.format("€%.2f", recap.getBookingCost()));
+        id.setText(String.valueOf(recap.getBookingID()));
+        description.setText(recap.getBookingDesc());
+        trackName.setText(recap.getBookedTrack());
+        shift.setText(recap.getShift());
+        bookManager.clearSession();
     }
 
     public void proceed(){
