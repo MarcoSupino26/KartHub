@@ -48,6 +48,8 @@ public class ConcreteBooking implements BookingInterface {
 
     public void setShift(String shift) {this.shift = shift;}
 
+    public void setDescription(String description) {this.description = description;}
+
     @Override
     public String getShift(){return shift;}
 

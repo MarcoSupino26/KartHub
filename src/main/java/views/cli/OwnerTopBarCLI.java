@@ -1,8 +1,7 @@
 package views.cli;
 
 import controllers.ManageController;
-import utils.SessionManager;
-import views.SceneManager;
+import utils.session.SessionManager;
 
 public class OwnerTopBarCLI {
 

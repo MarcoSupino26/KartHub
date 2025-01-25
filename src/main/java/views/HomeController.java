@@ -2,7 +2,7 @@ package views;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.BorderPane;
-import utils.SessionManager;
+import utils.session.SessionManager;
 import javafx.fxml.FXML;
 
 import java.io.IOException;

@@ -1,6 +1,6 @@
 package views.cli;
 
-import utils.SessionManager;
+import utils.session.SessionManager;
 
 import java.util.Scanner;
 

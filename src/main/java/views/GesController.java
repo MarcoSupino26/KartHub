@@ -10,7 +10,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import models.user.User;
-import utils.SessionManager;
+import utils.session.SessionManager;
 
 import java.io.File;
 

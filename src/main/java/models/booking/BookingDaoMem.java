@@ -1,6 +1,7 @@
 package models.booking;
 
 import java.util.HashMap;
+import java.util.List;
 
 public class BookingDaoMem extends BookingDao {
     private final HashMap<String, BookingInterface> bookings;
@@ -22,5 +23,10 @@ public class BookingDaoMem extends BookingDao {
         if(!bookings.containsKey(id)){
             bookings.put(id, booking);
         }
+    }
+
+    @Override
+    public List<BookingInterface> getBookingsByTrack(String trackName) {
+        return null;
     }
 }

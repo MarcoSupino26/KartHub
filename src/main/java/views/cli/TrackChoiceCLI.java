@@ -2,8 +2,6 @@ package views.cli;
 
 import controllers.BookManager;
 import beans.DisplayBean;
-import models.track.Track;
-import utils.SessionManager;
 
 import java.util.List;
 import java.util.Scanner;

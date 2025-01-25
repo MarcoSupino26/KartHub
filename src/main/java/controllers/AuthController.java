@@ -2,7 +2,7 @@ package controllers;
 import beans.LoginBean;
 import models.dao.factory.FactoryDAO;
 import models.user.UserDao;
-import utils.SessionManager;
+import utils.session.SessionManager;
 import models.user.User;
 
 public class AuthController {

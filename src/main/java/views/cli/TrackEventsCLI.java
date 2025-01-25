@@ -2,7 +2,6 @@ package views.cli;
 
 import beans.TrackEventBean;
 import controllers.EventManager;
-import utils.SessionManager;
 
 import java.util.List;
 import java.util.Scanner;

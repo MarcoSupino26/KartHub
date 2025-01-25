@@ -2,7 +2,7 @@ package views.topbar;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import utils.SessionManager;
+import utils.session.SessionManager;
 import views.SceneManager;
 
 public class UserTopBarController {

@@ -1,4 +1,4 @@
-package utils;
+package utils.session;
 
 import models.user.User;
 

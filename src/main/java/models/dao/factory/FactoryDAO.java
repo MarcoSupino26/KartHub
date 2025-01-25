@@ -1,9 +1,11 @@
 package models.dao.factory;
 
 import models.event.KartEventDao;
+import models.slots.TimeSlotDao;
 import models.track.TrackDao;
 import models.user.UserDao;
 import models.booking.BookingDao;
+import start.Main;
 
 public abstract class FactoryDAO {
     private static FactoryDAO instance;
@@ -13,7 +15,9 @@ public abstract class FactoryDAO {
 
     public static FactoryDAO getInstance() {
         if (instance == null) {
-            instance = new MemoryDao();
+            if(Main.isDemoMode()) {
+                instance = new MemoryDao();
+            } else instance = new DBDao();
         }
         return instance;
     }
@@ -25,4 +29,6 @@ public abstract class FactoryDAO {
     public abstract BookingDao createBookingDao();
 
     public abstract KartEventDao createKartEventDao();
+
+    public abstract TimeSlotDao createTimeSlotDao();
 }

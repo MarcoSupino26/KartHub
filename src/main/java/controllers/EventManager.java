@@ -9,8 +9,8 @@ import models.event.KartEventDao;
 import models.track.Track;
 import models.track.TrackDao;
 import models.user.User;
-import utils.EventSession;
-import utils.SessionManager;
+import utils.session.EventSession;
+import utils.session.SessionManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +28,7 @@ public class EventManager {
         TrackDao trackDao = FactoryDAO.getInstance().createTrackDao();
         List<Track> tracks = trackDao.getAllTracks();
         for (Track track : tracks) {
-            if (track.getOwner().equals(owner)) {
+            if (track.getOwner().getUsername().equals(owner.getUsername())) {
                 trackName = track.getName();
             }
         }
@@ -111,7 +111,7 @@ public class EventManager {
         TrackDao trackDao = FactoryDAO.getInstance().createTrackDao();
         Track track = trackDao.getTrack(trackName);
         track.addEvent(kartEvent);
-        trackDao.updateTrack(track);
+        trackDao.insertTrack(track);
 
         KartEventDao kartEventDao = FactoryDAO.getInstance().createKartEventDao();
         kartEventDao.addKartEvent(kartEvent);
@@ -135,7 +135,7 @@ public class EventManager {
                 eventSession.setCurrentKartEvent(kartEvent);
             }
         }
-        trackDao.updateTrack(track);
+        trackDao.insertTrack(track);
     }
 
     public int getSoldTickets() {

@@ -7,8 +7,8 @@ import models.dao.factory.FactoryDAO;
 import models.slots.TimeSlot;
 import models.track.Track;
 import models.track.TrackDao;
-import utils.BookingSession;
-import utils.SessionManager;
+import utils.session.BookingSession;
+import utils.session.SessionManager;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -174,7 +174,7 @@ public class BookManager {
         double startTime = options.getStartTime();
         track.setSlotAvailability(selectedDay, bookedSlots, startTime);
         TrackDao trackDao = FactoryDAO.getInstance().createTrackDao();
-        trackDao.updateTrack(track);
+        trackDao.insertTrack(track);
     }
 
     public BookRecapBean getBookRecap(){

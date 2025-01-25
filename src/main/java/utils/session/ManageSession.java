@@ -1,4 +1,4 @@
-package utils;
+package utils.session;
 
 import javafx.scene.image.Image;
 import models.user.User;

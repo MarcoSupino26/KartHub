@@ -85,10 +85,7 @@ public class TrackDaoMem extends TrackDao {
 
     @Override
     public void insertTrack(Track track) {
-        String name = track.getName();
-        if(!tracks.containsKey(name)){
-            tracks.put(track.getName(), track);
-        }
+        tracks.put(track.getName(), track);
     }
 
     @Override
@@ -99,10 +96,5 @@ public class TrackDaoMem extends TrackDao {
     @Override
     public List<Track> getAllTracks() {
         return new ArrayList<>(tracks.values());
-    }
-
-    @Override
-    public void updateTrack(Track track){
-        tracks.put(track.getName(), track);
     }
 }

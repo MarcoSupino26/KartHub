@@ -39,6 +39,13 @@ public class UserDaoMem extends UserDao {
             return null;
         }
     }
+
+    @Override
+    public User getUserByUsername(String username) {
+        return null;
+    }
+
+
     //rivedere la logica del null, forse meglio metterla nel controllore
 
     //removeUser()

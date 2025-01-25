@@ -25,12 +25,8 @@ public class KartEventDaoMem extends KartEventDao {
     }
 
     @Override
-    public KartEvent getKartEvent(String eventName) {
-        if (kartEvents.containsKey(eventName)) {
-            return  kartEvents.get(eventName);
-        }else{
-            return null;
-        }
+    public List<KartEvent> getEventsByTrack(String track) {
+        return null;
     }
 
     @Override

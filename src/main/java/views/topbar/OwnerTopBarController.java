@@ -2,7 +2,7 @@ package views.topbar;
 
 import controllers.ManageController;
 import javafx.fxml.FXML;
-import utils.SessionManager;
+import utils.session.SessionManager;
 import views.SceneManager;
 
 public class OwnerTopBarController {

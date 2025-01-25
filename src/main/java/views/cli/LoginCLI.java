@@ -1,9 +1,7 @@
 package views.cli;
 
-import utils.SessionManager;
 import controllers.AuthController;
 import beans.LoginBean;
-import views.HomeController;
 
 import java.util.Scanner;
 

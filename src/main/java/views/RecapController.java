@@ -4,9 +4,7 @@ import beans.BookRecapBean;
 import controllers.BookManager;
 import javafx.fxml.FXML;
 import javafx.scene.text.Text;
-import models.booking.BookingInterface;
-import utils.BookingSession;
-import utils.SessionManager;
+import utils.session.SessionManager;
 
 public class RecapController {
     @FXML

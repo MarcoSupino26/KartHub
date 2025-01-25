@@ -5,12 +5,19 @@ import javafx.stage.Stage;
 import views.SceneManager;
 import java.util.Scanner;
 import views.cli.HomeCLI;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Properties;
 
 public class Main extends Application {
 
     private static boolean isCLI = false;
+    private static boolean isDemoMode = true;
 
     public static void main(String[] args) {
+        // Carica il valore della modalità dal file di configurazione
+        loadConfig();
+
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Benvenuto in KartHub!");
@@ -52,6 +59,27 @@ public class Main extends Application {
         HomeCLI homeCLI = new HomeCLI();
         homeCLI.start();
     }
+
+    // Metodo per caricare la configurazione dal file config.properties
+    private static void loadConfig() {
+        Properties properties = new Properties();
+        try {
+            // Carica il file di configurazione
+            FileInputStream configFile = new FileInputStream("src/main/resources/config.properties");
+            properties.load(configFile);
+
+            // Legge il valore della modalità dal file
+            String mode = properties.getProperty("mode", "demo"); // Default a demo se non trovato
+            isDemoMode = "demo".equalsIgnoreCase(mode);
+
+            System.out.println("Modalità di esecuzione: " + (isDemoMode ? "Demo" : "Persistence"));
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Errore nel caricare il file di configurazione.");
+        }
+    }
+
+    public static boolean isDemoMode() {
+        return isDemoMode;
+    }
 }
-
-

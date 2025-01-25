@@ -6,8 +6,8 @@ import models.dao.factory.FactoryDAO;
 import models.track.Track;
 import models.track.TrackDao;
 import models.user.User;
-import utils.ManageSession;
-import utils.SessionManager;
+import utils.session.ManageSession;
+import utils.session.SessionManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +22,7 @@ public class ManageController {
         User owner = SessionManager.getInstance().getLoggedUser();
         List<Track> tracks = trackDao.getAllTracks();
         for (Track track : tracks) {
-            if (track.getOwner().equals(owner)) {
+            if (track.getOwner().getUsername().equals(owner.getUsername())) {
                 ManageSession mS = new ManageSession();
                 mS.setTrackName(track.getName());
                 SessionManager.getInstance().createManageSession(mS);
@@ -99,7 +99,7 @@ public class ManageController {
         User owner = SessionManager.getInstance().getLoggedUser();
         List<Track> tracks = trackDao.getAllTracks();
         for (Track track : tracks) {
-            if (track.getOwner().equals(owner)) {
+            if (track.getOwner().getUsername().equals(owner.getUsername())) {
                 ManageSession mS = new ManageSession();
                 mS.setTrackName(track.getName());
                 return new TrackProfileBean(track.getImage(), track.getName());

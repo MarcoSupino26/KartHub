@@ -2,7 +2,7 @@ package views.cli;
 
 import beans.BookRecapBean;
 import controllers.BookManager;
-import utils.SessionManager;
+import utils.session.SessionManager;
 
 public class RecapCLI {
 

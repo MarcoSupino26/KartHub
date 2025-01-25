@@ -4,6 +4,7 @@ import models.booking.BookingDao;
 import models.booking.BookingDaoMem;
 import models.event.KartEventDao;
 import models.event.KartEventDaoMem;
+import models.slots.TimeSlotDao;
 import models.track.TrackDao;
 import models.track.TrackDaoMem;
 import models.user.UserDao;
@@ -21,4 +22,7 @@ public class MemoryDao extends FactoryDAO {
 
     @Override
     public KartEventDao createKartEventDao(){return KartEventDaoMem.getInstance();}
+
+    @Override
+    public TimeSlotDao createTimeSlotDao(){return null;}
 }

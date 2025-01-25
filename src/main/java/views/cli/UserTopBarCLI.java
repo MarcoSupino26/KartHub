@@ -1,7 +1,6 @@
 package views.cli;
 
-import utils.SessionManager;
-import views.SceneManager;
+import utils.session.SessionManager;
 
 public class UserTopBarCLI {
     public void displayMenu() {
