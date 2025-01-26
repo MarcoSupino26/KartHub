@@ -2,6 +2,9 @@ package views;
 
 import beans.*;
 import controllers.BookManager;
+import exceptions.EmptyFieldException;
+import exceptions.InvalidDateException;
+import exceptions.InvalidDateFormatException;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.Event;
@@ -166,21 +169,71 @@ public class BookingController {
     @FXML
     public void confirmBooking() {
         OptionsBean optionsBean = new OptionsBean();
+        int rentalKarts = 0;
+        int personalKarts = 0;
 
-        int rentalKarts = Integer.parseInt(rental.getText());
-        if(check.isSelected()) {
-            int personalKarts = Integer.parseInt(personal.getText());
+        /*rentalKarts = Integer.parseInt(rental.getText());
+        if (check.isSelected()) {
+            personalKarts = Integer.parseInt(personal.getText());
             rentalKarts = rentalKarts - personalKarts;
             optionsBean.setPersonal(personalKarts);
-        }else optionsBean.setPersonal(0);
-
+        } else optionsBean.setPersonal(0);
         optionsBean.setRental(rentalKarts);
+
         optionsBean.setRace(race.isSelected());
         optionsBean.setQuali(quali.isSelected());
         optionsBean.setFp(fp.isSelected());
         optionsBean.setMedals(medals.isSelected());
         optionsBean.setChampagne(champagne.isSelected());
-        optionsBean.setOnBoard(onBoard.isSelected());
+        optionsBean.setOnBoard(onBoard.isSelected());*/
+        try {
+            if (rental.getText().isEmpty()) {
+                throw new EmptyFieldException("Il campo 'rental' non può essere vuoto.");
+            }
+            rentalKarts = Integer.parseInt(rental.getText());
+
+            if (check.isSelected()) {
+                if (personal.getText().isEmpty()) {
+                    throw new EmptyFieldException("Il campo 'personal' non può essere vuoto quando l'opzione è selezionata.");
+                }
+                personalKarts = Integer.parseInt(personal.getText());
+                rentalKarts = rentalKarts - personalKarts;
+                optionsBean.setPersonal(personalKarts);
+            } else {
+                optionsBean.setPersonal(0);
+            }
+
+            if (!race.isSelected() && !fp.isSelected()) {
+                throw new EmptyFieldException("Devi selezionare almeno una tra 'race' o 'fp'.");
+            }
+
+            optionsBean.setRental(rentalKarts);
+            optionsBean.setRace(race.isSelected());
+            optionsBean.setQuali(quali.isSelected());
+            optionsBean.setFp(fp.isSelected());
+            optionsBean.setMedals(medals.isSelected());
+            optionsBean.setChampagne(champagne.isSelected());
+            optionsBean.setOnBoard(onBoard.isSelected());
+
+        } catch (EmptyFieldException e) {
+            e.handleException();
+        }
+
+
+        try {
+            if(day.getValue() == null) {
+                throw new EmptyFieldException();
+            }
+            if(day.getValue().isAfter(LocalDate.now())) {
+                throw new InvalidDateException();
+            }
+        } catch (InvalidDateException e) {
+            e.handleException();
+        } catch (InvalidDateFormatException e){
+            e.handleException();
+        }catch (EmptyFieldException e){
+            e.handleException();
+        }
         optionsBean.setDate(day.getValue());
 
         String slot = slots.getValue();

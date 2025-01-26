@@ -2,6 +2,8 @@ package views.cli;
 
 import controllers.AuthController;
 import beans.LoginBean;
+import exceptions.UserNotFoundException;
+import views.SceneManager;
 
 import java.util.Scanner;
 
@@ -41,13 +43,12 @@ public class LoginCLI {
         logBean.setUsername(username);
         logBean.setPassword(password);
 
-        AuthController authenticator = new AuthController();
-        if (authenticator.authUser(logBean)) {
-            System.out.println("Accesso riuscito! Benvenuto, " + username);
-            new HomeCLI().start();
-        } else {
-            System.out.println("Credenziali errate. Riprova.");
-            start();
+        try {
+            if (new AuthController().authUser(logBean)) {
+                new HomeCLI().start();
+            }
+        }catch (UserNotFoundException e){
+            e.handleException();
         }
     }
 

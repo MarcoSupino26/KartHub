@@ -28,7 +28,7 @@ public class TicketShop {
         EventCreationBean bean = eventManager.getPaymentInfo();
         int avTickets = bean.getAvailableTickets();
 
-        for (int i = 0; i < avTickets; i++) {
+        for (int i = 0; i <= avTickets; i++) {
             ticket.getItems().add(i);
         }
         ticket.setValue(0);

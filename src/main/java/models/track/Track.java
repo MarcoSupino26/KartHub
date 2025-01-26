@@ -120,6 +120,7 @@ public class Track {
     public String getDescription() {
         return description;
     }
+
     public void setShiftDuration(double shiftDuration) {this.shiftDuration = shiftDuration;}
 
     public void setOpeningHour(double openingHour) {this.openingHour = openingHour;}

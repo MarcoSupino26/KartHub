@@ -20,6 +20,7 @@ public class ManageController {
     public boolean registeredTrack() { //controlla se l'owner ha un tracciato associato
         TrackDao trackDao = FactoryDAO.getInstance().createTrackDao();
         User owner = SessionManager.getInstance().getLoggedUser();
+        System.out.println("Utente " + owner.getUsername());
         List<Track> tracks = trackDao.getAllTracks();
         for (Track track : tracks) {
             if (track.getOwner().getUsername().equals(owner.getUsername())) {

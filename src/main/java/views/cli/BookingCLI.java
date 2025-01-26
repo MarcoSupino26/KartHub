@@ -5,6 +5,10 @@ import controllers.BookManager;
 import beans.OptionsBean;
 import beans.SlotBean;
 import beans.TrackProfileBean;
+import exceptions.EmptyFieldException;
+import exceptions.InvalidDateException;
+import exceptions.InvalidDateFormatException;
+
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
@@ -35,8 +39,21 @@ public class BookingCLI {
         while (continueBooking) {
             showOptions();
 
+
             System.out.print("Inserisci la data della prenotazione (YYYY-MM-DD): ");
-            selectedDay = LocalDate.parse(scanner.nextLine());
+            try {
+                selectedDay = LocalDate.parse(scanner.nextLine());
+                if(selectedDay == null) throw new EmptyFieldException();
+                if(selectedDay.isAfter(LocalDate.now())) {
+                    throw new InvalidDateException();
+                }
+            } catch (InvalidDateException e) {
+                e.handleException();
+            } catch (InvalidDateFormatException e){
+                e.handleException();
+            } catch (EmptyFieldException e){
+                e.handleException();
+            }
 
             updateTimeSlots();
 
@@ -62,6 +79,11 @@ public class BookingCLI {
         System.out.print("Seleziona le opzioni (separate da virgola): ");
         String[] options = scanner.nextLine().split(",");
 
+        try{
+            if(!optionsListContains(options, "1") && !optionsListContains(options,"3")) throw new EmptyFieldException();
+        } catch (EmptyFieldException e){
+            e.handleException();
+        }
         raceSelected = optionsListContains(options, "1");
         qualiSelected = optionsListContains(options, "2");
         fpSelected = optionsListContains(options, "3");
@@ -69,7 +91,7 @@ public class BookingCLI {
         champagneSelected = optionsListContains(options, "5");
         onBoardSelected = optionsListContains(options, "6");
 
-        System.out.print("Numero di persone: ");
+        /*System.out.print("Numero di persone: ");
         rentalKarts = Integer.parseInt(scanner.nextLine());
         System.out.print("Usate kart personali? (s/n): ");
         checkSelected = "s".equalsIgnoreCase(scanner.nextLine());
@@ -80,6 +102,34 @@ public class BookingCLI {
             rentalKarts = rentalKarts - personalKarts;
         } else {
             personalKarts = 0;
+        }*/
+        try {
+            System.out.print("Numero di persone: ");
+            // Verifica se il campo rental è vuoto o non valido
+            String rentalInput = scanner.nextLine();
+            if (rentalInput.isEmpty()) {
+                throw new EmptyFieldException("Il numero di persone (rental) non può essere vuoto.");
+            }
+            rentalKarts = Integer.parseInt(rentalInput);
+
+            System.out.print("Usate kart personali? (s/n): ");
+            checkSelected = "s".equalsIgnoreCase(scanner.nextLine());
+
+            if (checkSelected) {
+                System.out.print("Inserisci il numero di kart personali: ");
+                // Verifica se il campo personal è vuoto o non valido
+                String personalInput = scanner.nextLine();
+                if (personalInput.isEmpty()) {
+                    throw new EmptyFieldException("Il numero di kart personali non può essere vuoto.");
+                }
+                personalKarts = Integer.parseInt(personalInput);
+                rentalKarts = rentalKarts - personalKarts;
+            } else {
+                personalKarts = 0;
+            }
+
+        } catch (EmptyFieldException e) {
+            e.handleException(); // Gestisce l'eccezione a seconda che sia CLI o GUI
         }
     }
 

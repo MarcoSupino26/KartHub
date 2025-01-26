@@ -1,5 +1,6 @@
 package controllers;
 import beans.LoginBean;
+import exceptions.UserNotFoundException;
 import models.dao.factory.FactoryDAO;
 import models.user.UserDao;
 import utils.session.SessionManager;
@@ -16,7 +17,7 @@ public class AuthController {
         String password = logBean.getPassword();
         User usr = userDAO.getUser(username, password);
         if(usr == null) {
-            return false;
+            throw new UserNotFoundException();
         }else{
             SessionManager.getInstance().setLoggedUser(usr);
             return true;

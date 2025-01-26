@@ -7,7 +7,7 @@ import java.util.UUID;
 public class ConcreteBooking implements BookingInterface {
     private double baseCost;
     private String description;
-    private final String id;
+    private String id;
     private int rental;
     private int personal;
     private User user;
@@ -50,6 +50,10 @@ public class ConcreteBooking implements BookingInterface {
 
     public void setDescription(String description) {this.description = description;}
 
+    public void setId(String id){
+        this.id = id;
+    }
+
     @Override
     public String getShift(){return shift;}
 
@@ -62,4 +66,8 @@ public class ConcreteBooking implements BookingInterface {
     public LocalDate getSelectedDay() {return selectedDay;}
 
     public void setSelectedDay(LocalDate selectedDay) {this.selectedDay = selectedDay;}
+
+    public void setBaseCost(double cost) {
+        this.baseCost = cost;
+    }
 }

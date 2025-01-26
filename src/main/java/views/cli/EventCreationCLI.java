@@ -2,6 +2,10 @@ package views.cli;
 
 import beans.EventCreationBean;
 import controllers.EventManager;
+import exceptions.InvalidDateException;
+import exceptions.InvalidDateFormatException;
+
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Scanner;
 
@@ -33,6 +37,16 @@ public class EventCreationCLI {
         eventTime = LocalTime.parse(scanner.nextLine());
         System.out.print("Inserisci la data dell'evento (YYYY-MM-DD): ");
         eventDate = java.time.LocalDate.parse(scanner.nextLine());
+        try {
+            if(eventDate.isAfter(LocalDate.now())) {
+                throw new InvalidDateException();
+            }
+        } catch (InvalidDateException e) {
+            e.handleException();
+        } catch (InvalidDateFormatException e){
+            e.handleException();
+        }
+
         System.out.print("Inserisci il numero di biglietti disponibili: ");
         availableTickets = Integer.parseInt(scanner.nextLine());
 

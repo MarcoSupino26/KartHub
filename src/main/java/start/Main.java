@@ -82,4 +82,8 @@ public class Main extends Application {
     public static boolean isDemoMode() {
         return isDemoMode;
     }
+
+    public static boolean isCLI() {
+        return isCLI;
+    }
 }

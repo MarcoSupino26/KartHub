@@ -2,11 +2,15 @@ package views;
 
 import beans.EventCreationBean;
 import controllers.EventManager;
+import exceptions.InvalidDateException;
+import exceptions.InvalidDateFormatException;
 import javafx.fxml.FXML;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
+
+import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class EventCreation {
@@ -33,7 +37,18 @@ public class EventCreation {
     @FXML
     public void createEvent() {
         EventCreationBean bean = new EventCreationBean(eventName.getText());
+
+        try {
+            if(eventDate.getValue().isAfter(LocalDate.now())) {
+                throw new InvalidDateException();
+            }
+        } catch (InvalidDateException e) {
+            e.handleException();
+        } catch (InvalidDateFormatException e){
+            e.handleException();
+        }
         bean.setDate(eventDate.getValue());
+
         bean.setPrice(Double.parseDouble(ticketCost.getText()));
         bean.setType(eventType.getText());
         bean.setAvailableTickets(tickets.getValue());
