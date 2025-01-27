@@ -102,8 +102,10 @@ public class TrackDaoDB extends TrackDao {
 
     @Override
     public Track getTrack(String name) {
-        String query = "SELECT trackname, description, karts, address, " + "image_path, opening_hour, closing_hour, duration,usrname" +
+        String query = "SELECT trackname, description, karts, address, " +
+                "image_path, opening_hour, closing_hour, slot_duration, usrname " +
                 "FROM tracks WHERE trackname = ?";
+
         Track track = null;
         try (Connection connection = DBConnection.getInstance().getConnection();
              PreparedStatement stmt = connection.prepareStatement(query)) {
@@ -150,7 +152,9 @@ public class TrackDaoDB extends TrackDao {
 
     public List<Track> getAllTracks() {
         List<Track> tracks = new ArrayList<>();
-        String query = "SELECT trackname, description, karts, address, image_path, opening_hour, closing_hour, slot_duration, usrname FROM tracks";
+        String query = "SELECT trackname, description, karts, address, " +
+                "image_path, opening_hour, closing_hour, slot_duration, usrname " +
+                "FROM tracks";
         Connection connection = null;
         try {
             connection = DBConnection.getInstance().getConnection();
@@ -301,8 +305,9 @@ public class TrackDaoDB extends TrackDao {
     @Override
     public Track getTrackByUser(String username) {
         String query = "SELECT trackname, description, karts, address, " +
-                "image_path, opening_hour, closing_hour, duration, usrname" +
+                "image_path, opening_hour, closing_hour, slot_duration, usrname " +
                 "FROM tracks WHERE usrname = ?";
+
         Track track = null;
 
         try (Connection connection = DBConnection.getInstance().getConnection();

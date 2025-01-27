@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDaoDB extends UserDao {
-    private final String OWN = "Proprietario";
+    private static final String OWN = "Proprietario";
 
     @Override
     public void addUser(String username, User user) {
@@ -38,7 +38,8 @@ public class UserDaoDB extends UserDao {
 
     @Override
     public User getUser(String username, String password) {
-        String query = "SELECT usrname, password, type FROM users WHERE usrname = ? AND password = ?";
+        String query = "SELECT usrname, password, type " +
+                "FROM users WHERE usrname = ? AND password = ?";
         User user = null;
 
         try (Connection connection = DBConnection.getInstance().getConnection();
@@ -68,7 +69,9 @@ public class UserDaoDB extends UserDao {
 
     @Override
     public User getUserByUsername(String username) {
-        String query = "SELECT usrname, password, type FROM users WHERE usrname = ?";
+        String query = "SELECT usrname, password, type " +
+                "FROM users WHERE usrname = ?";
+
         User user = null;
 
         try (Connection connection = DBConnection.getInstance().getConnection();
