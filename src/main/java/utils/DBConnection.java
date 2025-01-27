@@ -13,9 +13,9 @@ public class DBConnection {
     private static DBConnection instance;
     private Connection connection;
 
-    private static String URL;
-    private static String USER;
-    private static String PASSWORD;
+    private final static String URL;
+    private final static String USER;
+    private final static String PASSWORD;
 
 
     static {

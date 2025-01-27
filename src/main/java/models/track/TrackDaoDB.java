@@ -18,6 +18,7 @@ import java.util.*;
 import javafx.scene.image.Image;
 
 public class TrackDaoDB extends TrackDao {
+    private static final String INSERR = "DB insert error";
     private static final String TRACK = "trackname";
     private static final String DESCRIPTION = "description";
     private static final String KARTS = "karts";
@@ -26,7 +27,7 @@ public class TrackDaoDB extends TrackDao {
     private static final String OPENING = "opening_hour";
     private static final String CLOSING = "closing_hour";
     private static final String DURATION = "slot_duration";
-    private static final String USR = "username";
+    private static final String USR = "usrname";
 
     @Override
     public void insertTrack(Track track) {
@@ -64,7 +65,7 @@ public class TrackDaoDB extends TrackDao {
                 try{
                     timeSlotDao.insertTimeSlots(slots, date, track.getName());
                 }catch (DataLoadException e){
-                    System.out.println("DB insert error");
+                    System.out.println(INSERR);
                 }
             }
 
@@ -91,11 +92,11 @@ public class TrackDaoDB extends TrackDao {
             try{
                 insertTrackCosts(track);
             }catch (SQLException e) {
-                throw new DataLoadException("DB insert error");
+                throw new DataLoadException(INSERR);
             }
 
         } catch (SQLException e) {
-            throw new DataLoadException("DB insert error");
+            throw new DataLoadException(INSERR);
         }
     }
 
@@ -120,8 +121,14 @@ public class TrackDaoDB extends TrackDao {
                     double opening = rs.getDouble(OPENING);
                     double closing = rs.getDouble(CLOSING);
                     double shiftDuration = rs.getDouble(DURATION);
-                    String username = rs.getString(USR);
+                    String usrName = rs.getString(USR);
 
+                    try{
+                        UserDao userDao = FactoryDAO.getInstance().createUserDao();
+                        track.setOwner(userDao.getUserByUsername(usrName));
+                    }catch (DataLoadException e){
+                        System.out.println(e.getMessage());
+                    }
                     track.setName(trackname);
                     track.setDescription(descritpion);
                     track.setAvailableKarts(karts);
@@ -307,8 +314,8 @@ public class TrackDaoDB extends TrackDao {
                     String descritpion = rs.getString(DESCRIPTION);
                     int karts  = rs.getInt(KARTS);
                     String address = rs.getString(ADDR);
-                    String image_path = rs.getString(IMG);
-                    Image image = new Image(image_path);
+                    String imagePath = rs.getString(IMG);
+                    Image image = new Image(imagePath);
                     double opening = rs.getDouble(OPENING);
                     double closing = rs.getDouble(CLOSING);
                     double shiftDuration = rs.getDouble(DURATION);
@@ -323,7 +330,6 @@ public class TrackDaoDB extends TrackDao {
                     track.setClosingHour(closing);
                     track.setShiftDuration(shiftDuration);
                     track.setOwner(new Owner(user, null, null));
-                    // Retrieve TimeSlots
                     TimeSlotDao timeSlotDao = FactoryDAO.getInstance().createTimeSlotDao();
                     List<LocalDate> timeSlotDates = new ArrayList<>();
                     try {

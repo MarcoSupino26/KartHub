@@ -95,16 +95,18 @@ public class UserDaoDB extends UserDao {
     }
 
     private User populateUser(User user) {
-        if (user instanceof Owner) {
+        if (user.getType().equals("Proprietario")) {
             TrackDao trackDao = FactoryDAO.getInstance().createTrackDao();
             Track track = null;
             try {
+                //Attenzione qui
                 track = trackDao.getTrackByUser(user.getUsername());
+                track.setOwner(user);
             }catch (DataLoadException e) {
                 System.out.println(e.getMessage());
             }
             ((Owner) user).setTrack(track);
-        } else if (user instanceof Customer) {
+        } else if (user.getType().equals("Cliente")) {
             BookingDao bookingDao = FactoryDAO.getInstance().createBookingDao();
             List<BookingInterface> bookings = new ArrayList<>();
 
