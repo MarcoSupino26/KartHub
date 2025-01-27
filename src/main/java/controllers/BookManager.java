@@ -115,7 +115,7 @@ public class BookManager {
         List<SlotBean> generatedSlots = bean.getGeneratedSlots();
         List<SlotBean> combinedSlots = new ArrayList<>();
 
-        if(bean.isRaceChecked()) requiredSlots += 1;
+        if(bean.isRaceChecked()) requiredSlots += 2;
         if (bean.isQualiChecked()) requiredSlots += 1;
         if (bean.isFpChecked()) requiredSlots += 1;
 

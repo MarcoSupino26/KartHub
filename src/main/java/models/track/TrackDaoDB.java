@@ -39,12 +39,11 @@ public class TrackDaoDB extends TrackDao {
         try (Connection connection = DBConnection.getInstance().getConnection();
              PreparedStatement stmt = connection.prepareStatement(query)) {
 
-            // Inserting track data
             stmt.setString(1, track.getName());
             stmt.setString(2, track.getDescription());
             stmt.setInt(3, track.getAvailableKarts());
             stmt.setString(4, track.getAddress());
-            stmt.setString(5, track.getImage() != null ? track.getImage().getUrl() : null); // Handling image conversion
+            stmt.setString(5, track.getImage().getUrl());
             stmt.setDouble(6, track.getOpeningHour());
             stmt.setDouble(7, track.getClosingHour());
             stmt.setDouble(8, track.getShiftDuration());
@@ -59,7 +58,7 @@ public class TrackDaoDB extends TrackDao {
                 try{
                     timeSlotDao.insertTimeSlots(slots, date, track.getName());
                 }catch (DataLoadException e){
-                    System.out.println("DB insert errror");
+                    System.out.println("DB insert error");
                 }
             }
 
@@ -98,7 +97,6 @@ public class TrackDaoDB extends TrackDao {
     public Track getTrack(String name) {
         String query = "SELECT * FROM tracks WHERE trackname = ?";
         Track track = null;
-
         try (Connection connection = DBConnection.getInstance().getConnection();
              PreparedStatement stmt = connection.prepareStatement(query)) {
 
@@ -126,66 +124,11 @@ public class TrackDaoDB extends TrackDao {
                     track.setOpeningHour(opening);
                     track.setClosingHour(closing);
                     track.setShiftDuration(shiftDuration);
-
-                    UserDao userDao = FactoryDAO.getInstance().createUserDao();
-                    User owner = null;
-                    try {
-                        owner = userDao.getUserByUsername(username);
-                    }catch (DataLoadException e){
-                        System.out.println(e.getMessage());
-                    }
-                    track.setOwner(owner);
-
-                    // Retrieve TimeSlots
-                    TimeSlotDao timeSlotDao = FactoryDAO.getInstance().createTimeSlotDao();
-                    List<LocalDate> timeSlotDates = new ArrayList<>();
-                    try{
-                        timeSlotDates = timeSlotDao.getDatesForTrack(track.getName());
-                    } catch (DataLoadException e){
-                        System.out.println(e.getMessage());
-                    }
-                    for (LocalDate date : timeSlotDates) {
-                        List<TimeSlot> timeSlots = new ArrayList<>();
-                        try {
-                            timeSlots = timeSlotDao.getTimeSlots(track.getName(), date);
-                        }catch (DataLoadException e){
-                            System.out.println(e.getMessage());
-                        }
-                        track.addTimeSlots(timeSlots, date);
-                    }
-
-                    // Retrieve Bookings
-                    BookingDao bookingDao = FactoryDAO.getInstance().createBookingDao();
-                    List<BookingInterface> bookings = new ArrayList<>();
-                    try{
-                        bookings = bookingDao.getBookingsByTrack(track.getName());
-                    }catch (DataLoadException e){
-                        System.out.println(e.getMessage());
-                    }
-
-                    for (BookingInterface booking : bookings) {
-                        track.addBooking(booking);
-                    }
-
-                    // Retrieve Kart Events
-                    KartEventDao kartEventDao = FactoryDAO.getInstance().createKartEventDao();
-                    List<KartEvent> events = new ArrayList<>();
-                    try{
-                        events = kartEventDao.getEventsByTrack(track.getName());
-                    }catch (DataLoadException e){
-                        System.out.println(e.getMessage());
-                    }
-
-                    for (KartEvent event : events) {
-                        track.addEvent(event);
-                    }
-
-                    track.setCost(getTrackCosts(track.getName()));
                 }
             }
 
         } catch (SQLException e) {
-            throw new RuntimeException("Error retrieving track from database", e);
+            throw new DataLoadException("DB retrieval error");
         }
 
         return track;
@@ -230,68 +173,71 @@ public class TrackDaoDB extends TrackDao {
         return tracks;
     }
 
-    private List<Track> populateTracks(List<Track> tracks) {
-        List<Track> updatedTracks = new ArrayList<>();
-        for (Track track : tracks) {
-            UserDao userDao = FactoryDAO.getInstance().createUserDao();
-            User owner = null;
-            try {
-                owner = userDao.getUserByUsername(track.getOwner().getUsername());
-            }catch (DataLoadException e){
-                System.out.println(e.getMessage());
-            }
-            track.setOwner(owner);
-
-            TimeSlotDao timeSlotDao = FactoryDAO.getInstance().createTimeSlotDao();
-            List<LocalDate> dates = new ArrayList<>();
-            try{
-                dates = timeSlotDao.getDatesForTrack(track.getName());
-            }catch (DataLoadException e){
-                System.out.println(e.getMessage());
-            }
-            for (LocalDate date : dates) {
-                List<TimeSlot> slots = new ArrayList<>();
-                try {
-                    slots = timeSlotDao.getTimeSlots(track.getName(), date);
-                }catch (DataLoadException e){
-                    System.out.println(e.getMessage());
-                }
-                track.addTimeSlots(slots, date);
-            }
-
-            BookingDao bookingDao = FactoryDAO.getInstance().createBookingDao();
-            List<BookingInterface> bookings = new ArrayList<>();
-            try{
-                bookings = bookingDao.getBookingsByTrack(track.getName());
-            } catch (DataLoadException e){
-                System.out.println(e.getMessage());
-            }
-
-            for (BookingInterface booking : bookings) {
-                track.addBooking(booking);
-            }
-
-            KartEventDao eventDao = FactoryDAO.getInstance().createKartEventDao();
-            List<KartEvent> events = new ArrayList<>();
-            try{
-                events = eventDao.getEventsByTrack(track.getName());
-            }catch (DataLoadException e){
-                System.out.println(e.getMessage());
-            }
-
-            for (KartEvent event : events) {
-                track.addEvent(event);
-            }
-
-            try{
-                track.setCost(getTrackCosts(track.getName()));
-            }catch (SQLException e) {
-                e.printStackTrace();
-            }
-
-            updatedTracks.add(track);
+    private Track populateTrack(Track track) {
+        UserDao userDao = FactoryDAO.getInstance().createUserDao();
+        User owner = null;
+        try {
+            owner = userDao.getUserByUsername(track.getOwner().getUsername());
+        }catch (DataLoadException e){
+            System.out.println(e.getMessage());
         }
-        return updatedTracks;
+        track.setOwner(owner);
+
+        TimeSlotDao timeSlotDao = FactoryDAO.getInstance().createTimeSlotDao();
+        List<LocalDate> dates = new ArrayList<>();
+        try{
+            dates = timeSlotDao.getDatesForTrack(track.getName());
+        }catch (DataLoadException e){
+            System.out.println(e.getMessage());
+        }
+        for (LocalDate date : dates) {
+            List<TimeSlot> slots = new ArrayList<>();
+            try {
+                slots = timeSlotDao.getTimeSlots(track.getName(), date);
+            }catch (DataLoadException e){
+                System.out.println(e.getMessage());
+            }
+            track.addTimeSlots(slots, date);
+        }
+
+        BookingDao bookingDao = FactoryDAO.getInstance().createBookingDao();
+        List<BookingInterface> bookings = new ArrayList<>();
+        try{
+            bookings = bookingDao.getBookingsByTrack(track.getName());
+        } catch (DataLoadException e){
+            System.out.println(e.getMessage());
+        }
+
+        for (BookingInterface booking : bookings) {
+            track.addBooking(booking);
+        }
+
+        KartEventDao eventDao = FactoryDAO.getInstance().createKartEventDao();
+        List<KartEvent> events = new ArrayList<>();
+        try{
+            events = eventDao.getEventsByTrack(track.getName());
+        }catch (DataLoadException e){
+            System.out.println(e.getMessage());
+        }
+
+        for (KartEvent event : events) {
+            track.addEvent(event);
+        }
+
+        try{
+            track.setCost(getTrackCosts(track.getName()));
+        }catch (SQLException e) {
+            throw new DataLoadException("DB retrieval error");
+        }
+        return track;
+    }
+
+    private List<Track> populateTracks(List<Track> tracks) {
+        List<Track> populatedTracks = new ArrayList<>();
+        for (Track track : tracks) {
+            populatedTracks.add(populateTrack(track));
+        }
+        return populatedTracks;
     }
 
     private void insertTrackCosts(Track track) throws SQLException {
@@ -418,7 +364,7 @@ public class TrackDaoDB extends TrackDao {
             }
 
         } catch (SQLException e) {
-            throw new RuntimeException("Error retrieving track from database", e);
+            throw new DataLoadException("DB data retrieval error");
         }
 
         return track;
