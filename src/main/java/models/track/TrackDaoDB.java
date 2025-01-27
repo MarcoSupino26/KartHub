@@ -116,8 +116,8 @@ public class TrackDaoDB extends TrackDao {
                     String descritpion = rs.getString(DESCRIPTION);
                     int karts  = rs.getInt(KARTS);
                     String address = rs.getString(ADDR);
-                    String image_path = rs.getString(IMG);
-                    Image image = new Image(image_path);
+                    String imagePath = rs.getString(IMG);
+                    Image image = new Image(imagePath);
                     double opening = rs.getDouble(OPENING);
                     double closing = rs.getDouble(CLOSING);
                     double shiftDuration = rs.getDouble(DURATION);
@@ -309,76 +309,77 @@ public class TrackDaoDB extends TrackDao {
 
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    track = new Track();
-                    String trackname = rs.getString(TRACK);
-                    String descritpion = rs.getString(DESCRIPTION);
-                    int karts  = rs.getInt(KARTS);
-                    String address = rs.getString(ADDR);
-                    String imagePath = rs.getString(IMG);
-                    Image image = new Image(imagePath);
-                    double opening = rs.getDouble(OPENING);
-                    double closing = rs.getDouble(CLOSING);
-                    double shiftDuration = rs.getDouble(DURATION);
-                    String user = rs.getString(USR);
+                    track = buildTrackFromResultSet(rs);
 
-                    track.setName(trackname);
-                    track.setDescription(descritpion);
-                    track.setAvailableKarts(karts);
-                    track.setAddress(address);
-                    track.setImage(image);
-                    track.setOpeningHour(opening);
-                    track.setClosingHour(closing);
-                    track.setShiftDuration(shiftDuration);
-                    track.setOwner(new Owner(user, null, null));
                     TimeSlotDao timeSlotDao = FactoryDAO.getInstance().createTimeSlotDao();
-                    List<LocalDate> timeSlotDates = new ArrayList<>();
+                    List<LocalDate> timeSlotDates = null;
                     try {
                         timeSlotDates = timeSlotDao.getDatesForTrack(track.getName());
-                    }catch (DataLoadException e){
+                    } catch (DataLoadException e) {
                         System.out.println(e.getMessage());
                     }
-                    for (LocalDate date : timeSlotDates) {
-                        List<TimeSlot> timeSlots = new ArrayList<>();
-                        try {
-                            timeSlots = timeSlotDao.getTimeSlots(track.getName(), date);
-                        }catch (DataLoadException e){
-                            System.out.println(e.getMessage());
+                    if (timeSlotDates != null) {
+                        for (LocalDate date : timeSlotDates) {
+                            List<TimeSlot> timeSlots = null;
+                            try {
+                                timeSlots = timeSlotDao.getTimeSlots(track.getName(), date);
+                            } catch (DataLoadException e) {
+                                System.out.println(e.getMessage());
+                            }
+                            if (timeSlots != null) {
+                                track.addTimeSlots(timeSlots, date);
+                            }
                         }
-                        track.addTimeSlots(timeSlots, date);
                     }
+
 
                     BookingDao bookingDao = FactoryDAO.getInstance().createBookingDao();
-                    List<BookingInterface> bookings = new ArrayList<>();
-                    try{
+                    List<BookingInterface> bookings = null;
+                    try {
                         bookings = bookingDao.getBookingsByTrack(track.getName());
-                    }catch (DataLoadException e){
+                    } catch (DataLoadException e) {
                         System.out.println(e.getMessage());
                     }
-
-                    for (BookingInterface booking : bookings) {
-                        track.addBooking(booking);
+                    if (bookings != null) {
+                        for (BookingInterface booking : bookings) {
+                            track.addBooking(booking);
+                        }
                     }
-
                     KartEventDao kartEventDao = FactoryDAO.getInstance().createKartEventDao();
-                    List<KartEvent> events = new ArrayList<>();
-                    try{
+                    List<KartEvent> events = null;
+                    try {
                         events = kartEventDao.getEventsByTrack(track.getName());
-                    }catch (DataLoadException e){
+                    } catch (DataLoadException e) {
                         System.out.println(e.getMessage());
                     }
-
-                    for (KartEvent event : events) {
-                        track.addEvent(event);
+                    if (events != null) {
+                        for (KartEvent event : events) {
+                            track.addEvent(event);
+                        }
                     }
 
                     track.setCost(getTrackCosts(track.getName()));
                 }
             }
-
         } catch (SQLException e) {
             throw new DataLoadException("DB data retrieval error");
         }
 
         return track;
     }
+
+    private Track buildTrackFromResultSet(ResultSet rs) throws SQLException {
+        Track track = new Track();
+        track.setName(rs.getString(TRACK));
+        track.setDescription(rs.getString(DESCRIPTION));
+        track.setAvailableKarts(rs.getInt(KARTS));
+        track.setAddress(rs.getString(ADDR));
+        track.setImage(new Image(rs.getString(IMG)));
+        track.setOpeningHour(rs.getDouble(OPENING));
+        track.setClosingHour(rs.getDouble(CLOSING));
+        track.setShiftDuration(rs.getDouble(DURATION));
+        track.setOwner(new Owner(rs.getString(USR), null, null));
+        return track;
+    }
+
 }
