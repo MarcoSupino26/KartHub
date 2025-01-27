@@ -3,10 +3,10 @@ package exceptions;
 import start.Main;
 
 public class InvalidDateException extends RuntimeException{
-    private static final String errorMessage = "La data inserita è antecedente a oggi.";
+    private static final String ERRMSG = "La data inserita è antecedente a oggi.";
 
     public InvalidDateException(){
-        super(errorMessage);
+        super(ERRMSG);
     }
 
     public InvalidDateException(String message){
@@ -14,8 +14,8 @@ public class InvalidDateException extends RuntimeException{
     }
 
     public void handleException(){
-        if(Main.isCLI()) System.out.println(errorMessage);
-        else PopUpManager.showPopUp(errorMessage);
+        if(Main.isCLI()) System.out.println(ERRMSG);
+        else PopUpManager.showPopUp(ERRMSG);
     }
 
 }

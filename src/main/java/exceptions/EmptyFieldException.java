@@ -3,10 +3,10 @@ package exceptions;
 import start.Main;
 
 public class EmptyFieldException extends RuntimeException{
-    private static final String errorMessage = "Compila tutti i campi prima di proseguire";
+    private static final String ERRMSG = "Compila tutti i campi prima di proseguire";
 
     public EmptyFieldException() {
-        super(errorMessage);
+        super(ERRMSG);
     }
 
     public EmptyFieldException(String message) {
@@ -14,8 +14,8 @@ public class EmptyFieldException extends RuntimeException{
     }
 
     public void handleException() {
-        if(Main.isCLI()) System.out.println(errorMessage);
-        else PopUpManager.showPopUp(errorMessage);
+        if(Main.isCLI()) System.out.println(ERRMSG);
+        else PopUpManager.showPopUp(ERRMSG);
     }
 
 }

@@ -18,8 +18,16 @@ import java.util.*;
 import javafx.scene.image.Image;
 
 public class TrackDaoDB extends TrackDao {
+    private static final String TRACK = "trackname";
+    private static final String DESCRIPTION = "description";
+    private static final String KARTS = "karts";
+    private static final String ADDR = "address";
+    private static final String IMG = "image_path";
+    private static final String OPENING = "opening_hour";
+    private static final String CLOSING = "closing_hour";
+    private static final String DURATION = "slot_duration";
+    private static final String USR = "username";
 
-    public TrackDaoDB() {}//Non sono necessari parametri
     @Override
     public void insertTrack(Track track) {
         String query = "INSERT INTO tracks (trackname, description, karts, address, image_path, opening_hour, closing_hour, slot_duration, usrname) " +
@@ -83,7 +91,7 @@ public class TrackDaoDB extends TrackDao {
             try{
                 insertTrackCosts(track);
             }catch (SQLException e) {
-                e.printStackTrace();
+                throw new DataLoadException("DB insert error");
             }
 
         } catch (SQLException e) {
@@ -103,16 +111,16 @@ public class TrackDaoDB extends TrackDao {
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
                     track = new Track();
-                    String trackname = rs.getString("trackname");
-                    String descritpion = rs.getString("description");
-                    int karts  = rs.getInt("karts");
-                    String address = rs.getString("address");
-                    String image_path = rs.getString("image_path");
-                    Image image = new Image(image_path);  // Converting image path to Image object
-                    double opening = rs.getDouble("opening_hour");
-                    double closing = rs.getDouble("closing_hour");
-                    double shiftDuration = rs.getDouble("slot_duration");
-                    String username = rs.getString("usrname");
+                    String trackname = rs.getString(TRACK);
+                    String descritpion = rs.getString(DESCRIPTION);
+                    int karts  = rs.getInt(KARTS);
+                    String address = rs.getString(ADDR);
+                    String image_path = rs.getString(IMG);
+                    Image image = new Image(image_path);
+                    double opening = rs.getDouble(OPENING);
+                    double closing = rs.getDouble(CLOSING);
+                    double shiftDuration = rs.getDouble(DURATION);
+                    String username = rs.getString(USR);
 
                     track.setName(trackname);
                     track.setDescription(descritpion);
@@ -145,16 +153,16 @@ public class TrackDaoDB extends TrackDao {
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
                     Track track = new Track();
-                    track.setName(rs.getString("trackname"));
-                    track.setDescription(rs.getString("description"));
-                    track.setAvailableKarts(rs.getInt("karts"));
-                    track.setAddress(rs.getString("address"));
-                    track.setOpeningHour(rs.getDouble("opening_hour"));
-                    track.setClosingHour(rs.getDouble("closing_hour"));
-                    track.setShiftDuration(rs.getDouble("slot_duration"));
-                    track.setOwner(new Owner(rs.getString("usrname"),null, null));
+                        track.setName(rs.getString(TRACK));
+                    track.setDescription(rs.getString(DESCRIPTION));
+                    track.setAvailableKarts(rs.getInt(KARTS));
+                    track.setAddress(rs.getString(ADDR));
+                    track.setOpeningHour(rs.getDouble(OPENING));
+                    track.setClosingHour(rs.getDouble(CLOSING));
+                    track.setShiftDuration(rs.getDouble(DURATION));
+                    track.setOwner(new Owner(rs.getString(USR),null, null));
 
-                    String imagePath = rs.getString("image_path");
+                    String imagePath = rs.getString(IMG);
                     if (imagePath != null && !imagePath.isEmpty()) {
                         track.setImage(new Image(imagePath));
                     }
@@ -295,16 +303,16 @@ public class TrackDaoDB extends TrackDao {
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
                     track = new Track();
-                    String trackname = rs.getString("trackname");
-                    String descritpion = rs.getString("description");
-                    int karts  = rs.getInt("karts");
-                    String address = rs.getString("address");
-                    String image_path = rs.getString("image_path");
-                    Image image = new Image(image_path);  // Converting image path to Image object
-                    double opening = rs.getDouble("opening_hour");
-                    double closing = rs.getDouble("closing_hour");
-                    double shiftDuration = rs.getDouble("slot_duration");
-                    String user = rs.getString("usrname");
+                    String trackname = rs.getString(TRACK);
+                    String descritpion = rs.getString(DESCRIPTION);
+                    int karts  = rs.getInt(KARTS);
+                    String address = rs.getString(ADDR);
+                    String image_path = rs.getString(IMG);
+                    Image image = new Image(image_path);
+                    double opening = rs.getDouble(OPENING);
+                    double closing = rs.getDouble(CLOSING);
+                    double shiftDuration = rs.getDouble(DURATION);
+                    String user = rs.getString(USR);
 
                     track.setName(trackname);
                     track.setDescription(descritpion);

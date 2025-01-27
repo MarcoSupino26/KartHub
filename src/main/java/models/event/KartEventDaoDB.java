@@ -9,8 +9,6 @@ import java.util.List;
 
 public class KartEventDaoDB extends KartEventDao {
 
-    public KartEventDaoDB() {}//Non sono necessari parametri
-
     public List<KartEvent> getEventsByTrack(String track) {
         String query = "SELECT * FROM events WHERE trackname = ?";
         return getEvents(query, track);
