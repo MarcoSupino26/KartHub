@@ -119,7 +119,6 @@ public class BookManager {
         if (bean.isQualiChecked()) requiredSlots += 1;
         if (bean.isFpChecked()) requiredSlots += 1;
 
-        System.out.println("Required slots: " + requiredSlots);
         SessionManager.getInstance().getBookingSession().setBookedSlots(requiredSlots);
 
         for (int i = 0; i < generatedSlots.size() - requiredSlots; i++) {

@@ -24,11 +24,7 @@ public class DBConnection {
     // Metodo per ottenere l'istanza Singleton
     public static DBConnection getInstance() throws SQLException {
         if (instance == null) {
-            synchronized (DBConnection.class) {
-                if (instance == null) {
-                    instance = new DBConnection();
-                }
-            }
+            instance = new DBConnection();
         }
         return instance;
     }

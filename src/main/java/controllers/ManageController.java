@@ -23,7 +23,6 @@ public class ManageController {
     public boolean registeredTrack() { //controlla se l'owner ha un tracciato associato
         TrackDao trackDao = FactoryDAO.getInstance().createTrackDao();
         User owner = SessionManager.getInstance().getLoggedUser();
-        System.out.println("Utente " + owner.getUsername());
         List<Track> tracks = new ArrayList<>();
         try {
             tracks = trackDao.getAllTracks();
@@ -118,7 +117,6 @@ public class ManageController {
     public TrackProfileBean getTrackInfo(){
         User owner = SessionManager.getInstance().getLoggedUser();
         Track ownedTrack = ((Owner)owner).getTrack();
-        System.out.println("User " + owner.getUsername() + " has track " + ownedTrack.getName());
         ManageSession mS = new ManageSession();
         mS.setTrackName(ownedTrack.getName());
         return new TrackProfileBean(ownedTrack.getImage(), ownedTrack.getName());

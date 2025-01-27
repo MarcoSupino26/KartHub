@@ -170,7 +170,6 @@ public class EventManager {
                 eventSession.setCurrentKartEvent(kartEvent);
             }
         }
-        /*Qui da togliere se non funziona*/
         User owner = track.getOwner();
         UserDao userDao = FactoryDAO.getInstance().createUserDao();
         ((Owner)owner).setTrack(track);
