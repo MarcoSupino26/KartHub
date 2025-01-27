@@ -11,7 +11,8 @@ public class TimeSlotDaoDB extends TimeSlotDao {
 
     @Override
     public List<TimeSlot> getTimeSlots(String trackName, LocalDate date) {
-        String query = "SELECT * FROM time_slots WHERE trackname = ? AND day = ?";
+        String query = "SELECT day, trackname, start_hour, end_hour, available " +
+                "FROM time_slots WHERE trackname = ? AND day = ?";
         List<TimeSlot> timeSlots = new ArrayList<>();
         try (Connection connection = DBConnection.getInstance().getConnection();
              PreparedStatement stmt = connection.prepareStatement(query)) {

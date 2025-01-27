@@ -49,7 +49,8 @@ public class BookingDaoDB extends BookingDao {
 
     @Override
     public List<BookingInterface> getBookingsByTrack(String trackName) {
-        String query = "SELECT * FROM bookings WHERE trackname = ?";
+        String query = "SELECT id, trackname, usrname, description, cost, shift, selectedDay, rental, personal" +
+                " FROM bookings WHERE trackname = ?";
         String usrname = "";
         List<ConcreteBooking> bookings = new ArrayList<>();
         List<BookingInterface> bookingList = new ArrayList<>();
@@ -103,7 +104,8 @@ public class BookingDaoDB extends BookingDao {
 
     public List<BookingInterface> getBookingsByUser(String usrname) {
         List<BookingInterface> bookings = new ArrayList<>();
-        String query = "SELECT * FROM bookings WHERE usrname = ?";
+        String query = "SELECT id, trackname, usrname, description, cost, shift, selectedDay, rental, personal" +
+                " FROM bookings WHERE usrname = ?";
 
         try (Connection connection = DBConnection.getInstance().getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {

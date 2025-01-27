@@ -102,7 +102,8 @@ public class TrackDaoDB extends TrackDao {
 
     @Override
     public Track getTrack(String name) {
-        String query = "SELECT * FROM tracks WHERE trackname = ?";
+        String query = "SELECT trackname, description, karts, address, " + "image_path, opening_hour, closing_hour, duration,usrname" +
+                "FROM tracks WHERE trackname = ?";
         Track track = null;
         try (Connection connection = DBConnection.getInstance().getConnection();
              PreparedStatement stmt = connection.prepareStatement(query)) {
@@ -299,7 +300,9 @@ public class TrackDaoDB extends TrackDao {
 
     @Override
     public Track getTrackByUser(String username) {
-        String query = "SELECT * FROM tracks WHERE usrname = ?";
+        String query = "SELECT trackname, description, karts, address, " +
+                "image_path, opening_hour, closing_hour, duration, usrname" +
+                "FROM tracks WHERE usrname = ?";
         Track track = null;
 
         try (Connection connection = DBConnection.getInstance().getConnection();

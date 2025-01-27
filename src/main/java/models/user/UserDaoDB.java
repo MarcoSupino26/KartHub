@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDaoDB extends UserDao {
+    private final String OWN = "Proprietario";
 
     @Override
     public void addUser(String username, User user) {
@@ -37,7 +38,7 @@ public class UserDaoDB extends UserDao {
 
     @Override
     public User getUser(String username, String password) {
-        String query = "SELECT * FROM users WHERE usrname = ? AND password = ?";
+        String query = "SELECT usrname, password, type FROM users WHERE usrname = ? AND password = ?";
         User user = null;
 
         try (Connection connection = DBConnection.getInstance().getConnection();
@@ -52,7 +53,7 @@ public class UserDaoDB extends UserDao {
                     String passw = rs.getString("password");
                     String type = rs.getString("type");
 
-                    if (type.equals("Proprietario")) {
+                    if (type.equals(OWN)) {
                         user = new Owner(usrname, passw, type);
                     } else {
                         user = new Customer(usrname, passw, type);
@@ -67,7 +68,7 @@ public class UserDaoDB extends UserDao {
 
     @Override
     public User getUserByUsername(String username) {
-        String query = "SELECT * FROM users WHERE usrname = ?";
+        String query = "SELECT usrname, password, type FROM users WHERE usrname = ?";
         User user = null;
 
         try (Connection connection = DBConnection.getInstance().getConnection();
@@ -81,7 +82,7 @@ public class UserDaoDB extends UserDao {
                     String passw = rs.getString("password");
                     String type = rs.getString("type");
 
-                    if ("Proprietario".equals(type)) {
+                    if (OWN.equals(type)) {
                         user = new Owner(usrname, passw, type);
                     } else if ("Cliente".equals(type)) {
                         user = new Customer(usrname, passw, type);
@@ -95,7 +96,7 @@ public class UserDaoDB extends UserDao {
     }
 
     private User populateUser(User user) {
-        if (user.getType().equals("Proprietario")) {
+        if (user.getType().equals(OWN)) {
             TrackDao trackDao = FactoryDAO.getInstance().createTrackDao();
             Track track = null;
             try {
