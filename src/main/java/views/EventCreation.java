@@ -2,6 +2,7 @@ package views;
 
 import beans.EventCreationBean;
 import controllers.EventManager;
+import exceptions.DataLoadException;
 import exceptions.InvalidDateException;
 import exceptions.InvalidDateFormatException;
 import javafx.fxml.FXML;
@@ -39,7 +40,7 @@ public class EventCreation {
         EventCreationBean bean = new EventCreationBean(eventName.getText());
 
         try {
-            if(eventDate.getValue().isAfter(LocalDate.now())) {
+            if(eventDate.getValue().isBefore(LocalDate.now())) {
                 throw new InvalidDateException();
             }
         } catch (InvalidDateException e) {
@@ -55,7 +56,10 @@ public class EventCreation {
         bean.setTime(LocalTime.parse(eventTime.getText()));
 
         new EventManager().saveEvent(bean);
-
-        SceneManager.changeScene("/home.fxml");
+        try{
+            SceneManager.changeScene("/home.fxml");
+        }catch(DataLoadException e){
+            System.out.println(e.getMessage());
+        }
     }
 }

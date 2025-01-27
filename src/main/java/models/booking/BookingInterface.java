@@ -10,7 +10,7 @@ public interface BookingInterface {
     String getId();
     int getRental();
     int getPersonal();
-    User getUser();
+    String getUser();
     String getShift();
     String getTrackName();
     LocalDate getSelectedDay();

@@ -2,6 +2,7 @@ package views;
 
 import beans.LoginBean;
 import controllers.AuthController;
+import exceptions.DataLoadException;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
@@ -22,6 +23,7 @@ public class SignController {
         ToggleGroup group = new ToggleGroup();
         opt1.setToggleGroup(group);
         opt2.setToggleGroup(group);
+        //Data di nascita fittizia, solo per fattori estetici
         birthDate.setStyle("-fx-font-family: 'Futura-Medium'; -fx-font-size: 14");
     }
 
@@ -35,6 +37,10 @@ public class SignController {
 
         AuthController auth = new AuthController();
         auth.registerUser(signBean);
-        SceneManager.changeScene("/home.fxml");
+        try {
+            SceneManager.changeScene("/home.fxml");
+        } catch (DataLoadException e){
+            System.out.println(e.getMessage());
+        }
     }
 }

@@ -1,12 +1,16 @@
 package controllers;
 
 import beans.*;
+import exceptions.DataLoadException;
 import javafx.scene.image.Image;
 import models.booking.*;
 import models.dao.factory.FactoryDAO;
 import models.slots.TimeSlot;
 import models.track.Track;
 import models.track.TrackDao;
+import models.user.Customer;
+import models.user.Owner;
+import models.user.User;
 import utils.session.BookingSession;
 import utils.session.SessionManager;
 
@@ -22,8 +26,12 @@ public class BookManager {
 
     public List<DisplayBean> getTracks(){
         List<DisplayBean> disBeans = new ArrayList<>();
-        List<Track> tracks;
-        tracks = FactoryDAO.getInstance().createTrackDao().getAllTracks();
+        List<Track> tracks = new ArrayList<>();
+        try {
+            tracks = FactoryDAO.getInstance().createTrackDao().getAllTracks();
+        }catch (DataLoadException e){
+            System.out.println(e.getMessage());
+        }
         for (Track track : tracks) {
             DisplayBean displayBean = new DisplayBean();
             displayBean.setImage(track.getImage());
@@ -42,8 +50,12 @@ public class BookManager {
     }
 
     public void setBookingSession(String trackName) {
-        List<Track> tracks;
-        tracks = FactoryDAO.getInstance().createTrackDao().getAllTracks();
+        List<Track> tracks = new ArrayList<>();
+        try {
+            tracks = FactoryDAO.getInstance().createTrackDao().getAllTracks();
+        }catch (DataLoadException e){
+            System.out.println(e.getMessage());
+        }
         for (Track track : tracks) {
             if (track.getName().equals(trackName)) {
                 BookingSession bookingSession = new BookingSession(track);
@@ -52,18 +64,18 @@ public class BookManager {
         }
     }
 
-    public void generateSlots2(LocalDate selectedDate){
+    public void generateSlots(LocalDate selectedDate){
         BookingSession session = SessionManager.getInstance().getBookingSession();
         Track track = session.getTrack();
 
-        if(!session.getTrack().getTimeSlots(selectedDate).isEmpty()) return;
+        if(!session.getTrack().getTimeSlots(selectedDate).isEmpty()) return; //Se sono già presenti turni per un determinato giorno non vengono generati
 
         List<TimeSlot> timeSlots = getTimeSlotList(track);
 
         session.getTrack().addTimeSlots(timeSlots, selectedDate);
     }
 
-    private static List<TimeSlot> getTimeSlotList(Track track) {
+    private static List<TimeSlot> getTimeSlotList(Track track) {//Generazione dei turni secondo i turni del tracciato
         double start = track.getOpeningHour();
         double end = track.getClosingHour();
         double duration = track.getShiftDuration();
@@ -82,7 +94,7 @@ public class BookManager {
         return timeSlots;
     }
 
-    public List<SlotBean> getSlots2(LocalDate day){
+    public List<SlotBean> getSlots(LocalDate day){
         BookingSession session = SessionManager.getInstance().getBookingSession();
         List<TimeSlot> timeSlots = session.getTrack().getTimeSlots(day);
         List<SlotBean> daySlots = new ArrayList<>();
@@ -103,13 +115,14 @@ public class BookManager {
         List<SlotBean> generatedSlots = bean.getGeneratedSlots();
         List<SlotBean> combinedSlots = new ArrayList<>();
 
-        if(bean.isRaceChecked()) requiredSlots += 2;
-        if(bean.isQualiChecked()) requiredSlots += 1;
-        if(bean.isFpChecked()) requiredSlots += 1;
+        if(bean.isRaceChecked()) requiredSlots += 1;
+        if (bean.isQualiChecked()) requiredSlots += 1;
+        if (bean.isFpChecked()) requiredSlots += 1;
 
+        System.out.println("Required slots: " + requiredSlots);
         SessionManager.getInstance().getBookingSession().setBookedSlots(requiredSlots);
 
-        for (int i = 0; i <= generatedSlots.size() - requiredSlots; i++) {
+        for (int i = 0; i < generatedSlots.size() - requiredSlots; i++) {
             boolean allAvailable = true;
             for(int j = 0; j < requiredSlots; j++){
                 if(!generatedSlots.get(i+j).isFree()){
@@ -137,7 +150,7 @@ public class BookManager {
         ConcreteBooking concreteBooking = (ConcreteBooking) booking;
         concreteBooking.setRental(options.getRental());
         concreteBooking.setPersonal(options.getPersonal());
-        concreteBooking.setUser(SessionManager.getInstance().getLoggedUser());
+        concreteBooking.setUser(SessionManager.getInstance().getLoggedUser().getUsername());
         concreteBooking.setShift(options.getShifts());
         concreteBooking.setTrackName(track.getName());
         concreteBooking.setSelectedDay(selectedDay);
@@ -165,16 +178,28 @@ public class BookManager {
         if(options.isOnBoard()){
             booking = new OnBoardDecorator(booking, track.getCost(6));
         }
-
         track.addBooking(booking);
+        User logged = SessionManager.getInstance().getLoggedUser();
+        if(logged instanceof Customer) ((Customer) logged).addBooking(booking);
+        User owner = track.getOwner();
+        if(owner instanceof Owner) ((Owner)owner).setTrack(track);
         BookingDao bookDao = FactoryDAO.getInstance().createBookingDao();
-        bookDao.addBooking(booking);
+
+        try {
+            bookDao.addBooking(booking);
+        }catch (DataLoadException e){
+            System.out.println(e.getMessage());
+        }
 
         bookingSession.setBooking(booking);
         double startTime = options.getStartTime();
         track.setSlotAvailability(selectedDay, bookedSlots, startTime);
         TrackDao trackDao = FactoryDAO.getInstance().createTrackDao();
-        trackDao.insertTrack(track);
+        try {
+            trackDao.insertTrack(track);
+        }catch (DataLoadException e){
+            System.out.println(e.getMessage());
+        }
     }
 
     public BookRecapBean getBookRecap(){

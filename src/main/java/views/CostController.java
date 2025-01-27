@@ -2,6 +2,7 @@ package views;
 
 import beans.CostBean;
 import controllers.ManageController;
+import exceptions.DataLoadException;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import java.util.ArrayList;
@@ -32,6 +33,10 @@ public class CostController {
         cost.add(Double.parseDouble(onBoard.getText()));
         CostBean costBean = new CostBean(cost);
         new ManageController().saveTrack(costBean);
-        SceneManager.changeScene("/home.fxml");
+        try {
+            SceneManager.changeScene("/home.fxml");
+        } catch (DataLoadException e){
+            System.out.println(e.getMessage());
+        }
     }
 }

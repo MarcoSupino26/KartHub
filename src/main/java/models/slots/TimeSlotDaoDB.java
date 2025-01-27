@@ -1,13 +1,13 @@
 package models.slots;
 
-import models.slots.TimeSlot;
+import exceptions.DataLoadException;
 import utils.DBConnection;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DBTimeSlotDao extends TimeSlotDao {
+public class TimeSlotDaoDB extends TimeSlotDao {
 
     @Override
     public List<TimeSlot> getTimeSlots(String trackName, LocalDate date) {
@@ -27,7 +27,7 @@ public class DBTimeSlotDao extends TimeSlotDao {
                 }
             }
         } catch (SQLException e) {
-            throw new RuntimeException("Error retrieving time slots for track " + trackName + " on " + date, e);
+            throw new DataLoadException("DB data retrieval error");
         }
         return timeSlots;
     }
@@ -52,7 +52,7 @@ public class DBTimeSlotDao extends TimeSlotDao {
                 }
             }
         } catch (SQLException e) {
-            throw new RuntimeException("Error retrieving dates for track " + trackName, e);
+            throw new DataLoadException("DB data retrieval error");
         }
         return dates;
     }
@@ -74,7 +74,7 @@ public class DBTimeSlotDao extends TimeSlotDao {
             }
             stmt.executeBatch();
         } catch (SQLException e) {
-            throw new RuntimeException("Error inserting time slots for track " + trackName + " on " + day, e);
+            throw new DataLoadException("DB insert error");
         }
     }
 }

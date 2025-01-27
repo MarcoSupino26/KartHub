@@ -2,6 +2,7 @@ package views;
 
 import beans.TrackBean;
 import controllers.ManageController;
+import exceptions.DataLoadException;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.control.TextField;
@@ -64,7 +65,11 @@ public class GesController {
         track.setDescription(description.getText());
         track.setAddress(address.getText());
         new ManageController().createTrack(track);
-        SceneManager.changeScene("/slotChoice.fxml");
+        try{
+            SceneManager.changeScene("/slotChoice.fxml");
+        }catch (DataLoadException e){
+            System.out.println(e.getMessage());
+        }
     }
 
 }

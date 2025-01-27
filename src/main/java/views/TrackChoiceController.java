@@ -1,6 +1,7 @@
 package views;
 import beans.DisplayBean;
 import controllers.BookManager;
+import exceptions.DataLoadException;
 import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -29,14 +30,14 @@ public class TrackChoiceController {
         tracksContainer.setPrefHeight(100);
 
         BookManager bookManager = new BookManager();
-        profiles = bookManager.getTracks();
-        for (DisplayBean displayBean : profiles) {
+        profiles = bookManager.getTracks(); //Bean per le info dei tracciati prenotabili
+        for (DisplayBean displayBean : profiles) {//Hbox generati dinamicamente per i tracciati
             displayTrackProfile(displayBean, tracksContainer);
         }
         scrollPane.setContent(tracksContainer);
     }
 
-    public void displayTrackProfile(DisplayBean display, VBox tracksContainer) {
+    public void displayTrackProfile(DisplayBean display, VBox tracksContainer) {//Personalizzazione delle varie Hbox
         HBox trackProfile = new HBox();
         trackProfile.setPrefWidth(500);
         trackProfile.setPrefHeight(100);
@@ -77,7 +78,11 @@ public class TrackChoiceController {
     public void onSelectClicked(ActionEvent event, String name) {
         BookManager bookManager = new BookManager();
         bookManager.setBookingSession(name);
+        try{
         SceneManager.changeScene("/book.fxml");
+        } catch (DataLoadException e){
+            System.out.println(e.getMessage());
+        }
     }
 
 }

@@ -10,7 +10,7 @@ public class ConcreteBooking implements BookingInterface {
     private String id;
     private int rental;
     private int personal;
-    private User user;
+    private String username;
     private String shift;
     private String trackName;
     private LocalDate selectedDay;
@@ -38,9 +38,9 @@ public class ConcreteBooking implements BookingInterface {
     public int getPersonal() {return personal;}
 
     @Override
-    public User getUser(){return user;}
+    public String getUser(){return username;}
 
-    public void setUser(User user){this.user = user;}
+    public void setUser(String username){this.username = username;}
 
     public void setRental(int rental) {this.rental = rental;}
 

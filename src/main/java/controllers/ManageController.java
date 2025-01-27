@@ -1,11 +1,14 @@
 package controllers;
 
 import beans.*;
+import exceptions.DataLoadException;
 import models.booking.BookingInterface;
 import models.dao.factory.FactoryDAO;
 import models.track.Track;
 import models.track.TrackDao;
+import models.user.Owner;
 import models.user.User;
+import models.user.UserDao;
 import utils.session.ManageSession;
 import utils.session.SessionManager;
 
@@ -21,7 +24,12 @@ public class ManageController {
         TrackDao trackDao = FactoryDAO.getInstance().createTrackDao();
         User owner = SessionManager.getInstance().getLoggedUser();
         System.out.println("Utente " + owner.getUsername());
-        List<Track> tracks = trackDao.getAllTracks();
+        List<Track> tracks = new ArrayList<>();
+        try {
+            tracks = trackDao.getAllTracks();
+        }catch (DataLoadException e) {
+            System.out.println(e.getMessage());
+        }
         for (Track track : tracks) {
             if (track.getOwner().getUsername().equals(owner.getUsername())) {
                 ManageSession mS = new ManageSession();
@@ -35,9 +43,9 @@ public class ManageController {
 
     public List<BookingsDisplayBean> getBookings() {
         List<BookingsDisplayBean> bookingBeans = new ArrayList<>();
-        String trackName = SessionManager.getInstance().getManageSession().getTrackName();
-        TrackDao trackDao = FactoryDAO.getInstance().createTrackDao();
-        Track track = trackDao.getTrack(trackName);
+        Track track;
+        User owner = SessionManager.getInstance().getLoggedUser();
+        track = ((Owner)owner).getTrack();
 
         List<BookingInterface> bookings = track.allBookings();
         for (BookingInterface booking : bookings) {
@@ -53,7 +61,7 @@ public class ManageController {
         bookingBean.setPersonal(String.valueOf(booking.getPersonal()));
         bookingBean.setRental(String.valueOf(booking.getRental()));
         bookingBean.setShift(String.valueOf(booking.getShift()));
-        bookingBean.setUser(booking.getUser().getUsername());
+        bookingBean.setUser(booking.getUser());
         bookingBean.setCost(String.valueOf(booking.getCost()));
         bookingBean.setDescription(booking.getDescription());
         return bookingBean;
@@ -91,21 +99,28 @@ public class ManageController {
         newTrack.setCost(costBean.getCost());
         newTrack.setAddress(ms.getAddress());
 
+        User logged = SessionManager.getInstance().getLoggedUser();
+        ((Owner) logged).setTrack(newTrack);
+        UserDao userDao = FactoryDAO.getInstance().createUserDao();
+        try {
+            userDao.addUser(logged.getUsername(), logged);
+        }catch (DataLoadException e) {
+            System.out.println(e.getMessage());
+        }
         TrackDao trackDao = FactoryDAO.getInstance().createTrackDao();
-        trackDao.insertTrack(newTrack);
+        try {
+            trackDao.insertTrack(newTrack);
+        }catch (DataLoadException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public TrackProfileBean getTrackInfo(){
-        TrackDao trackDao = FactoryDAO.getInstance().createTrackDao();
         User owner = SessionManager.getInstance().getLoggedUser();
-        List<Track> tracks = trackDao.getAllTracks();
-        for (Track track : tracks) {
-            if (track.getOwner().getUsername().equals(owner.getUsername())) {
-                ManageSession mS = new ManageSession();
-                mS.setTrackName(track.getName());
-                return new TrackProfileBean(track.getImage(), track.getName());
-            }
-        }
-        return null;
+        Track ownedTrack = ((Owner)owner).getTrack();
+        System.out.println("User " + owner.getUsername() + " has track " + ownedTrack.getName());
+        ManageSession mS = new ManageSession();
+        mS.setTrackName(ownedTrack.getName());
+        return new TrackProfileBean(ownedTrack.getImage(), ownedTrack.getName());
     }
 }

@@ -2,12 +2,12 @@ package views;
 
 import beans.*;
 import controllers.BookManager;
+import exceptions.DataLoadException;
 import exceptions.EmptyFieldException;
 import exceptions.InvalidDateException;
 import exceptions.InvalidDateFormatException;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.control.*;
@@ -67,19 +67,20 @@ public class BookingController {
                 @Override
                 public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
                     // Abilita o disabilita la checkbox Qualifica in base alla selezione della Gara
-                    quali.setDisable(!newValue); // Se Gara è selezionata, Qualifica è abilitata
+                    quali.setDisable(!newValue); //La qualifica è abilitata solo se la gara è selezionata
                     if (!newValue) {
-                        quali.setSelected(false); // Deseleziona Qualifica se Gara non è selezionata
+                        quali.setSelected(false); //La qualifica viene deselezionata se la gara non è selezionata
                     }
                 }
             });
 
             ChangeListener<Boolean> optionsListener = (observable, oldValue, newValue) -> {
                 boolean selected = race.isSelected() || quali.isSelected() || fp.isSelected();
-                day.setDisable(!selected);
-                if(day.getValue() != null) /*updateTimeSlots()*/updateTimeSlots2();
+                day.setDisable(!selected); //Se nessun formato è selezionato, non è possibile selezionare il giorno
+                if(day.getValue() != null) updateTimeSlots(); //Aggiornamento dei turni se viene selezionato un giorno
             };
 
+            //Se cambia la selezione dei formati vengono generati nuovi turni
             race.selectedProperty().addListener(optionsListener);
             quali.selectedProperty().addListener(optionsListener);
             fp.selectedProperty().addListener(optionsListener);
@@ -87,10 +88,11 @@ public class BookingController {
             day.valueProperty().addListener(new ChangeListener<>() {
                 @Override
                 public void changed(ObservableValue<? extends LocalDate> observable, LocalDate oldValue, LocalDate newValue) {
-                    if(newValue != null) /*updateTimeSlots()*/updateTimeSlots2();
+                    if(newValue != null) updateTimeSlots(); //Se cambia il giorno selezionato vengono generati nuovamente i turni
                 }
             });
 
+            //Viene settato il form per la prenotazione
             TrackProfileBean selectedTrack = bookManager.getSelectedTrack();
             trackName.setText(selectedTrack.getName());
             profilePic.setImage(selectedTrack.getImage());
@@ -99,17 +101,17 @@ public class BookingController {
     }
 
     @FXML
-    public void updateTimeSlots2(){
+    public void updateTimeSlots(){//Aggiornamento dei turni
         LocalDate selectedDay = day.getValue();
         BookManager bookManager = new BookManager();
-        bookManager.generateSlots2(selectedDay);
+        bookManager.generateSlots(selectedDay); //Gli slot vengono generati
 
-        List<SlotBean> slotsList = bookManager.getSlots2(selectedDay);
-        updateTimeSlotsListView2(slotsList, bookManager);
+        List<SlotBean> slotsList = bookManager.getSlots(selectedDay);
+        updateTimeSlotsListView(slotsList, bookManager); //Aggiornamento degli slot mostrati all'utente
     }
 
     @FXML
-    public void updateTimeSlotsListView2(List<SlotBean> slotsList, BookManager bM) {
+    public void updateTimeSlotsListView(List<SlotBean> slotsList, BookManager bM) {
         slotsList = updateCombinedSlots(slotsList, bM);
         populateSlotsListView(slotsList);
         setupSlotsCellFactory();
@@ -117,13 +119,14 @@ public class BookingController {
 
 
     private List<SlotBean> updateCombinedSlots(List<SlotBean> slotsList, BookManager bM) {
-        if (race.isSelected()) {
-            boolean qualiOption = quali.isSelected();
-            boolean fpOption = fp.isSelected();
-            CombinedSlotsBean combinedSlotsBean = new CombinedSlotsBean(slotsList, true, qualiOption, fpOption);
-            slotsList = bM.getCombinedSlots2(combinedSlotsBean);
-        }
+        boolean raceOption = race.isSelected();
+        boolean qualiOption = quali.isSelected();
+        boolean fpOption = fp.isSelected();
+        CombinedSlotsBean combinedSlotsBean = new CombinedSlotsBean(slotsList, raceOption, qualiOption, fpOption);
+        slotsList = bM.getCombinedSlots2(combinedSlotsBean);
         return slotsList;
+        //Gli slot continuano a essere singoli, ma vengono mostrati all'utente come un semplice turno.
+        //La gara occupa 2 slot, la qualifica e le prove libere 1 slot
     }
 
     private void populateSlotsListView(List<SlotBean> slotsList) {
@@ -155,12 +158,16 @@ public class BookingController {
     }
 
     @FXML
-    public void bookTrack(Event event){
-        SceneManager.changeScene("/trackChoice.fxml");
+    public void bookTrack(){
+        try {
+            SceneManager.changeScene("/trackChoice.fxml");
+        } catch (DataLoadException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     @FXML
-    public void showOptions(Event event){
+    public void showOptions(){
         boolean checked = check.isSelected();
         optional.setVisible(checked);
         optional.setManaged(checked);
@@ -172,20 +179,6 @@ public class BookingController {
         int rentalKarts = 0;
         int personalKarts = 0;
 
-        /*rentalKarts = Integer.parseInt(rental.getText());
-        if (check.isSelected()) {
-            personalKarts = Integer.parseInt(personal.getText());
-            rentalKarts = rentalKarts - personalKarts;
-            optionsBean.setPersonal(personalKarts);
-        } else optionsBean.setPersonal(0);
-        optionsBean.setRental(rentalKarts);
-
-        optionsBean.setRace(race.isSelected());
-        optionsBean.setQuali(quali.isSelected());
-        optionsBean.setFp(fp.isSelected());
-        optionsBean.setMedals(medals.isSelected());
-        optionsBean.setChampagne(champagne.isSelected());
-        optionsBean.setOnBoard(onBoard.isSelected());*/
         try {
             if (rental.getText().isEmpty()) {
                 throw new EmptyFieldException("Il campo 'rental' non può essere vuoto.");
@@ -224,7 +217,7 @@ public class BookingController {
             if(day.getValue() == null) {
                 throw new EmptyFieldException();
             }
-            if(day.getValue().isAfter(LocalDate.now())) {
+            if(day.getValue().isBefore(LocalDate.now())) {
                 throw new InvalidDateException();
             }
         } catch (InvalidDateException e) {
@@ -242,6 +235,10 @@ public class BookingController {
         optionsBean.setStartTime((Double.parseDouble(parts[0])));
         optionsBean.setShifts(slot);
         new BookManager().saveBooking(optionsBean);
-        SceneManager.changeScene("/bookingrecap.fxml");
+        try {
+            SceneManager.changeScene("/bookingrecap.fxml");
+        } catch (DataLoadException e){
+            System.out.println(e.getMessage());
+        }
     }
 }

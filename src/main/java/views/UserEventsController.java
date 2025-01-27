@@ -2,6 +2,7 @@ package views;
 
 import beans.UserEventsBean;
 import controllers.EventManager;
+import exceptions.DataLoadException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
@@ -16,8 +17,6 @@ import javafx.scene.text.Text;
 import java.util.List;
 
 public class UserEventsController {
-    @FXML
-    private Button logIn;
     @FXML
     private ScrollPane scrollPane;
 
@@ -87,6 +86,10 @@ public class UserEventsController {
     @FXML
     public void ticketShop(ActionEvent event, UserEventsBean bean) {
         new EventManager().setCurrentEvent(bean);
-        SceneManager.changeScene("/ticketbuy.fxml");
+        try{
+            SceneManager.changeScene("/ticketbuy.fxml");
+        }catch(DataLoadException e){
+            System.out.println(e.getMessage());
+        }
     }
 }

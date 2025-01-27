@@ -2,6 +2,7 @@ package views;
 
 import beans.TrackProfileBean;
 import controllers.ManageController;
+import exceptions.DataLoadException;
 import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
@@ -29,6 +30,10 @@ public class TrackManager {
 
     @FXML
     public void seeBookings(){
-        SceneManager.changeScene("/trackbookings.fxml");
+        try{
+            SceneManager.changeScene("/trackbookings.fxml");
+        }catch (DataLoadException e){
+            System.out.println(e.getMessage());
+        }
     }
 }

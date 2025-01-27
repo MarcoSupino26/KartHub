@@ -1,5 +1,6 @@
 package views;
 
+import exceptions.DataLoadException;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -9,7 +10,7 @@ import java.io.IOException;
 public class SceneManager {
     private static Stage initialStage;
 
-    private SceneManager(){//la classe non deve essere istanzia
+    private SceneManager(){//la classe non deve essere istanziata
     }
 
     //Inizializzazione riferimento allo stage principale
@@ -27,7 +28,7 @@ public class SceneManager {
             initialStage.setResizable(false);
             initialStage.show();
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new DataLoadException("Couldn't load scene " + fxmlPath);
         }
     }
 }

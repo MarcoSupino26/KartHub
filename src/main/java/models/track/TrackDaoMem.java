@@ -97,4 +97,10 @@ public class TrackDaoMem extends TrackDao {
     public List<Track> getAllTracks() {
         return new ArrayList<>(tracks.values());
     }
+
+    @Override
+    public Track getTrackByUser(String username) {
+        return null;
+    }
+
 }

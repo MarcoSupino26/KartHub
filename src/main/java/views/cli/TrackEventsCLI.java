@@ -9,7 +9,7 @@ import java.util.Scanner;
 public class TrackEventsCLI {
 
     private Scanner scanner = new Scanner(System.in);
-    private OwnerTopBarCLI ownerTopBarCLI = new OwnerTopBarCLI();
+    private final OwnerTopBarCLI ownerTopBarCLI = new OwnerTopBarCLI();
 
     public void start() {
         while (true) {

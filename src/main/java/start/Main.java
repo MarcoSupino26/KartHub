@@ -1,5 +1,6 @@
 package start;
 
+import exceptions.DataLoadException;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import views.SceneManager;
@@ -15,8 +16,12 @@ public class Main extends Application {
     private static boolean isDemoMode = true;
 
     public static void main(String[] args) {
-        // Carica il valore della modalità dal file di configurazione
-        loadConfig();
+        try {
+            loadConfig();
+        }
+        catch (DataLoadException e) {
+            System.out.println(e.getMessage());
+        }
 
         Scanner scanner = new Scanner(System.in);
 
@@ -60,22 +65,20 @@ public class Main extends Application {
         homeCLI.start();
     }
 
-    // Metodo per caricare la configurazione dal file config.properties
+    //Caricamento del file di config
     private static void loadConfig() {
         Properties properties = new Properties();
         try {
-            // Carica il file di configurazione
             FileInputStream configFile = new FileInputStream("src/main/resources/config.properties");
             properties.load(configFile);
 
-            // Legge il valore della modalità dal file
             String mode = properties.getProperty("mode", "demo"); // Default a demo se non trovato
             isDemoMode = "demo".equalsIgnoreCase(mode);
 
             System.out.println("Modalità di esecuzione: " + (isDemoMode ? "Demo" : "Persistence"));
+
         } catch (IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Errore nel caricare il file di configurazione.");
+            throw new DataLoadException("File opening error");
         }
     }
 

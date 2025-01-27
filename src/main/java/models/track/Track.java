@@ -140,4 +140,8 @@ public class Track {
     public List<KartEvent> allEvents() {
         return new ArrayList<>(events.values());
     }
+
+    public List<LocalDate> allDates() {
+        return new ArrayList<>(timeSlots.keySet());
+    }
 }

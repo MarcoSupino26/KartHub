@@ -17,7 +17,7 @@ public abstract class FactoryDAO {
         if (instance == null) {
             if(Main.isDemoMode()) {
                 instance = new MemoryDao();
-            } else instance = new DBDao();
+            } else instance = new DaoDB();
         }
         return instance;
     }

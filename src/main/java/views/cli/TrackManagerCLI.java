@@ -7,7 +7,7 @@ import java.util.Scanner;
 public class TrackManagerCLI {
 
     private Scanner scanner = new Scanner(System.in);
-    private OwnerTopBarCLI ownerTopBarCLI = new OwnerTopBarCLI();
+    private final OwnerTopBarCLI ownerTopBarCLI = new OwnerTopBarCLI();
 
     public void start() {
         displayTrackInfo();

@@ -37,6 +37,7 @@ public class EventCreationCLI {
         eventTime = LocalTime.parse(scanner.nextLine());
         System.out.print("Inserisci la data dell'evento (YYYY-MM-DD): ");
         eventDate = java.time.LocalDate.parse(scanner.nextLine());
+
         try {
             if(eventDate.isAfter(LocalDate.now())) {
                 throw new InvalidDateException();

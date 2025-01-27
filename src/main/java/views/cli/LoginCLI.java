@@ -3,7 +3,6 @@ package views.cli;
 import controllers.AuthController;
 import beans.LoginBean;
 import exceptions.UserNotFoundException;
-import views.SceneManager;
 
 import java.util.Scanner;
 

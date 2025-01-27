@@ -10,6 +10,7 @@ import exceptions.InvalidDateException;
 import exceptions.InvalidDateFormatException;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -42,8 +43,11 @@ public class BookingCLI {
 
             System.out.print("Inserisci la data della prenotazione (YYYY-MM-DD): ");
             try {
-                selectedDay = LocalDate.parse(scanner.nextLine());
-                if(selectedDay == null) throw new EmptyFieldException();
+                try{
+                    selectedDay = LocalDate.parse(scanner.nextLine());
+                } catch (DateTimeParseException e){
+                    throw new InvalidDateException();
+                }
                 if(selectedDay.isAfter(LocalDate.now())) {
                     throw new InvalidDateException();
                 }
@@ -91,18 +95,6 @@ public class BookingCLI {
         champagneSelected = optionsListContains(options, "5");
         onBoardSelected = optionsListContains(options, "6");
 
-        /*System.out.print("Numero di persone: ");
-        rentalKarts = Integer.parseInt(scanner.nextLine());
-        System.out.print("Usate kart personali? (s/n): ");
-        checkSelected = "s".equalsIgnoreCase(scanner.nextLine());
-
-        if (checkSelected) {
-            System.out.print("Inserisci il numero di kart personali: ");
-            personalKarts = Integer.parseInt(scanner.nextLine());
-            rentalKarts = rentalKarts - personalKarts;
-        } else {
-            personalKarts = 0;
-        }*/
         try {
             System.out.print("Numero di persone: ");
             // Verifica se il campo rental è vuoto o non valido
@@ -144,9 +136,9 @@ public class BookingCLI {
 
     private void updateTimeSlots() {
         BookManager bookManager = new BookManager();
-        bookManager.generateSlots2(selectedDay);
+        bookManager.generateSlots(selectedDay);
 
-        List<SlotBean> slotsList = bookManager.getSlots2(selectedDay);
+        List<SlotBean> slotsList = bookManager.getSlots(selectedDay);
         if (slotsList.isEmpty()) {
             System.out.println("Nessuno slot disponibile");
         }else updateTimeSlotsList(slotsList, bookManager);

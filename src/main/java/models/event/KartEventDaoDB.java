@@ -1,17 +1,15 @@
 package models.event;
 
-import models.dao.factory.DBDao;
+import exceptions.DataLoadException;
 import utils.DBConnection;
 
 import java.sql.*;
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DBKartEventDao extends KartEventDao {
+public class KartEventDaoDB extends KartEventDao {
 
-    public DBKartEventDao() {
+    public KartEventDaoDB() {
     }
 
     // Metodo per ottenere eventi associati a un track
@@ -34,7 +32,7 @@ public class DBKartEventDao extends KartEventDao {
                 }
             }
         } catch (SQLException e) {
-            throw new RuntimeException("Error retrieving events by track", e);
+            throw new DataLoadException("DB data retrieval error");
         }
         return events;
     }
@@ -57,7 +55,7 @@ public class DBKartEventDao extends KartEventDao {
                 events.add(kartEvent);
             }
         } catch (SQLException e) {
-            throw new RuntimeException("Error retrieving all events", e);
+            throw new DataLoadException("DB data retrieval error");
         }
         return events;
     }
@@ -84,7 +82,7 @@ public class DBKartEventDao extends KartEventDao {
             stmt.setString(7, kartEvent.getTrackName());
             stmt.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException("Error adding kart event", e);
+            throw new DataLoadException("DB Insert error");
         }
     }
 }

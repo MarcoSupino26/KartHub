@@ -3,16 +3,16 @@ package models.user;
 import java.util.HashMap;
 
 public class UserDaoMem extends UserDao {
-    private final HashMap<String, User> users; //hash map per mantenere gli utenti in memoria
+    private final HashMap<String, User> users;
     private static UserDaoMem instance;
 
     protected UserDaoMem(){
         users = new HashMap<>();
         String own = "Proprietario";
-        users.put("Marco", new User("Marco", "psw1", own));
-        users.put("Emanuele", new User("Emanuele", "psw2", own));
-        users.put("Simone", new User("Simone", "psw3", own));
-        users.put("Edoardo", new User("Edoardo", "psw4", "Cliente"));
+        users.put("Marco", new Owner("Marco", "psw1", own));
+        users.put("Emanuele", new Owner("Emanuele", "psw2", own));
+        users.put("Simone", new Owner("Simone", "psw3", own));
+        users.put("Edoardo", new Customer("Edoardo", "psw4", "Cliente"));
     }
 
 
@@ -44,11 +44,4 @@ public class UserDaoMem extends UserDao {
     public User getUserByUsername(String username) {
         return null;
     }
-
-
-    //rivedere la logica del null, forse meglio metterla nel controllore
-
-    //removeUser()
-
-    //updateUser()
 }

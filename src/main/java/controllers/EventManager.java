@@ -3,12 +3,15 @@ package controllers;
 import beans.EventCreationBean;
 import beans.TrackEventBean;
 import beans.UserEventsBean;
+import exceptions.DataLoadException;
 import models.dao.factory.FactoryDAO;
 import models.event.KartEvent;
 import models.event.KartEventDao;
 import models.track.Track;
 import models.track.TrackDao;
+import models.user.Owner;
 import models.user.User;
+import models.user.UserDao;
 import utils.session.EventSession;
 import utils.session.SessionManager;
 
@@ -26,7 +29,12 @@ public class EventManager {
         String trackName = "";
 
         TrackDao trackDao = FactoryDAO.getInstance().createTrackDao();
-        List<Track> tracks = trackDao.getAllTracks();
+        List<Track> tracks = new ArrayList<>();
+        try{
+            tracks = trackDao.getAllTracks();
+        }catch (DataLoadException e){
+            System.out.println(e.getMessage());
+        }
         for (Track track : tracks) {
             if (track.getOwner().getUsername().equals(owner.getUsername())) {
                 trackName = track.getName();
@@ -44,7 +52,12 @@ public class EventManager {
 
     public List<UserEventsBean> getAllEvents() {
         KartEventDao kartEventDao = FactoryDAO.getInstance().createKartEventDao();
-        List<KartEvent> kartEvents = kartEventDao.getAllEvents();
+        List<KartEvent> kartEvents = new ArrayList<>();
+        try {
+            kartEvents = kartEventDao.getAllEvents();
+        }catch (DataLoadException e){
+            System.out.println(e.getMessage());
+        }
         List<UserEventsBean> userEventsBeans = new ArrayList<>();
 
         for(KartEvent kartEvent : kartEvents){
@@ -68,11 +81,10 @@ public class EventManager {
 
     public List<TrackEventBean> getAssociatedEvents() {
         List<TrackEventBean> beans = new ArrayList<>();
-        String trackName = SessionManager.getInstance().getEventSession().getTrackname();
+        Track track;
 
-        TrackDao trackDao = FactoryDAO.getInstance().createTrackDao();
-        Track track = trackDao.getTrack(trackName);
-
+        User logged = SessionManager.getInstance().getLoggedUser();
+        track = ((Owner)logged).getTrack();
         List<KartEvent> kartEventList = track.allEvents();
         for (KartEvent kartEvent : kartEventList) {
             TrackEventBean bean = new TrackEventBean();
@@ -107,15 +119,29 @@ public class EventManager {
         kartEvent.setCost(eventBean.getPrice());
         kartEvent.setTrackName(trackName);
         kartEvent.setEventType(eventBean.getType());
-
-        TrackDao trackDao = FactoryDAO.getInstance().createTrackDao();
-        Track track = trackDao.getTrack(trackName);
+        Track track;
+        User logged = SessionManager.getInstance().getLoggedUser();
+        track = ((Owner)logged).getTrack();
         track.addEvent(kartEvent);
-        trackDao.insertTrack(track);
-
+        UserDao userDao = FactoryDAO.getInstance().createUserDao();
+        try {
+            userDao.addUser(logged.getUsername(), logged);
+        }catch (DataLoadException e){
+            System.out.println(e.getMessage());
+        }
+        TrackDao trackDao = FactoryDAO.getInstance().createTrackDao();
+        try {
+            trackDao.insertTrack(track);
+        }catch (DataLoadException e){
+            System.out.println(e.getMessage());
+        }
         KartEventDao kartEventDao = FactoryDAO.getInstance().createKartEventDao();
-        kartEventDao.addKartEvent(kartEvent);
 
+        try{
+            kartEventDao.addKartEvent(kartEvent);
+        }catch (DataLoadException e){
+            System.out.println(e.getMessage());
+        }
         SessionManager.getInstance().freeEventSession();
     }
 
@@ -124,18 +150,40 @@ public class EventManager {
         eventSession.setShoppedTickets(soldTickets);
 
         TrackDao trackDao = FactoryDAO.getInstance().createTrackDao();
-        Track track = trackDao.getTrack(eventSession.getTrackname());
+        Track track = null;
+        try {
+            track = trackDao.getTrack(eventSession.getTrackname());
+        }catch (DataLoadException e){
+            System.out.println(e.getMessage());
+        }
         List<KartEvent> kartEvents = track.allEvents();
 
         KartEventDao kartEventDao = FactoryDAO.getInstance().createKartEventDao();
         for (KartEvent kartEvent : kartEvents) {
             if(kartEvent.getEventName().equals(eventSession.getCurrentKartEvent().getEventName())){
                 kartEvent.setTickets(kartEvent.getTickets() - soldTickets);
-                kartEventDao.addKartEvent(kartEvent);
+                try{
+                    kartEventDao.addKartEvent(kartEvent);
+                }catch (DataLoadException e){
+                    System.out.println(e.getMessage());
+                }
                 eventSession.setCurrentKartEvent(kartEvent);
             }
         }
-        trackDao.insertTrack(track);
+        /*Qui da togliere se non funziona*/
+        User owner = track.getOwner();
+        UserDao userDao = FactoryDAO.getInstance().createUserDao();
+        ((Owner)owner).setTrack(track);
+        try {
+            userDao.addUser(owner.getUsername(), owner);
+        }catch (DataLoadException e){
+            System.out.println(e.getMessage());
+        }
+        try{
+            trackDao.insertTrack(track);
+        }catch (DataLoadException e){
+            System.out.println(e.getMessage());
+        }
     }
 
     public int getSoldTickets() {

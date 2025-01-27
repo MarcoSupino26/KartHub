@@ -2,6 +2,7 @@ package views;
 
 import beans.LoginBean;
 import controllers.AuthController;
+import exceptions.DataLoadException;
 import exceptions.UserNotFoundException;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -20,7 +21,11 @@ public class LoginController {
         logBean.setPassword(psw.getText());
         try {
             if (new AuthController().authUser(logBean)) {
+                try{
                 SceneManager.changeScene("/home.fxml");
+                } catch (DataLoadException e) {
+                    System.out.println(e.getMessage());
+                }
             }
         }catch (UserNotFoundException e){
             e.handleException();
@@ -28,6 +33,10 @@ public class LoginController {
     }
     @FXML
     public void switchToSign(){
-        SceneManager.changeScene("/sign.fxml");
+        try {
+            SceneManager.changeScene("/sign.fxml");
+        }catch (DataLoadException e){
+            System.out.println(e.getMessage());
+        }
     }
 }

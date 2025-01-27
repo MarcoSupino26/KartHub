@@ -26,14 +26,15 @@ public class TrackBookings {
         bookingsContainer.setPrefWidth(500);
         bookingsContainer.setPrefHeight(100);
 
-        bookings = new ManageController().getBookings();
+        bookings = new ManageController().getBookings(); //Bean per le info delle prenotazioni
+        //Vengono generati dinamicamente oggetti HBox per mostrare le prenotazioni di un tracciato
         for(BookingsDisplayBean booking : bookings) {
             displayBookings(booking, bookingsContainer);
         }
         scrollPane.setContent(bookingsContainer);
     }
 
-    public void displayBookings(BookingsDisplayBean booking, VBox bookingsContainer) {
+    public void displayBookings(BookingsDisplayBean booking, VBox bookingsContainer) {//Personalizzazione delle HBox
         HBox bookingDisplayed = new HBox();
         bookingDisplayed.setPrefWidth(500);
         bookingDisplayed.setPrefHeight(100);

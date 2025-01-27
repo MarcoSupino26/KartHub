@@ -1,7 +1,8 @@
 package models.booking;
 
+import exceptions.DataLoadException;
 import models.dao.factory.FactoryDAO;
-import models.user.User;
+import models.user.Customer;
 import models.user.UserDao;
 import utils.DBConnection;
 import java.sql.Connection;
@@ -12,7 +13,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DBBookingDao extends BookingDao {
+public class BookingDaoDB extends BookingDao {
 
     @Override
     public void addBooking(BookingInterface booking) {
@@ -32,7 +33,7 @@ public class DBBookingDao extends BookingDao {
              PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setString(1, booking.getId());
             stmt.setString(2, booking.getTrackName());
-            stmt.setString(3, booking.getUser().getUsername());
+            stmt.setString(3, booking.getUser());
             stmt.setString(4, booking.getDescription());
             stmt.setDouble(5, booking.getCost());
             stmt.setString(6, booking.getShift());
@@ -42,9 +43,7 @@ public class DBBookingDao extends BookingDao {
 
             stmt.executeUpdate();
         } catch (SQLException e) {
-            // Gestione dell'eccezione: stampa del messaggio di errore
-            System.err.println("Error adding booking to database: " + e.getMessage());
-            // Eventualmente, puoi anche registrare l'errore in un log
+            throw new DataLoadException("DB insert error");
         }
     }
 
@@ -59,10 +58,10 @@ public class DBBookingDao extends BookingDao {
             stmt.setString(1, trackName);
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
-                    // Estrai i valori dal ResultSet prima di chiuderlo
                     String id = rs.getString("id");
                     String track = rs.getString("trackname");
                     usrname = rs.getString("usrname");
+                    Customer user = new Customer(usrname, null, null);
                     String description = rs.getString("description");
                     double cost = rs.getDouble("cost");
                     String shift = rs.getString("shift");
@@ -70,7 +69,6 @@ public class DBBookingDao extends BookingDao {
                     int rental = rs.getInt("rental");
                     int personal = rs.getInt("personal");
 
-                    // Ora puoi chiudere il ResultSet e fare altre operazioni
                     ConcreteBooking booking = new ConcreteBooking();
                     booking.setId(id);
                     booking.setTrackName(track);
@@ -80,24 +78,59 @@ public class DBBookingDao extends BookingDao {
                     booking.setSelectedDay(selectedDay);
                     booking.setRental(rental);
                     booking.setPersonal(personal);
+                    booking.setUser(user.getUsername());
                     bookings.add(booking);
                 }
             }
 
-            for(ConcreteBooking i: bookings){
-                // Recupera l'utente dopo aver chiuso il ResultSet
+            for(ConcreteBooking booking: bookings){
                 UserDao userDao = FactoryDAO.getInstance().createUserDao();
-                User user = userDao.getUserByUsername(usrname); // Recupera l'utente
-                i.setUser(user);
-                bookingList.add(i);
+                Customer user = null;
+                try {
+                    user = (Customer) userDao.getUserByUsername(booking.getUser());
+                }catch (DataLoadException e) {
+                    System.out.println(e.getMessage());
+                }
+                booking.setUser(user.getUsername());
+                bookingList.add(booking);
             }
 
         } catch (SQLException e) {
-            // Gestione dell'eccezione: stampa del messaggio di errore
-            System.err.println("Error retrieving bookings by track: " + e.getMessage());
+            throw new DataLoadException("DB data retrieval error");
         }
         return bookingList;
     }
+
+    public List<BookingInterface> getBookingsByUser(String usrname) {
+        List<BookingInterface> bookings = new ArrayList<>();
+        String query = "SELECT * FROM bookings WHERE usrname = ?";
+
+        try (Connection connection = DBConnection.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+
+            statement.setString(1, usrname);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                ConcreteBooking booking = new ConcreteBooking();
+                booking.setId(resultSet.getString("id"));
+                booking.setTrackName(resultSet.getString("trackname"));
+                booking.setUser(resultSet.getString("usrname"));
+                booking.setDescription(resultSet.getString("description"));
+                booking.setBaseCost(resultSet.getDouble("cost"));
+                booking.setShift(resultSet.getString("shift"));
+                booking.setSelectedDay(resultSet.getDate("selectedDay").toLocalDate());
+                booking.setRental(resultSet.getInt("rental"));
+                booking.setPersonal(resultSet.getInt("personal"));
+
+                bookings.add(booking);
+            }
+        } catch (SQLException e) {
+            throw new DataLoadException("DB data retrieval error");
+        }
+        return bookings;
+    }
+
 
 
 }

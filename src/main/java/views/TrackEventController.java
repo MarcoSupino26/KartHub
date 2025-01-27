@@ -2,6 +2,7 @@ package views;
 
 import beans.TrackEventBean;
 import controllers.EventManager;
+import exceptions.DataLoadException;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.ScrollPane;
@@ -29,16 +30,16 @@ public class TrackEventController {
         eventsContainer.setPrefHeight(100);
         eventsContainer.setStyle("-fx-background-color: #000000; -fx-padding: 10");
 
-        trackEventsList = eventManager.getAssociatedEvents();
+        trackEventsList = eventManager.getAssociatedEvents(); //Recupero delle info degli eventi di un tracciato
         for (TrackEventBean trackEventBean : trackEventsList) {
             displayEvent(trackEventBean, eventsContainer);
         }
         scrollPane.setContent(eventsContainer);
 
-        scrollPane.requestFocus();
+        scrollPane.requestLayout();
     }
 
-    public void displayEvent(TrackEventBean trackEvent, VBox eventsContainer) {
+    public void displayEvent(TrackEventBean trackEvent, VBox eventsContainer) {//Personalizzazione delle varie HBox
         HBox displayedEvent = new HBox();
         displayedEvent.setPrefWidth(500);
         displayedEvent.setPrefHeight(100);
@@ -73,6 +74,10 @@ public class TrackEventController {
 
     @FXML
     public void addEvent(){
+        try{
         SceneManager.changeScene("/eventcreation.fxml");
+        }catch(DataLoadException e){
+            System.out.println(e.getMessage());
+        }
     }
 }
