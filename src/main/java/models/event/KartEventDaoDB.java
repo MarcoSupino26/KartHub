@@ -12,23 +12,28 @@ public class KartEventDaoDB extends KartEventDao {
     public KartEventDaoDB() {
     }
 
-    // Metodo per ottenere eventi associati a un track
     public List<KartEvent> getEventsByTrack(String track) {
         String query = "SELECT * FROM events WHERE trackname = ?";
+        return getEvents(query, track);
+    }
+
+    public List<KartEvent> getAllEvents() {
+        String query = "SELECT * FROM events";
+        return getEvents(query, null);
+    }
+
+    private List<KartEvent> getEvents(String query, String track) {
         List<KartEvent> events = new ArrayList<>();
         try (Connection connection = DBConnection.getInstance().getConnection();
              PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setString(1, track);
+
+            if (track != null) {
+                stmt.setString(1, track);
+            }
+
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
-                    KartEvent kartEvent = new KartEvent(rs.getString("event_name"));
-                    kartEvent.setEventType(rs.getString("event_type"));
-                    kartEvent.setCost(rs.getDouble("ticket_cost"));
-                    kartEvent.setEventDate(rs.getDate("day").toLocalDate());
-                    kartEvent.setEventTime(rs.getTime("start_hour").toLocalTime());
-                    kartEvent.setTickets(rs.getInt("available_tickets"));
-                    kartEvent.setTrackName(rs.getString("trackname"));
-                    events.add(kartEvent);
+                    events.add(mapToKartEvent(rs));
                 }
             }
         } catch (SQLException e) {
@@ -37,30 +42,17 @@ public class KartEventDaoDB extends KartEventDao {
         return events;
     }
 
-    // Metodo per ottenere tutti gli eventi
-    public List<KartEvent> getAllEvents() {
-        String query = "SELECT * FROM events";
-        List<KartEvent> events = new ArrayList<>();
-        try (Connection connection = DBConnection.getInstance().getConnection();
-             PreparedStatement stmt = connection.prepareStatement(query);
-             ResultSet rs = stmt.executeQuery()) {
-            while (rs.next()) {
-                KartEvent kartEvent = new KartEvent(rs.getString("event_name"));
-                kartEvent.setEventType(rs.getString("event_type"));
-                kartEvent.setCost(rs.getDouble("ticket_cost"));
-                kartEvent.setEventDate(rs.getDate("day").toLocalDate());
-                kartEvent.setEventTime(rs.getTime("start_hour").toLocalTime());
-                kartEvent.setTickets(rs.getInt("available_tickets"));
-                kartEvent.setTrackName(rs.getString("trackname"));
-                events.add(kartEvent);
-            }
-        } catch (SQLException e) {
-            throw new DataLoadException("DB data retrieval error");
-        }
-        return events;
+    private KartEvent mapToKartEvent(ResultSet rs) throws SQLException {
+        KartEvent kartEvent = new KartEvent(rs.getString("event_name"));
+        kartEvent.setEventType(rs.getString("event_type"));
+        kartEvent.setCost(rs.getDouble("ticket_cost"));
+        kartEvent.setEventDate(rs.getDate("day").toLocalDate());
+        kartEvent.setEventTime(rs.getTime("start_hour").toLocalTime());
+        kartEvent.setTickets(rs.getInt("available_tickets"));
+        kartEvent.setTrackName(rs.getString("trackname"));
+        return kartEvent;
     }
 
-    // Metodo per aggiungere o aggiornare un evento
     public void addKartEvent(KartEvent kartEvent) {
         String query = "INSERT INTO events (event_name, event_type, available_tickets, ticket_cost, day, start_hour, trackname) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?) " +
