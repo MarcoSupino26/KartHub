@@ -1,17 +1,34 @@
 package utils;
 
+import exceptions.DataLoadException;
+
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
 
 public class DBConnection {
     private static DBConnection instance;
     private Connection connection;
 
-    private static final String URL = "jdbc:mysql://localhost:3306/kart_hub";
-    private static final String USER = "root";
-    private static final String PASSWORD = "#Egeria02";
+    private static String URL;
+    private static String USER;
+    private static String PASSWORD;
 
+
+    static {
+        Properties prop = new Properties();
+        try (FileInputStream input = new FileInputStream("src/main/resources/dbconfig.properties")) {
+            prop.load(input);
+            URL = prop.getProperty("db.url");
+            USER = prop.getProperty("db.user");
+            PASSWORD = prop.getProperty("db.password");
+        } catch (IOException e) {
+            throw new DataLoadException("File open error");
+        }
+    }
     // Costruttore privato per il Singleton
     private DBConnection() throws SQLException {
         try {
