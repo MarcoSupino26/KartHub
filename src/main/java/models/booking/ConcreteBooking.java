@@ -1,5 +1,4 @@
 package models.booking;
-import models.user.User;
 
 import java.time.LocalDate;
 import java.util.UUID;

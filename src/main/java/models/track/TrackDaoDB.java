@@ -19,9 +19,7 @@ import javafx.scene.image.Image;
 
 public class TrackDaoDB extends TrackDao {
 
-    public TrackDaoDB() {
-    }
-
+    public TrackDaoDB() {}//Non sono necessari parametri
     @Override
     public void insertTrack(Track track) {
         String query = "INSERT INTO tracks (trackname, description, karts, address, image_path, opening_hour, closing_hour, slot_duration, usrname) " +

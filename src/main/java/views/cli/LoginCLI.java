@@ -21,11 +21,13 @@ public class LoginCLI {
             switch (choice) {
                 case "1":
                     accedi();
+                    break;
                 case "2":
                     switchToSign();
-                    return;
+                    break;
                 default:
                     System.out.println("Opzione non valida. Riprova.");
+                    break;
             }
         }
     }

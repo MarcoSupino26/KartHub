@@ -1,7 +1,5 @@
 package models.booking;
 
-import models.user.User;
-
 import java.time.LocalDate;
 
 public abstract class BookDecorator implements BookingInterface {

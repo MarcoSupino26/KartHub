@@ -30,12 +30,16 @@ public class TrackEventsCLI {
         switch (choice) {
             case "1":
                 ownerTopBarCLI.switchToHome();
+                break;
             case "2":
                 ownerTopBarCLI.switchToManager();
+                break;
             case "3":
                 ownerTopBarCLI.switchToEventi();
+                break;
             case "4":
                 ownerTopBarCLI.logout();
+                break;
             case "5":
                 displayEvents();
                 break;
@@ -44,6 +48,7 @@ public class TrackEventsCLI {
                 break;
             default:
                 System.out.println("Opzione non valida. Riprova.");
+                break;
         }
     }
 

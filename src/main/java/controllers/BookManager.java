@@ -179,9 +179,9 @@ public class BookManager {
         }
         track.addBooking(booking);
         User logged = SessionManager.getInstance().getLoggedUser();
-        if(logged instanceof Customer) ((Customer) logged).addBooking(booking);
+        ((Customer) logged).addBooking(booking);
         User owner = track.getOwner();
-        if(owner instanceof Owner) ((Owner)owner).setTrack(track);
+        ((Owner)owner).setTrack(track);
         BookingDao bookDao = FactoryDAO.getInstance().createBookingDao();
 
         try {
