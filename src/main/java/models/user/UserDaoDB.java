@@ -62,31 +62,7 @@ public class UserDaoDB extends UserDao {
         } catch (SQLException e) {
             throw new DataLoadException("DB data retrieval error");
         }
-
-        if (user != null) {
-            if (user instanceof Owner) {
-                TrackDao trackDao = FactoryDAO.getInstance().createTrackDao();
-                Track track = null;
-                try {
-                    track = trackDao.getTrackByUser(user.getUsername());
-                }catch (DataLoadException e) {
-                    System.out.println(e.getMessage());
-                }
-                ((Owner) user).setTrack(track);
-            } else if (user instanceof Customer) {
-                BookingDao bookingDao = FactoryDAO.getInstance().createBookingDao();
-                List<BookingInterface> bookings = new ArrayList<>();
-
-                try {
-                    bookings = bookingDao.getBookingsByUser(user.getUsername());
-                }catch (DataLoadException e){
-                    System.out.println(e.getMessage());
-                }
-
-                ((Customer) user).setBookings(bookings);
-            }
-        }
-        return user;
+        return populateUser(user);
     }
 
     @Override
@@ -115,31 +91,31 @@ public class UserDaoDB extends UserDao {
         } catch (SQLException e) {
             throw new DataLoadException("DB data retrieval error");
         }
+        return populateUser(user);
+    }
 
-        if (user != null) {
-            if (user instanceof Owner) {
-                TrackDao trackDao = FactoryDAO.getInstance().createTrackDao();
-                Track track = null;
-                try {
-                    track = trackDao.getTrackByUser(user.getUsername());
-                }catch (DataLoadException e){
-                    System.out.println(e.getMessage());
-                }
-                track.setOwner(user);
-                ((Owner) user).setTrack(track);
-            } else if (user instanceof Customer) {
-                BookingDao bookingDao = FactoryDAO.getInstance().createBookingDao();
-                List<BookingInterface> bookings = new ArrayList<>();
-                try {
-                    bookings = bookingDao.getBookingsByUser(user.getUsername());
-                } catch (DataLoadException e) {
-                    System.out.println(e.getMessage());
-                }
-
-                ((Customer) user).setBookings(bookings);
+    private User populateUser(User user) {
+        if (user instanceof Owner) {
+            TrackDao trackDao = FactoryDAO.getInstance().createTrackDao();
+            Track track = null;
+            try {
+                track = trackDao.getTrackByUser(user.getUsername());
+            }catch (DataLoadException e) {
+                System.out.println(e.getMessage());
             }
+            ((Owner) user).setTrack(track);
+        } else if (user instanceof Customer) {
+            BookingDao bookingDao = FactoryDAO.getInstance().createBookingDao();
+            List<BookingInterface> bookings = new ArrayList<>();
+
+            try {
+                bookings = bookingDao.getBookingsByUser(user.getUsername());
+            }catch (DataLoadException e){
+                System.out.println(e.getMessage());
+            }
+
+            ((Customer) user).setBookings(bookings);
         }
         return user;
     }
-
 }
