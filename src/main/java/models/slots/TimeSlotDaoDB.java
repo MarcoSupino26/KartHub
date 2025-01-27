@@ -65,9 +65,9 @@ public class TimeSlotDaoDB extends TimeSlotDao {
                 "ON DUPLICATE KEY UPDATE available = VALUES(available)";
         try (Connection connection = DBConnection.getInstance().getConnection();
              PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setDate(1, Date.valueOf(day));
+            stmt.setString(2, trackName);
             for (TimeSlot timeSlot : timeSlots) {
-                stmt.setDate(1, Date.valueOf(day));
-                stmt.setString(2, trackName);
                 stmt.setDouble(3, timeSlot.getStartTime());
                 stmt.setDouble(4, timeSlot.getEndTime());
                 stmt.setBoolean(5, timeSlot.isAvailable());
