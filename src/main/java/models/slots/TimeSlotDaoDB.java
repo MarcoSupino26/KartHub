@@ -41,7 +41,7 @@ public class TimeSlotDaoDB extends TimeSlotDao {
         try {
             connection = DBConnection.getInstance().getConnection();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DataLoadException("DB connection error");
         }
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setString(1, trackName);

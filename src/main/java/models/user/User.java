@@ -5,7 +5,7 @@ public abstract class User {
     private String password;
     private String type;
 
-    public User(String username, String password, String type) {
+    protected User(String username, String password, String type) {
         this.username = username;
         this.password = password;
         this.type = type;

@@ -29,8 +29,8 @@ public class DBConnection {
             throw new DataLoadException("File open error");
         }
     }
-    // Costruttore privato per il Singleton
-    private DBConnection() throws SQLException {
+
+    protected DBConnection() throws SQLException {
         try {
             this.connection = DriverManager.getConnection(URL, USER, PASSWORD);
         } catch (SQLException e) {
@@ -38,7 +38,6 @@ public class DBConnection {
         }
     }
 
-    // Metodo per ottenere l'istanza Singleton
     public static DBConnection getInstance() throws SQLException {
         if (instance == null) {
             instance = new DBConnection();
@@ -46,7 +45,6 @@ public class DBConnection {
         return instance;
     }
 
-    // Metodo per ottenere la connessione
     public Connection getConnection() throws SQLException {
         if (connection == null || connection.isClosed()) {
             try {

@@ -26,7 +26,7 @@ public class KartEventDaoMem extends KartEventDao {
 
     @Override
     public List<KartEvent> getEventsByTrack(String track) {
-        return null;
+        return List.of();
     }
 
     @Override

@@ -27,7 +27,7 @@ public class BookingDaoMem extends BookingDao {
 
     @Override
     public List<BookingInterface> getBookingsByTrack(String trackName) {
-        return null;
+        return List.of();
     }
 
     @Override

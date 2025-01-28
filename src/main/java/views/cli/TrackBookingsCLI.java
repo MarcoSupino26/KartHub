@@ -12,7 +12,6 @@ public class TrackBookingsCLI {
     OwnerTopBarCLI ownerTopBarCLI = new OwnerTopBarCLI();
 
     public void start() {
-        OwnerTopBarCLI ownerTopBarCLI = new OwnerTopBarCLI();
         displayBookings();
         while(true) {
             ownerTopBarCLI.displayMenu();

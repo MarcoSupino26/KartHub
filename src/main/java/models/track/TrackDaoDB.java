@@ -159,7 +159,7 @@ public class TrackDaoDB extends TrackDao {
         try {
             connection = DBConnection.getInstance().getConnection();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DataLoadException("DB connection error");
         }
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             try (ResultSet rs = stmt.executeQuery()) {
@@ -185,8 +185,7 @@ public class TrackDaoDB extends TrackDao {
             tracks = populateTracks(tracks);
 
         } catch (SQLException e) {
-            System.err.println("Errore durante il recupero dei tracciati.");
-            e.printStackTrace();
+            throw new DataLoadException("DB data retrieval error");
         }
         return tracks;
     }
