@@ -34,7 +34,7 @@ public class DBConnection {
         try {
             this.connection = DriverManager.getConnection(URL, USER, PASSWORD);
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new DataLoadException("Connection error");
         }
     }
 

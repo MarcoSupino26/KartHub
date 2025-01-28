@@ -58,45 +58,50 @@ public class TrackDaoDB extends TrackDao {
 
             stmt.executeUpdate();
 
-            TimeSlotDao timeSlotDao = FactoryDAO.getInstance().createTimeSlotDao();
-            List<LocalDate> dates = track.allDates();
-            for (LocalDate date : dates) {
-                List<TimeSlot> slots = track.getTimeSlots(date);
-                try{
-                    timeSlotDao.insertTimeSlots(slots, date, track.getName());
-                }catch (DataLoadException e){
-                    System.out.println(INSERR);
-                }
-            }
-
-            List<BookingInterface> bookings = track.allBookings();
-            BookingDao bookingDao = FactoryDAO.getInstance().createBookingDao();
-            for (BookingInterface booking : bookings) {
-                try {
-                    bookingDao.addBooking(booking);
-                }catch (DataLoadException e){
-                    System.out.println(e.getMessage());
-                }
-            }
-
-            List<KartEvent> events = track.allEvents();
-            KartEventDao kartEventDao = FactoryDAO.getInstance().createKartEventDao();
-            for (KartEvent event : events) {
-                try{
-                    kartEventDao.addKartEvent(event);
-                }catch (DataLoadException e){
-                    System.out.println(e.getMessage());
-                }
-            }
-
-            try{
-                insertTrackCosts(track);
-            }catch (SQLException e) {
-                throw new DataLoadException(INSERR);
-            }
+            insertTimeSlots(track);
+            insertBookings(track);
+            insertKartEvents(track);
+            insertTrackCosts(track);
 
         } catch (SQLException e) {
             throw new DataLoadException(INSERR);
+        }
+    }
+
+    private void insertTimeSlots(Track track) {
+        TimeSlotDao timeSlotDao = FactoryDAO.getInstance().createTimeSlotDao();
+        List<LocalDate> dates = track.allDates();
+        for (LocalDate date : dates) {
+            List<TimeSlot> slots = track.getTimeSlots(date);
+            try {
+                timeSlotDao.insertTimeSlots(slots, date, track.getName());
+            } catch (DataLoadException e) {
+                System.out.println(INSERR);
+            }
+        }
+    }
+
+    private void insertBookings(Track track) {
+        List<BookingInterface> bookings = track.allBookings();
+        BookingDao bookingDao = FactoryDAO.getInstance().createBookingDao();
+        for (BookingInterface booking : bookings) {
+            try {
+                bookingDao.addBooking(booking);
+            } catch (DataLoadException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    private void insertKartEvents(Track track) {
+        List<KartEvent> events = track.allEvents();
+        KartEventDao kartEventDao = FactoryDAO.getInstance().createKartEventDao();
+        for (KartEvent event : events) {
+            try {
+                kartEventDao.addKartEvent(event);
+            } catch (DataLoadException e) {
+                System.out.println(e.getMessage());
+            }
         }
     }
 
