@@ -64,7 +64,7 @@ public class UserEventsController {
 
         Button buyTicket = new Button("Compra");
         buyTicket.setStyle("-fx-background-color: #c5151d; -fx-text-fill: white;");
-            buyTicket.setFont(Font.font(fontName, 18));
+        buyTicket.setFont(Font.font(fontName, 18));
         buyTicket.setOnAction(event->ticketShop(event, bean));
 
         eventDetails.getChildren().addAll(eventName, eventType, trackName, eventDate, eventTime, tickets, cost);

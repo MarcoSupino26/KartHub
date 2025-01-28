@@ -1,6 +1,7 @@
 package controllers;
 
 import beans.*;
+import com.mysql.cj.Session;
 import exceptions.DataLoadException;
 import models.booking.BookingInterface;
 import models.dao.factory.FactoryDAO;
@@ -21,23 +22,14 @@ public class ManageController {
     }
 
     public boolean registeredTrack() { //controlla se l'owner ha un tracciato associato
-        TrackDao trackDao = FactoryDAO.getInstance().createTrackDao();
         User owner = SessionManager.getInstance().getLoggedUser();
-        List<Track> tracks = new ArrayList<>();
-        try {
-            tracks = trackDao.getAllTracks();
-        }catch (DataLoadException e) {
-            System.out.println(e.getMessage());
-        }
-        for (Track track : tracks) {
-            if (track.getOwner().getUsername().equals(owner.getUsername())) {
-                ManageSession mS = new ManageSession();
-                mS.setTrackName(track.getName());
-                SessionManager.getInstance().createManageSession(mS);
-                return true;
-            }
-        }
-        return false;
+        Track track = ((Owner)owner).getTrack();
+        if(track != null) {
+            ManageSession mS = new ManageSession();
+            mS.setTrackName(track.getName());
+            SessionManager.getInstance().createManageSession(mS);
+            return true;
+        }else return false;
     }
 
     public List<BookingsDisplayBean> getBookings() {

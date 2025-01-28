@@ -123,6 +123,7 @@ public class EventManager {
         User logged = SessionManager.getInstance().getLoggedUser();
         track = ((Owner)logged).getTrack();
         track.addEvent(kartEvent);
+        ((Owner) logged).setTrack(track);
         UserDao userDao = FactoryDAO.getInstance().createUserDao();
         try {
             userDao.addUser(logged.getUsername(), logged);
@@ -136,7 +137,6 @@ public class EventManager {
             System.out.println(e.getMessage());
         }
         KartEventDao kartEventDao = FactoryDAO.getInstance().createKartEventDao();
-
         try{
             kartEventDao.addKartEvent(kartEvent);
         }catch (DataLoadException e){
