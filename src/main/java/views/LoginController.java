@@ -15,27 +15,41 @@ public class LoginController {
     private TextField psw;
 
     @FXML
-    public void accedi(){
-        LoginBean logBean = new LoginBean();
-        logBean.setUsername(usr.getText());
-        logBean.setPassword(psw.getText());
+    public void accedi() {
+        LoginBean logBean = createLoginBean();
         try {
-            if (new AuthController().authUser(logBean)) {
-                try{
-                SceneManager.changeScene("/home.fxml");
-                } catch (DataLoadException e) {
-                    System.out.println(e.getMessage());
-                }
-            }
-        }catch (UserNotFoundException e){
+            authenticateUser(logBean);
+        } catch (UserNotFoundException e) {
             e.handleException();
         }
     }
+
     @FXML
-    public void switchToSign(){
+    public void switchToSign() {
         try {
-            SceneManager.changeScene("/sign.fxml");
-        }catch (DataLoadException e){
+            changeScene("/sign.fxml");
+        }catch (DataLoadException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private LoginBean createLoginBean() {
+        LoginBean logBean = new LoginBean();
+        logBean.setUsername(usr.getText());
+        logBean.setPassword(psw.getText());
+        return logBean;
+    }
+
+    private void authenticateUser(LoginBean logBean) throws UserNotFoundException {
+        if (new AuthController().authUser(logBean)) {
+            changeScene("/home.fxml");
+        }
+    }
+
+    private void changeScene(String fxmlPath) {
+        try {
+            SceneManager.changeScene(fxmlPath);
+        } catch (DataLoadException e) {
             System.out.println(e.getMessage());
         }
     }

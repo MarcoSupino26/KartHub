@@ -35,30 +35,10 @@ public class BookingCLI {
         TrackProfileBean selectedTrack = bookManager.getSelectedTrack();
 
         System.out.println("Tracciato selezionato: " + selectedTrack.getName());
-        boolean continueBooking = true;
 
-        while (continueBooking) {
+        while (true) {
             showOptions();
-
-
-            System.out.print("Inserisci la data della prenotazione (YYYY-MM-DD): ");
-            try {
-                try{
-                    selectedDay = LocalDate.parse(scanner.nextLine());
-                } catch (DateTimeParseException e){
-                    throw new InvalidDateException();
-                }
-                if(selectedDay.isAfter(LocalDate.now())) {
-                    throw new InvalidDateException();
-                }
-            } catch (InvalidDateException e) {
-                e.handleException();
-            } catch (InvalidDateFormatException e){
-                e.handleException();
-            } catch (EmptyFieldException e){
-                e.handleException();
-            }
-
+            selectDate();
             updateTimeSlots();
 
             System.out.println("\nVuoi scegliere un altro giorno o proseguire?");
@@ -69,8 +49,8 @@ public class BookingCLI {
             String option = scanner.nextLine();
 
             if ("2".equals(option)) {
-                continueBooking = false;
                 confirmBooking();
+                break;
             } else if (!"1".equals(option)) {
                 System.out.println("Scelta non valida");
             }
@@ -83,11 +63,14 @@ public class BookingCLI {
         System.out.print("Seleziona le opzioni (separate da virgola): ");
         String[] options = scanner.nextLine().split(",");
 
-        try{
-            if(!optionsListContains(options, "1") && !optionsListContains(options,"3")) throw new EmptyFieldException();
-        } catch (EmptyFieldException e){
+        try {
+            validateOptions(options);
+        } catch (EmptyFieldException e) {
             e.handleException();
+            showOptions(); // Riprova in caso di errore
+            return;
         }
+
         raceSelected = optionsListContains(options, "1");
         qualiSelected = optionsListContains(options, "2");
         fpSelected = optionsListContains(options, "3");
@@ -95,43 +78,63 @@ public class BookingCLI {
         champagneSelected = optionsListContains(options, "5");
         onBoardSelected = optionsListContains(options, "6");
 
+        collectKartDetails();
+    }
+
+    private void validateOptions(String[] options) throws EmptyFieldException {
+        if (!optionsListContains(options, "1") && !optionsListContains(options, "3")) {
+            throw new EmptyFieldException("Devi selezionare almeno Gara o Prova Libera.");
+        }
+    }
+
+    private void collectKartDetails() {
         try {
             System.out.print("Numero di persone: ");
-            // Verifica se il campo rental è vuoto o non valido
-            String rentalInput = scanner.nextLine();
-            if (rentalInput.isEmpty()) {
-                throw new EmptyFieldException("Il numero di persone (rental) non può essere vuoto.");
-            }
-            rentalKarts = Integer.parseInt(rentalInput);
+            rentalKarts = readInteger();
 
             System.out.print("Usate kart personali? (s/n): ");
             checkSelected = "s".equalsIgnoreCase(scanner.nextLine());
 
             if (checkSelected) {
                 System.out.print("Inserisci il numero di kart personali: ");
-                // Verifica se il campo personal è vuoto o non valido
-                String personalInput = scanner.nextLine();
-                if (personalInput.isEmpty()) {
-                    throw new EmptyFieldException("Il numero di kart personali non può essere vuoto.");
-                }
-                personalKarts = Integer.parseInt(personalInput);
-                rentalKarts = rentalKarts - personalKarts;
+                personalKarts = readInteger();
+                rentalKarts -= personalKarts;
             } else {
                 personalKarts = 0;
             }
-
         } catch (EmptyFieldException e) {
-            e.handleException(); // Gestisce l'eccezione a seconda che sia CLI o GUI
+            e.handleException();
+            collectKartDetails();
         }
     }
 
-    private boolean optionsListContains(String[] options, String option) {
-        for (String o : options) {
-            if (o.trim().equals(option)) {
-                return true;
-            }
+    private void selectDate() {
+        System.out.print("Inserisci la data della prenotazione (YYYY-MM-DD): ");
+        try {
+            selectedDay = parseDate(scanner.nextLine());
+        } catch (InvalidDateException e){
+            e.handleException();
+            selectDate();
+        }catch (InvalidDateFormatException e) {
+            e.handleException();
+            selectDate();
         }
-        return false;
+    }
+
+    private LocalDate parseDate(String input) throws InvalidDateException, InvalidDateFormatException {
+        if (input.isEmpty()) {
+            throw new InvalidDateFormatException();
+        }
+
+        try {
+            LocalDate date = LocalDate.parse(input);
+            if (date.isBefore(LocalDate.now())) {
+                throw new InvalidDateException();
+            }
+            return date;
+        } catch (DateTimeParseException e) {
+            throw new InvalidDateFormatException();
+        }
     }
 
     private void updateTimeSlots() {
@@ -141,18 +144,16 @@ public class BookingCLI {
         List<SlotBean> slotsList = bookManager.getSlots(selectedDay);
         if (slotsList.isEmpty()) {
             System.out.println("Nessuno slot disponibile");
-        }else updateTimeSlotsList(slotsList, bookManager);
+        } else {
+            slotsList = updateCombinedSlots(slotsList, bookManager);
+            populateSlotsListView(slotsList);
+        }
     }
 
-    private void updateTimeSlotsList(List<SlotBean> slotsList, BookManager bookManager) {
-        slotsList = updateCombinedSlots(slotsList, bookManager);
-        populateSlotsListView(slotsList);
-    }
-
-    private List<SlotBean> updateCombinedSlots(List<SlotBean>slotsList, BookManager bookManager) {
-        if(raceSelected) {
+    private List<SlotBean> updateCombinedSlots(List<SlotBean> slotsList, BookManager bookManager) {
+        if (raceSelected) {
             CombinedSlotsBean combinedSlots = new CombinedSlotsBean(slotsList, true, qualiSelected, fpSelected);
-            slotsList = bookManager.getCombinedSlots2(combinedSlots);
+            return bookManager.getCombinedSlots2(combinedSlots);
         }
         return slotsList;
     }
@@ -160,16 +161,16 @@ public class BookingCLI {
     private void populateSlotsListView(List<SlotBean> slotsList) {
         System.out.println("Slot disponibili:");
 
-        int i = 1;
-        for (SlotBean slot : slotsList) {
+        for (int i = 0; i < slotsList.size(); i++) {
+            SlotBean slot = slotsList.get(i);
             if (slot.isFree()) {
-                String formattedSlot = String.format("%d: %.2f - %.2f", i, slot.getSlotStart(), slot.getSlotEnd()).replace(",", ".");
-                System.out.println(formattedSlot);
-                i++;
+                System.out.printf("%d: %.2f - %.2f%n", i + 1, slot.getSlotStart(), slot.getSlotEnd());
             }
         }
+
         System.out.print("Seleziona un turno: ");
-        int selectedIndex = Integer.parseInt(scanner.nextLine()) - 1;
+        int selectedIndex = readInteger() - 1;
+
         if (selectedIndex >= 0 && selectedIndex < slotsList.size()) {
             SlotBean selected = slotsList.get(selectedIndex);
             selectedSlot = String.format("%.2f - %.2f", selected.getSlotStart(), selected.getSlotEnd());
@@ -179,9 +180,16 @@ public class BookingCLI {
         }
     }
 
+    private int readInteger() throws EmptyFieldException {
+        String input = scanner.nextLine();
+        if (input.isEmpty()) {
+            throw new EmptyFieldException("Il campo non può essere vuoto.");
+        }
+        return Integer.parseInt(input);
+    }
+
     private void confirmBooking() {
         OptionsBean optionsBean = new OptionsBean();
-
         optionsBean.setRental(rentalKarts);
         optionsBean.setPersonal(personalKarts);
         optionsBean.setRace(raceSelected);
@@ -193,12 +201,20 @@ public class BookingCLI {
         optionsBean.setDate(selectedDay);
 
         String[] parts = selectedSlot.split("-");
-        String startTime = parts[0].replace(",",".");
-        optionsBean.setStartTime(Double.parseDouble(startTime));
+        optionsBean.setStartTime(Double.parseDouble(parts[0].replace(",", ".")));
         optionsBean.setShifts(selectedSlot);
 
         new BookManager().saveBooking(optionsBean);
 
         new RecapCLI().start();
+    }
+
+    private boolean optionsListContains(String[] options, String option) {
+        for (String o : options) {
+            if (o.trim().equals(option)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
