@@ -119,40 +119,8 @@ public class TrackDaoDB extends TrackDao {
 
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    track = new Track();
-                    String trackname = rs.getString(TRACK);
-                    String descritpion = rs.getString(DESCRIPTION);
-                    int karts  = rs.getInt(KARTS);
-                    String address = rs.getString(ADDR);
-                    String imagePath = rs.getString(IMG);
-                    Image image = new Image(imagePath);
-                    double opening = rs.getDouble(OPENING);
-                    double closing = rs.getDouble(CLOSING);
-                    double shiftDuration = rs.getDouble(DURATION);
-                    String usrName = rs.getString(USR);
-                    try{
-                        UserDao userDao = FactoryDAO.getInstance().createUserDao();
-                        track.setOwner(userDao.getUserByUsername(usrName));
-                    }catch (DataLoadException e){
-                        System.out.println(e.getMessage());
-                    }
-                    track.setName(trackname);
-                    track.setDescription(descritpion);
-                    track.setAvailableKarts(karts);
-                    track.setAddress(address);
-                    track.setImage(image);
-                    track.setOpeningHour(opening);
-                    track.setClosingHour(closing);
-                    track.setShiftDuration(shiftDuration);
-
-                    UserDao userDao = FactoryDAO.getInstance().createUserDao();
-                    User owner = null;
-                    try {
-                        owner = userDao.getUserByUsername(track.getOwner().getUsername());
-                    }catch (DataLoadException e){
-                        System.out.println(e.getMessage());
-                    }
-                    track.setOwner(owner);
+                    track = ResultSetToTrack(rs);
+                    setTrackOwner(track);
                 }
             }
         } catch (SQLException e) {
@@ -160,6 +128,43 @@ public class TrackDaoDB extends TrackDao {
         }
         return populateTrack(track);
     }
+
+    private Track ResultSetToTrack(ResultSet rs) throws SQLException {
+        String trackname = rs.getString(TRACK);
+        String description = rs.getString(DESCRIPTION);
+        int karts = rs.getInt(KARTS);
+        String address = rs.getString(ADDR);
+        String imagePath = rs.getString(IMG);
+        Image image = new Image(imagePath);
+        double opening = rs.getDouble(OPENING);
+        double closing = rs.getDouble(CLOSING);
+        double shiftDuration = rs.getDouble(DURATION);
+        String usrName = rs.getString(USR);
+
+        Track track = new Track();
+        track.setName(trackname);
+        track.setDescription(description);
+        track.setAvailableKarts(karts);
+        track.setAddress(address);
+        track.setImage(image);
+        track.setOpeningHour(opening);
+        track.setClosingHour(closing);
+        track.setShiftDuration(shiftDuration);
+        track.setOwner(new Owner(usrName, null, null));
+
+        return track;
+    }
+
+    private void setTrackOwner(Track track) {
+        try {
+            UserDao userDao = FactoryDAO.getInstance().createUserDao();
+            User owner = userDao.getUserByUsername(track.getOwner().getUsername());
+            track.setOwner(owner);
+        } catch (DataLoadException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
 
     public List<Track> getAllTracks() {
         List<Track> tracks = new ArrayList<>();
@@ -254,14 +259,7 @@ public class TrackDaoDB extends TrackDao {
     private List<Track> populateTracks(List<Track> tracks) {
         List<Track> populatedTracks = new ArrayList<>();
         for (Track track : tracks) {
-            UserDao userDao = FactoryDAO.getInstance().createUserDao();
-            User owner = null;
-            try {
-                owner = userDao.getUserByUsername(track.getOwner().getUsername());
-            }catch (DataLoadException e){
-                System.out.println(e.getMessage());
-            }
-            track.setOwner(owner);
+            setTrackOwner(track);
             populatedTracks.add(populateTrack(track));
         }
         return populatedTracks;
