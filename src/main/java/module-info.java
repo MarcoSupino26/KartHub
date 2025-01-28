@@ -4,9 +4,13 @@ module karthub{
     requires javafx.graphics;
     requires java.desktop;
     requires java.sql;
-    requires mysql.connector.j;
 
-
+    exports utils.session;
+    exports utils;
+    exports models.slots;
+    exports models.track;
+    exports models.event;
+    exports models.user;
     exports controllers;
     exports beans;
     exports views;

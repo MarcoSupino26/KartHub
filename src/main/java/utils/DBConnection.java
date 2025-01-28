@@ -20,7 +20,7 @@ public class DBConnection {
 
     static {
         Properties prop = new Properties();
-        try (FileInputStream input = new FileInputStream("src/main/resources/dbconfig.properties")) {
+        try (FileInputStream input = new FileInputStream("src/main/resources/config/dbconfig.properties")) {
             prop.load(input);
             URL = prop.getProperty("db.url");
             USER = prop.getProperty("db.user");
@@ -34,7 +34,7 @@ public class DBConnection {
         try {
             this.connection = DriverManager.getConnection(URL, USER, PASSWORD);
         } catch (SQLException e) {
-            throw new SQLException("Impossibile connettersi al database", e);
+            e.printStackTrace();
         }
     }
 

@@ -1,7 +1,6 @@
 package controllers;
 
 import beans.*;
-import com.mysql.cj.Session;
 import exceptions.DataLoadException;
 import models.booking.BookingInterface;
 import models.dao.factory.FactoryDAO;
