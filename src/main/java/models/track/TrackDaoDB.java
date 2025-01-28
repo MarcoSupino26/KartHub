@@ -119,7 +119,7 @@ public class TrackDaoDB extends TrackDao {
 
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    track = ResultSetToTrack(rs);
+                    track = resultSetToTrack(rs);
                     setTrackOwner(track);
                 }
             }
@@ -129,7 +129,7 @@ public class TrackDaoDB extends TrackDao {
         return populateTrack(track);
     }
 
-    private Track ResultSetToTrack(ResultSet rs) throws SQLException {
+    private Track resultSetToTrack(ResultSet rs) throws SQLException {
         String trackname = rs.getString(TRACK);
         String description = rs.getString(DESCRIPTION);
         int karts = rs.getInt(KARTS);
