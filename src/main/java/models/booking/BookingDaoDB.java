@@ -49,59 +49,73 @@ public class BookingDaoDB extends BookingDao {
 
     @Override
     public List<BookingInterface> getBookingsByTrack(String trackName) {
-        String query =  "SELECT id, trackname, usrname, description, cost, " +
+        String query = "SELECT id, trackname, usrname, description, cost, " +
                 "shift, selectedDay, rental, personal " +
                 "FROM bookings WHERE trackname = ?";
-        String usrname = "";
         List<ConcreteBooking> bookings = new ArrayList<>();
         List<BookingInterface> bookingList = new ArrayList<>();
+
         try (Connection connection = DBConnection.getInstance().getConnection();
              PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setString(1, trackName);
-            try (ResultSet rs = stmt.executeQuery()) {
-                while (rs.next()) {
-                    String id = rs.getString("id");
-                    String track = rs.getString("trackname");
-                    usrname = rs.getString("usrname");
-                    Customer user = new Customer(usrname, null, null);
-                    String description = rs.getString("description");
-                    double cost = rs.getDouble("cost");
-                    String shift = rs.getString("shift");
-                    LocalDate selectedDay = rs.getDate("selectedDay").toLocalDate();
-                    int rental = rs.getInt("rental");
-                    int personal = rs.getInt("personal");
+            bookings = getBookings(stmt);
 
-                    ConcreteBooking booking = new ConcreteBooking();
-                    booking.setId(id);
-                    booking.setTrackName(track);
-                    booking.setDescription(description);
-                    booking.setBaseCost(cost);
-                    booking.setShift(shift);
-                    booking.setSelectedDay(selectedDay);
-                    booking.setRental(rental);
-                    booking.setPersonal(personal);
-                    booking.setUser(user.getUsername());
-                    bookings.add(booking);
-                }
-            }
-
-            for(ConcreteBooking booking: bookings){
-                UserDao userDao = FactoryDAO.getInstance().createUserDao();
-                Customer user = null;
-                try {
-                    user = (Customer) userDao.getUserByUsername(booking.getUser());
-                }catch (DataLoadException e) {
-                    System.out.println(e.getMessage());
-                }
-                booking.setUser(user.getUsername());
-                bookingList.add(booking);
-            }
+            populateUsersAndConvert(bookings, bookingList);
 
         } catch (SQLException e) {
             throw new DataLoadException("DB data retrieval error");
         }
+
         return bookingList;
     }
+
+    private List<ConcreteBooking> getBookings(PreparedStatement stmt) throws SQLException {
+        List<ConcreteBooking> bookings = new ArrayList<>();
+
+        try (ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                String id = rs.getString("id");
+                String track = rs.getString("trackname");
+                String usrname = rs.getString("usrname");
+                String description = rs.getString("description");
+                double cost = rs.getDouble("cost");
+                String shift = rs.getString("shift");
+                LocalDate selectedDay = rs.getDate("selectedDay").toLocalDate();
+                int rental = rs.getInt("rental");
+                int personal = rs.getInt("personal");
+
+                ConcreteBooking booking = new ConcreteBooking();
+                booking.setId(id);
+                booking.setTrackName(track);
+                booking.setDescription(description);
+                booking.setBaseCost(cost);
+                booking.setShift(shift);
+                booking.setSelectedDay(selectedDay);
+                booking.setRental(rental);
+                booking.setPersonal(personal);
+                booking.setUser(usrname);
+
+                bookings.add(booking);
+            }
+        }
+
+        return bookings;
+    }
+
+    private void populateUsersAndConvert(List<ConcreteBooking> bookings, List<BookingInterface> bookingList) {
+        for (ConcreteBooking booking : bookings) {
+            UserDao userDao = FactoryDAO.getInstance().createUserDao();
+            try {
+                Customer user = (Customer) userDao.getUserByUsername(booking.getUser());
+                booking.setUser(user.getUsername());
+            } catch (DataLoadException e) {
+                System.out.println(e.getMessage());
+            }
+            bookingList.add(booking);
+        }
+    }
+
+
 
     public List<BookingInterface> getBookingsByUser(String usrname) {
         List<BookingInterface> bookings = new ArrayList<>();

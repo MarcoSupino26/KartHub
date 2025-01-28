@@ -282,7 +282,7 @@ public class TrackDaoDB extends TrackDao {
             statement.setDouble(7, track.getCost(6));
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new DataLoadException("DB insert error");
+            throw new DataLoadException(INSERR);
         }
     }
 
