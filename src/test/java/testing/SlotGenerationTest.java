@@ -1,3 +1,5 @@
+package testing;
+
 import models.track.Track;
 import models.slots.TimeSlot;
 import org.junit.jupiter.api.Test;

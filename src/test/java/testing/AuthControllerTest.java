@@ -1,9 +1,7 @@
+package testing;
+
 import beans.LoginBean;
 import controllers.AuthController;
-import exceptions.UserNotFoundException;
-import models.user.UserDao;
-import models.user.User;
-import models.user.Owner;
 import utils.session.SessionManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

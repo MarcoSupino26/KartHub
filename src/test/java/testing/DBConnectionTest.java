@@ -1,3 +1,5 @@
+package testing;
+
 import org.junit.jupiter.api.Test;
 import utils.DBConnection;
 import java.sql.Connection;
