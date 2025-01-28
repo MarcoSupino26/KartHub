@@ -4,22 +4,22 @@ import exceptions.DataLoadException;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import views.SceneManager;
-import java.util.Scanner;
 import views.cli.HomeCLI;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
+import java.util.Scanner;
 
 public class Main extends Application {
 
     private static boolean isCLI = false;
-    private static boolean isDemoMode = true;
+    private static String executionMode = "demo";
 
     public static void main(String[] args) {
         try {
             loadConfig();
-        }
-        catch (DataLoadException e) {
+        } catch (DataLoadException e) {
             System.out.println(e.getMessage());
         }
 
@@ -31,9 +31,9 @@ public class Main extends Application {
         System.out.println("2. CLI");
         System.out.print("-> ");
 
-        String scelta = scanner.nextLine();
+        String choice = scanner.nextLine();
 
-        switch (scelta) {
+        switch (choice) {
             case "1":
                 System.out.println("Avvio modalità GUI...");
                 Application.launch(Main.class, args);
@@ -65,25 +65,23 @@ public class Main extends Application {
         homeCLI.start();
     }
 
-    //Caricamento del file di config
+    // Caricamento del file di configurazione
     private static void loadConfig() {
         Properties properties = new Properties();
         try {
-            FileInputStream configFile = new FileInputStream("src/main/resources/config.properties");
+            FileInputStream configFile = new FileInputStream("src/main/resources/config/config.properties");
             properties.load(configFile);
 
-            String mode = properties.getProperty("mode", "demo"); // Default a demo se non trovato
-            isDemoMode = "demo".equalsIgnoreCase(mode);
-
-            System.out.println("Modalità di esecuzione: " + (isDemoMode ? "Demo" : "Persistence"));
+            executionMode = properties.getProperty("mode", "demo").toLowerCase(); // Default a demo se non trovato
+            System.out.println("Modalità di esecuzione: " + executionMode);
 
         } catch (IOException e) {
-            throw new DataLoadException("File opening error");
+            throw new DataLoadException(e.getMessage());
         }
     }
 
-    public static boolean isDemoMode() {
-        return isDemoMode;
+    public static String getExecutionMode() {
+        return executionMode;
     }
 
     public static boolean isCLI() {

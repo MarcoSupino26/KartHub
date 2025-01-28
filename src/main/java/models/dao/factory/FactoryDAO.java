@@ -15,9 +15,14 @@ public abstract class FactoryDAO {
 
     public static FactoryDAO getInstance() {
         if (instance == null) {
-            if(Main.isDemoMode()) {
+            String executionMode = Main.getExecutionMode();
+            if(executionMode.equals("demo")) {
                 instance = new MemoryDao();
-            } else instance = new DaoDB();
+            } else if(executionMode.equals("db")) {
+                instance = new DaoDB();
+            } else if(executionMode.equals("fsys")) {
+                instance = new FsysDao();
+            }
         }
         return instance;
     }
