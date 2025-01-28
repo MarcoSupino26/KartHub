@@ -17,6 +17,6 @@ public class TimeSlotDaoFsys extends TimeSlotDao {
 
     @Override
     public void insertTimeSlots(List<TimeSlot> timeSlots, LocalDate day, String trackName) {
-
+        //Non implementato
     }
 }

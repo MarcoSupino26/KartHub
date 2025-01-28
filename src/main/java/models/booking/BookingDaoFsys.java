@@ -6,7 +6,7 @@ public class BookingDaoFsys extends BookingDao{
     //Non implementato
     @Override
     public void addBooking(BookingInterface booking) {
-        return;
+        //Non implementato
     }
 
     @Override

@@ -18,7 +18,7 @@ public class KartEventDaoFsys extends KartEventDao{
         List<KartEvent> events = new ArrayList<>();
         return events.stream()
                 .filter(event -> event.getTrackName() != null && event.getTrackName().equalsIgnoreCase(trackName))
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override
