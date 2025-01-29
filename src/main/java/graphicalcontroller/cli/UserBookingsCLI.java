@@ -4,7 +4,6 @@ import beans.BookingsDisplayBean;
 import controllers.BookManager;
 
 import java.util.List;
-import java.util.Scanner;
 
 public class UserBookingsCLI {
 

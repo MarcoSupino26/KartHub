@@ -7,7 +7,7 @@ import java.util.Scanner;
 public class HomeCLI {
 
     private Scanner scanner = new Scanner(System.in);
-
+    private static final String NOTVALID = "Opzione non valida. Riprova";
     public void start() {
         System.out.println("-------------------------");
         System.out.println("Benvenuto in KartHub!");
@@ -55,7 +55,7 @@ public class HomeCLI {
                 ownerTopBar.logout();
                 break;
             default:
-                System.out.println("Opzione non valida. Riprova");
+                System.out.println(NOTVALID);
                 break;
         }
     }
@@ -76,10 +76,10 @@ public class HomeCLI {
                 break;
             case "5":
                 if(SessionManager.getInstance().getLoggedUser() != null) new UserBookingsCLI().start();
-                else System.out.println("Opzione non valida. Riprova");
+                else System.out.println(NOTVALID);
                 break;
             default:
-                System.out.println("Opzione non valida. Riprova");
+                System.out.println(NOTVALID);
                 break;
         }
     }
