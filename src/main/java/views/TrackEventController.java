@@ -75,7 +75,7 @@ public class TrackEventController {
     @FXML
     public void addEvent(){
         try{
-            SceneManager.changeScene("/eventcreation.fxml");
+            SceneManager.changeScene("/EventCreation.fxml");
         }catch(DataLoadException e){
             System.out.println(e.getMessage());
         }

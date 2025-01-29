@@ -36,7 +36,7 @@ public class ShiftsController {
         ShiftsBean shifts = new ShiftsBean(avKarts, opHour, clHour, shiftsDuration);
         new ManageController().saveShifts(shifts);
         try{
-            SceneManager.changeScene("/costChoice.fxml");
+            SceneManager.changeScene("/CostChoice.fxml");
         }catch(DataLoadException e){
             System.out.println(e.getMessage());
         }

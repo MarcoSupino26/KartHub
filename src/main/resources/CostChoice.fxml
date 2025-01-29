@@ -12,7 +12,7 @@
 
 <BorderPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.CostController">
     <top>
-        <fx:include source="ownertopbar.fxml" />
+        <fx:include source="OwnerTopBar.fxml" />
     </top>
     <center>
         <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="850.0" style="-fx-alignment: center;" BorderPane.alignment="CENTER">

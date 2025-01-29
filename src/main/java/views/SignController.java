@@ -38,7 +38,7 @@ public class SignController {
         AuthController auth = new AuthController();
         auth.registerUser(signBean);
         try {
-            SceneManager.changeScene("/home.fxml");
+            SceneManager.changeScene("/Home.fxml");
         } catch (DataLoadException e){
             System.out.println(e.getMessage());
         }

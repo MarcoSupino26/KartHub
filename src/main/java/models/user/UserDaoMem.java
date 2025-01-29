@@ -1,5 +1,9 @@
 package models.user;
 
+import models.dao.factory.FactoryDAO;
+import models.track.Track;
+import models.track.TrackDao;
+
 import java.util.HashMap;
 
 public class UserDaoMem extends UserDao {
@@ -8,7 +12,15 @@ public class UserDaoMem extends UserDao {
 
     protected UserDaoMem(){
         users = new HashMap<>();
-        users.put("Marco", new Owner("Marco", "psw1", "Proprietario"));
+        Owner owner = new Owner("Marco", "psw1", "Proprietario");
+        TrackDao trackDao = FactoryDAO.getInstance().createTrackDao();
+        Track track = trackDao.getTrack("Kartodromo Supox");
+        track.setOwner(owner);
+        trackDao.insertTrack(track);
+        owner.setTrack(track);
+        users.put("Marco", owner);
+        Customer customer = new Customer("Supino", "psw2", "Cliente");
+        users.put("Supino", customer);
     }
 
 

@@ -87,7 +87,7 @@ public class UserEventsController {
     public void ticketShop(ActionEvent event, UserEventsBean bean) {
         new EventManager().setCurrentEvent(bean);
         try{
-            SceneManager.changeScene("/ticketbuy.fxml");
+            SceneManager.changeScene("/TicketBuy.fxml");
         }catch(DataLoadException e){
             System.out.println(e.getMessage());
         }

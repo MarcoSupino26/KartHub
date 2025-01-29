@@ -1,7 +1,7 @@
 package views;
 
 import beans.BookingsDisplayBean;
-import controllers.ManageController;
+import controllers.BookManager;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.ScrollPane;
@@ -11,10 +11,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
-import java.time.LocalDate;
 import java.util.List;
 
-public class TrackBookings {
+public class UserBookings {
 
     @FXML
     private ScrollPane scrollPane;
@@ -22,17 +21,17 @@ public class TrackBookings {
     @FXML
     public void initialize() {
         List<BookingsDisplayBean> bookings;
-        VBox bookingsContainer = new VBox(10);
-        bookingsContainer.setStyle("-fx-background-color: #000000; -fx-padding: 10px");
-        bookingsContainer.setPrefWidth(500);
-        bookingsContainer.setPrefHeight(100);
+        VBox userBookingsContainer = new VBox(10);
+        userBookingsContainer.setStyle("-fx-background-color: #000000; -fx-padding: 10px");
+        userBookingsContainer.setPrefWidth(500);
+        userBookingsContainer.setPrefHeight(100);
 
-        bookings = new ManageController().getBookings(); //Bean per le info delle prenotazioni
-        //Vengono generati dinamicamente oggetti HBox per mostrare le prenotazioni di un tracciato
+        bookings = new BookManager().getUserBookings();
+
         for(BookingsDisplayBean booking : bookings) {
-            displayBookings(booking, bookingsContainer);
+            displayBookings(booking, userBookingsContainer);
         }
-        scrollPane.setContent(bookingsContainer);
+        scrollPane.setContent(userBookingsContainer);
     }
 
     public void displayBookings(BookingsDisplayBean booking, VBox bookingsContainer) {//Personalizzazione delle HBox
@@ -48,19 +47,19 @@ public class TrackBookings {
         bookingDetails.setPrefWidth(500);
         bookingDetails.setPrefHeight(100);
 
-        Text user = new Text(booking.getUsr());
-        user.setFont(Font.font("Futura-Medium", 20));
-        user.setFill(Color.WHITE);
+        Text track = new Text(booking.getTrackName());
+        track.setFont(Font.font("Futura-Medium", 20));
+        track.setFill(Color.WHITE);
 
-        Text date = customize(new Text(String.valueOf(booking.getDate())));
-        Text shift = customize(new Text(booking.getShift()));
-        Text rental = customize(new Text("Kart noleggiati: " + booking.getRental()));
+        Text day = customize(new Text(String.valueOf(booking.getSelectedDay())));
+        Text slot = customize(new Text(booking.getShift()));
+        Text karts = customize(new Text("Kart noleggiati: " + booking.getRental()));
         Text personal = customize(new Text("Personali: " + booking.getPersonal()));
-        Text description = customize(new Text(booking.getDescription()));
+        Text desc = customize(new Text(booking.getDescription()));
         double cost = Double.parseDouble(booking.getCost());
-        Text earnings = customize(new Text(String.format("€%.2f", cost)));
+        Text payment = customize(new Text(String.format("€%.2f", cost)));
 
-        bookingDetails.getChildren().addAll(user, date ,shift, rental, personal, description, earnings);
+        bookingDetails.getChildren().addAll(track, day, slot, karts, personal, desc, payment);
 
         bookingDisplayed.getChildren().add(bookingDetails);
 

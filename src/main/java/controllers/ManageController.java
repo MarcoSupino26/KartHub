@@ -6,6 +6,7 @@ import models.booking.BookingInterface;
 import models.dao.factory.FactoryDAO;
 import models.track.Track;
 import models.track.TrackDao;
+import models.user.Customer;
 import models.user.Owner;
 import models.user.User;
 import models.user.UserDao;
@@ -49,11 +50,13 @@ public class ManageController {
     private static BookingsDisplayBean getBookingsDisplayBean(BookingInterface booking) {
         BookingsDisplayBean bookingBean = new BookingsDisplayBean(booking.getSelectedDay());
         bookingBean.setPersonal(String.valueOf(booking.getPersonal()));
+        bookingBean.setSelectedDay(booking.getSelectedDay());
         bookingBean.setRental(String.valueOf(booking.getRental()));
         bookingBean.setShift(String.valueOf(booking.getShift()));
         bookingBean.setUser(booking.getUser());
         bookingBean.setCost(String.valueOf(booking.getCost()));
         bookingBean.setDescription(booking.getDescription());
+        bookingBean.setSelectedDay(booking.getSelectedDay());
         return bookingBean;
     }
 

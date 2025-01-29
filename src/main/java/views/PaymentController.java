@@ -43,13 +43,13 @@ public class PaymentController {
 
         if(paymentManager.processPayment(paymentBean)){
             try {
-                SceneManager.changeScene("/paymentdone.fxml");
+                SceneManager.changeScene("/PaymentDone.fxml");
             }catch (DataLoadException e){
                 System.out.println(e.getMessage());
             }
         } else {
             try {
-                SceneManager.changeScene("/home.fxml");
+                SceneManager.changeScene("/Home.fxml");
             }catch (DataLoadException e){
                 System.out.println(e.getMessage());
             }

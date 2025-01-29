@@ -79,7 +79,7 @@ public class TrackChoiceController {
         BookManager bookManager = new BookManager();
         bookManager.setBookingSession(name);
         try{
-        SceneManager.changeScene("/book.fxml");
+        SceneManager.changeScene("/Book.fxml");
         } catch (DataLoadException e){
             System.out.println(e.getMessage());
         }

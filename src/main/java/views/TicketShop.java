@@ -54,7 +54,7 @@ public class TicketShop {
         int selectedTickets = ticket.getValue();
         new EventManager().setSoldTickets(selectedTickets);
         try{
-            SceneManager.changeScene("/pay.fxml");
+            SceneManager.changeScene("/Pay.fxml");
         }catch(DataLoadException e){
             System.out.println(e.getMessage());
         }

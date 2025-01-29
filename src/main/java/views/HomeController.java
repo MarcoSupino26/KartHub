@@ -27,8 +27,8 @@ public class HomeController {
         //A seconda dell'utente viene caricata la topBar corrispondente
         String fxmlPath = (SessionManager.getInstance().getLoggedUser() != null &&
                 "Proprietario".equals(SessionManager.getInstance().getLoggedUser().getType()))
-                ? "/ownertopbar.fxml"
-                : "/usertopbar.fxml";
+                ? "/OwnerTopBar.fxml"
+                : "/UserTopBar.fxml";
 
         loader = new FXMLLoader(getClass().getResource(fxmlPath));
 

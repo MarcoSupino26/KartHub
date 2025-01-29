@@ -27,7 +27,7 @@ public class LoginController {
     @FXML
     public void switchToSign() {
         try {
-            changeScene("/sign.fxml");
+            changeScene("/Sign.fxml");
         }catch (DataLoadException e) {
             System.out.println(e.getMessage());
         }
@@ -42,7 +42,7 @@ public class LoginController {
 
     private void authenticateUser(LoginBean logBean) throws UserNotFoundException {
         if (new AuthController().authUser(logBean)) {
-            changeScene("/home.fxml");
+            changeScene("/Home.fxml");
         }
     }
 

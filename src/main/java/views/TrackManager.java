@@ -31,7 +31,7 @@ public class TrackManager {
     @FXML
     public void seeBookings(){
         try{
-            SceneManager.changeScene("/trackbookings.fxml");
+            SceneManager.changeScene("/TrackBookings.fxml");
         }catch (DataLoadException e){
             System.out.println(e.getMessage());
         }

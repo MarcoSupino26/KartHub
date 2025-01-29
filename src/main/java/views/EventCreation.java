@@ -57,7 +57,7 @@ public class EventCreation {
 
         new EventManager().saveEvent(bean);
         try{
-            SceneManager.changeScene("/home.fxml");
+            SceneManager.changeScene("/Home.fxml");
         }catch(DataLoadException e){
             System.out.println(e.getMessage());
         }

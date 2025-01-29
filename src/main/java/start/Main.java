@@ -57,7 +57,7 @@ public class Main extends Application {
             return;
         }
         SceneManager.setInitialStage(initialStage);
-        SceneManager.changeScene("/home.fxml");
+        SceneManager.changeScene("/Home.fxml");
     }
 
     private static void startCLI() {

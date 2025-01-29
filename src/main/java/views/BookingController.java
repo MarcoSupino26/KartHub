@@ -77,6 +77,7 @@ public class BookingController {
             ChangeListener<Boolean> optionsListener = (observable, oldValue, newValue) -> {
                 boolean selected = race.isSelected() || quali.isSelected() || fp.isSelected();
                 day.setDisable(!selected); //Se nessun formato è selezionato, non è possibile selezionare il giorno
+                if(!selected) day.setValue(null); //Viene deselezionato il giorno per evitare l'aggiornamento degli slot
                 if(day.getValue() != null) updateTimeSlots(); //Aggiornamento dei turni se viene selezionato un giorno
             };
 
@@ -123,7 +124,7 @@ public class BookingController {
         boolean qualiOption = quali.isSelected();
         boolean fpOption = fp.isSelected();
         CombinedSlotsBean combinedSlotsBean = new CombinedSlotsBean(slotsList, raceOption, qualiOption, fpOption);
-        slotsList = bM.getCombinedSlots2(combinedSlotsBean);
+        slotsList = bM.getCombinedSlots(combinedSlotsBean);
         return slotsList;
         //Gli slot continuano a essere singoli, ma vengono mostrati all'utente come un semplice turno.
         //La gara occupa 2 slot, la qualifica e le prove libere 1 slot
@@ -160,7 +161,7 @@ public class BookingController {
     @FXML
     public void bookTrack(){
         try {
-            SceneManager.changeScene("/trackChoice.fxml");
+            SceneManager.changeScene("/TrackChoice.fxml");
         } catch (DataLoadException e) {
             System.out.println(e.getMessage());
         }
@@ -171,6 +172,15 @@ public class BookingController {
         boolean checked = check.isSelected();
         optional.setVisible(checked);
         optional.setManaged(checked);
+    }
+
+    @FXML
+    public void bookedTracks(){
+        try{
+            SceneManager.changeScene("/UserBookings.fxml");
+        }catch(DataLoadException e){
+            System.out.println(e.getMessage());
+        }
     }
 
     @FXML
@@ -236,7 +246,7 @@ public class BookingController {
         optionsBean.setShifts(slot);
         new BookManager().saveBooking(optionsBean);
         try {
-            SceneManager.changeScene("/bookingrecap.fxml");
+            SceneManager.changeScene("/BookingRecap.fxml");
         } catch (DataLoadException e){
             System.out.println(e.getMessage());
         }

@@ -13,6 +13,7 @@ import models.user.Owner;
 import models.user.User;
 import utils.session.BookingSession;
 import utils.session.SessionManager;
+import views.UserBookings;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -110,26 +111,26 @@ public class BookManager {
         return daySlots;
     }
 
-    public List<SlotBean> getCombinedSlots2(CombinedSlotsBean bean){
+    public List<SlotBean> getCombinedSlots(CombinedSlotsBean bean) {
         int requiredSlots = 0;
         List<SlotBean> generatedSlots = bean.getGeneratedSlots();
         List<SlotBean> combinedSlots = new ArrayList<>();
 
-        if(bean.isRaceChecked()) requiredSlots += 2;
+        if (bean.isRaceChecked()) requiredSlots += 2;
         if (bean.isQualiChecked()) requiredSlots += 1;
         if (bean.isFpChecked()) requiredSlots += 1;
 
         SessionManager.getInstance().getBookingSession().setBookedSlots(requiredSlots);
-
-        for (int i = 0; i < generatedSlots.size() - requiredSlots; i++) {
+        //Vengono generati slot combinati a seconda delle scelte dell'utente
+        for (int i = 0; i <= generatedSlots.size() - requiredSlots; i += requiredSlots) {
             boolean allAvailable = true;
-            for(int j = 0; j < requiredSlots; j++){
-                if(!generatedSlots.get(i+j).isFree()){
+            for (int j = 0; j < requiredSlots; j++) {
+                if (!generatedSlots.get(i + j).isFree()) {
                     allAvailable = false;
                     break;
                 }
             }
-            if (allAvailable){
+            if (allAvailable) {
                 SlotBean start = generatedSlots.get(i);
                 SlotBean end = generatedSlots.get(i + requiredSlots - 1);
 
@@ -137,6 +138,32 @@ public class BookManager {
             }
         }
         return combinedSlots;
+    }
+
+    public List<BookingsDisplayBean> getUserBookings(){
+        List<BookingsDisplayBean> userBookings = new ArrayList<>();
+        Customer customer = (Customer) SessionManager.getInstance().getLoggedUser();
+
+        List<BookingInterface> bookings = customer.getBookings();
+        for (BookingInterface booking : bookings) {
+            BookingsDisplayBean userBooking = getUserBookingsBeans(booking);
+            userBookings.add(userBooking);
+        }
+
+        return userBookings;
+    }
+
+    private static BookingsDisplayBean getUserBookingsBeans(BookingInterface userBooking){
+        BookingsDisplayBean bookingBean = new BookingsDisplayBean(userBooking.getSelectedDay());
+        bookingBean.setPersonal(String.valueOf(userBooking.getPersonal()));
+        bookingBean.setSelectedDay(userBooking.getSelectedDay());
+        bookingBean.setRental(String.valueOf(userBooking.getRental()));
+        bookingBean.setShift(String.valueOf(userBooking.getShift()));
+        bookingBean.setTrackName(userBooking.getTrackName());
+        bookingBean.setCost(String.valueOf(userBooking.getCost()));
+        bookingBean.setDescription(userBooking.getDescription());
+        bookingBean.setSelectedDay(userBooking.getSelectedDay());
+        return bookingBean;
     }
 
     public void saveBooking(OptionsBean options){

@@ -34,7 +34,7 @@ public class CostController {
         CostBean costBean = new CostBean(cost);
         new ManageController().saveTrack(costBean);
         try {
-            SceneManager.changeScene("/home.fxml");
+            SceneManager.changeScene("/Home.fxml");
         } catch (DataLoadException e){
             System.out.println(e.getMessage());
         }

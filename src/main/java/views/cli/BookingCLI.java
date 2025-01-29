@@ -153,7 +153,7 @@ public class BookingCLI {
     private List<SlotBean> updateCombinedSlots(List<SlotBean> slotsList, BookManager bookManager) {
         if (raceSelected) {
             CombinedSlotsBean combinedSlots = new CombinedSlotsBean(slotsList, true, qualiSelected, fpSelected);
-            return bookManager.getCombinedSlots2(combinedSlots);
+            return bookManager.getCombinedSlots(combinedSlots);
         }
         return slotsList;
     }

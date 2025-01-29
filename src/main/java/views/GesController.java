@@ -66,7 +66,7 @@ public class GesController {
         track.setAddress(address.getText());
         new ManageController().createTrack(track);
         try{
-            SceneManager.changeScene("/slotChoice.fxml");
+            SceneManager.changeScene("/SlotChoice.fxml");
         }catch (DataLoadException e){
             System.out.println(e.getMessage());
         }

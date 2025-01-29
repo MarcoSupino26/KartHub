@@ -21,15 +21,10 @@ public class TrackDaoMem extends TrackDao {
         trackDetails.put("address", "Via dei laghi, 2");
         trackDetails.put("availableKarts", 14);
         trackDetails.put("image", new Image("file:C:\\Users\\supin\\Desktop\\Università\\ISPW\\Interfacce\\tt racing.jpg"));
-        trackDetails.put("owner", FactoryDAO.getInstance().createUserDao().getUser("Marco", "psw1"));
+        trackDetails.put("owner", new Owner("demo", "password", "Proprietario"));
 
         double[] timings = {10.00, 18.00, 15.00};
         Track demoTrack = saveDemoTrack(new Track(), trackDetails, timings);
-        demoTrack.setCost(new ArrayList<>(Collections.nCopies(6, 10.00)));
-        UserDao userDao = FactoryDAO.getInstance().createUserDao();
-        Owner owner = (Owner) userDao.getUser("Marco", "psw1");
-        owner.setTrack(demoTrack);
-        userDao.addUser(owner.getUsername(), owner);
         tracks.put(demoTrack.getName(), demoTrack);
     }
 
@@ -43,6 +38,7 @@ public class TrackDaoMem extends TrackDao {
         demo.setOpeningHour(timings[0]);
         demo.setClosingHour(timings[1]);
         demo.setShiftDuration(timings[2]);
+        demo.setCost(new ArrayList<>(Collections.nCopies(6, 10.00)));
         return demo;
     }
 

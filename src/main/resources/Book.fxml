@@ -19,15 +19,20 @@
 
 <BorderPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.BookingController">
     <top>
-        <fx:include source="usertopbar.fxml" />
+        <fx:include source="UserTopBar.fxml" />
     </top>
     <center>
         <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="850.0" style="-fx-alignment: center;" BorderPane.alignment="CENTER">
             <Pane prefHeight="538.0" prefWidth="850.0" style="-fx-background-color: #000000;">
                 <children>
-                    <Group fx:id="affiliates" layoutX="212.0" layoutY="39.0">
+                    <Group fx:id="affiliates" layoutX="212.0" layoutY="34.0">
                         <children>
-                            <Button alignment="CENTER" contentDisplay="CENTER" layoutX="285.0" layoutY="171.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="141.0" style="-fx-background-color: #c5151d;" text="Intorno a te" textAlignment="CENTER" textFill="WHITE">
+                            <Text fill="WHITE" layoutX="137.0" layoutY="3.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Scegli la pista">
+                                <font>
+                                    <Font name="Futura-Medium" size="26.0" />
+                                </font>
+                            </Text>
+                            <Button alignment="CENTER" contentDisplay="CENTER" layoutX="275.0" layoutY="155.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="141.0" style="-fx-background-color: #c5151d;" text="Intorno a te" textAlignment="CENTER" textFill="WHITE">
                                 <font>
                                     <Font name="Futura-Medium" size="18.0" />
                                 </font>
@@ -35,7 +40,7 @@
                                     <Cursor fx:constant="HAND" />
                                 </cursor>
                             </Button>
-                            <Button alignment="CENTER" contentDisplay="CENTER" layoutY="171.0" mnemonicParsing="false" onAction="#bookTrack" prefHeight="40.0" prefWidth="141.0" style="-fx-background-color: #c5151d;" text="I nostri affiliati" textAlignment="CENTER" textFill="WHITE">
+                            <Button alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="155.0" mnemonicParsing="false" onAction="#bookTrack" prefHeight="40.0" prefWidth="141.0" style="-fx-background-color: #c5151d;" text="I nostri affiliati" textAlignment="CENTER" textFill="WHITE">
                                 <font>
                                     <Font size="18.0" />
                                 </font>
@@ -43,11 +48,14 @@
                                     <Cursor fx:constant="HAND" />
                                 </cursor>
                             </Button>
-                            <Text fill="WHITE" layoutX="135.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Scegli la pista">
+                            <Button alignment="CENTER" contentDisplay="CENTER" layoutX="132.0" layoutY="369.0" mnemonicParsing="false" onAction="#bookedTracks" prefHeight="40.0" prefWidth="161.0" style="-fx-background-color: #c5151d;" text="Vedi prenotazioni" textAlignment="CENTER" textFill="WHITE">
                                 <font>
-                                    <Font size="26.0" />
+                                    <Font name="Futura-Medium" size="18.0" />
                                 </font>
-                            </Text>
+                                <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                </cursor>
+                            </Button>
                         </children>
                     </Group>
                 </children>
