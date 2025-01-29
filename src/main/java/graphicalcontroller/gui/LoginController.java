@@ -6,6 +6,7 @@ import exceptions.DataLoadException;
 import exceptions.UserNotFoundException;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
+import utils.session.SessionManager;
 
 public class LoginController {
 
@@ -42,6 +43,7 @@ public class LoginController {
 
     private void authenticateUser(LoginBean logBean) throws UserNotFoundException {
         if (new AuthController().authUser(logBean)) {
+            SessionManager.getInstance().setCurrentSection("Home");
             changeScene("/views/Home.fxml");
         }
     }

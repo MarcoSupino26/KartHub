@@ -5,6 +5,7 @@ import controllers.AuthController;
 import exceptions.DataLoadException;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import utils.session.SessionManager;
 
 public class SignController {
 
@@ -38,6 +39,7 @@ public class SignController {
         AuthController auth = new AuthController();
         auth.registerUser(signBean);
         try {
+            SessionManager.getInstance().setCurrentSection("Home");
             SceneManager.changeScene("/views/Home.fxml");
         } catch (DataLoadException e){
             System.out.println(e.getMessage());

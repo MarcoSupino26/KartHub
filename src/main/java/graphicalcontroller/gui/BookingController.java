@@ -220,6 +220,7 @@ public class BookingController {
 
         } catch (EmptyFieldException e) {
             e.handleException();
+            SceneManager.changeScene("/Book.fxml");
         }
 
 

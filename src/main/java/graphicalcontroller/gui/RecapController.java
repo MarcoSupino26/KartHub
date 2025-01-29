@@ -44,6 +44,7 @@ public class RecapController {
 
     public void proceed() {
         try{
+            SessionManager.getInstance().setCurrentSection("Home");
             SceneManager.changeScene("/views/Home.fxml");
         }catch (DataLoadException e){
             System.out.println(e.getMessage());

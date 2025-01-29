@@ -12,6 +12,8 @@ public class UserTopBarController {
     @FXML
     private Button event;
 
+    private static final String LOGIN = "Login";
+
     @FXML
     public void initialize(){
         if(SessionManager.getInstance().getLoggedUser()!=null){
@@ -24,7 +26,7 @@ public class UserTopBarController {
         String currentSection = SessionManager.getInstance().getCurrentSection();
         setButtonsStyle(book, "Prenota", currentSection);
         setButtonsStyle(event, "Eventi", currentSection);
-        setButtonsStyle(log, "Login", currentSection);
+        setButtonsStyle(log, LOGIN, currentSection);
     }
 
     private void setButtonsStyle(Button button, String section, String currentSection){
@@ -61,10 +63,10 @@ public class UserTopBarController {
     public void switchToEventi(){
         SessionManager sessionManager = SessionManager.getInstance();
         if(sessionManager.getInstance().getLoggedUser()!=null) {
-            SceneManager.changeScene("/views/Events.fxml");
             sessionManager.setCurrentSection("Eventi");
+            SceneManager.changeScene("/views/Events.fxml");;
         }else {
-            sessionManager.setCurrentSection("Login");
+            sessionManager.setCurrentSection(LOGIN);
             SceneManager.changeScene("/views/Login.fxml");
         }
     }
@@ -72,7 +74,7 @@ public class UserTopBarController {
     @FXML
     public void switchToLogin(){
         SessionManager sessionManager = SessionManager.getInstance();
-        sessionManager.setCurrentSection("Login");
+        sessionManager.setCurrentSection(LOGIN);
         if(sessionManager.getInstance().getLoggedUser() == null){
             SceneManager.changeScene("/views/Login.fxml");
         }else {

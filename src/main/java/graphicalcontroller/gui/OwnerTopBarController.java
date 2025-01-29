@@ -11,6 +11,8 @@ public class OwnerTopBarController {
     @FXML
     private Button event;
 
+    private static final String GES = "Gestisci";
+
     @FXML
     public void initialize() {
         updateButtonsStyle();
@@ -18,7 +20,7 @@ public class OwnerTopBarController {
 
     private void updateButtonsStyle(){
         String currentSection = SessionManager.getInstance().getCurrentSection();
-        setButtonsStyle(ges, "Gestisci", currentSection);
+        setButtonsStyle(ges, GES, currentSection);
         setButtonsStyle(event, "Eventi", currentSection);
     }
 
@@ -41,7 +43,7 @@ public class OwnerTopBarController {
 
     @FXML
     public void switchToManager(){
-        SessionManager.getInstance().setCurrentSection("Gestisci");
+        SessionManager.getInstance().setCurrentSection(GES);
         if(new ManageController().registeredTrack()) SceneManager.changeScene("/views/trackManager.fxml");
         else SceneManager.changeScene("/views/TrackCreation.fxml");
     }
@@ -64,7 +66,7 @@ public class OwnerTopBarController {
             SceneManager.changeScene("/views/TrackEvents.fxml");
         }
         else{
-            sessionManager.setCurrentSection("Gestisci");
+            sessionManager.setCurrentSection(GES);
             SceneManager.changeScene("/views/TrackCreation.fxml");
         }
     }
