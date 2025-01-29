@@ -7,17 +7,38 @@ import utils.session.SessionManager;
 public class UserTopBarController {
     @FXML
     private Button log;
+    @FXML
+    private Button book;
+    @FXML
+    private Button event;
 
     @FXML
     public void initialize(){
         if(SessionManager.getInstance().getLoggedUser()!=null){
             log.setText("Logout");
         }
+        updateButtonsStyle();
+    }
+
+    private void updateButtonsStyle(){
+        String currentSection = SessionManager.getInstance().getCurrentSection();
+        setButtonsStyle(book, "Prenota", currentSection);
+        setButtonsStyle(event, "Eventi", currentSection);
+        setButtonsStyle(log, "Login", currentSection);
+    }
+
+    private void setButtonsStyle(Button button, String section, String currentSection){
+        if(section.equals(currentSection)){
+            button.setStyle("-fx-underline: true; -fx-focus-color: transparent; -fx-background-color: transparent;");
+        }else{
+            button.setStyle("-fx-underline: false; -fx-focus-color: transparent; -fx-background-color: transparent;");
+        }
     }
 
     @FXML
     public void switchToHome(){
         SessionManager sessionManager = SessionManager.getInstance();
+        sessionManager.setCurrentSection("Home");
         if(sessionManager.getLoggedUser()!=null) {
             if (sessionManager.getBookingSession() != null) sessionManager.freeBookingSession();
             if (sessionManager.getEventSession() != null) sessionManager.freeEventSession();
@@ -28,6 +49,7 @@ public class UserTopBarController {
     @FXML
     public void switchToPrenota(){
         SessionManager sessionManager = SessionManager.getInstance();
+        sessionManager.setCurrentSection("Prenota");
         if(SessionManager.getInstance().getLoggedUser()!=null){
             if(sessionManager.getEventSession()!=null) sessionManager.freeEventSession();
             SceneManager.changeScene("/views/Book.fxml");
@@ -37,19 +59,27 @@ public class UserTopBarController {
 
     @FXML
     public void switchToEventi(){
-        if(SessionManager.getInstance().getLoggedUser()!=null) SceneManager.changeScene("/views/Events.fxml");
-        else SceneManager.changeScene("/views/Login.fxml");
+        SessionManager sessionManager = SessionManager.getInstance();
+        if(sessionManager.getInstance().getLoggedUser()!=null) {
+            SceneManager.changeScene("/views/Events.fxml");
+            sessionManager.setCurrentSection("Eventi");
+        }else {
+            sessionManager.setCurrentSection("Login");
+            SceneManager.changeScene("/views/Login.fxml");
+        }
     }
 
     @FXML
     public void switchToLogin(){
-        if(SessionManager.getInstance().getLoggedUser() == null){
+        SessionManager sessionManager = SessionManager.getInstance();
+        sessionManager.setCurrentSection("Login");
+        if(sessionManager.getInstance().getLoggedUser() == null){
             SceneManager.changeScene("/views/Login.fxml");
         }else {
-            SessionManager sessionManager = SessionManager.getInstance();
             if(sessionManager.getBookingSession()!=null) sessionManager.freeBookingSession();
             if(sessionManager.getEventSession()!=null) sessionManager.freeEventSession();
             sessionManager.freeSession();
+            sessionManager.setCurrentSection("Home");
             SceneManager.changeScene("/views/Home.fxml");
         }
     }

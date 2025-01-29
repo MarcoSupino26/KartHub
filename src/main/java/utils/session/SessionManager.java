@@ -7,6 +7,7 @@ import java.util.HashMap;
 public class SessionManager {
     private static SessionManager instance;
     private User loggedUser;
+    private String currentSection;
     private HashMap<String, BookingSession> bookingSessions;
     private HashMap<String, ManageSession> manageSessions;
     private HashMap<String, EventSession> eventSessions;
@@ -31,6 +32,10 @@ public class SessionManager {
     public void setLoggedUser(User user){
         this.loggedUser = user;
     }
+
+    public void setCurrentSection(String section){this.currentSection = section;}
+
+    public String getCurrentSection(){return this.currentSection;}
 
     public void freeSession(){
         this.loggedUser = null;

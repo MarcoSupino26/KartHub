@@ -10,6 +10,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
+import utils.session.SessionManager;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -57,6 +58,7 @@ public class EventCreation {
 
         new EventManager().saveEvent(bean);
         try{
+            SessionManager.getInstance().setCurrentSection("Home");
             SceneManager.changeScene("/views/Home.fxml");
         }catch(DataLoadException e){
             System.out.println(e.getMessage());

@@ -5,6 +5,8 @@ import controllers.ManageController;
 import exceptions.DataLoadException;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
+import utils.session.SessionManager;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +36,7 @@ public class CostController {
         CostBean costBean = new CostBean(cost);
         new ManageController().saveTrack(costBean);
         try {
+            SessionManager.getInstance().setCurrentSection("Home");
             SceneManager.changeScene("/views/Home.fxml");
         } catch (DataLoadException e){
             System.out.println(e.getMessage());
