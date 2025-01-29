@@ -13,7 +13,6 @@ import models.user.Owner;
 import models.user.User;
 import utils.session.BookingSession;
 import utils.session.SessionManager;
-import views.UserBookings;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

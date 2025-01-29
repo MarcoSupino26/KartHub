@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane fx:id="borderPane" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="graphicalcontroller.gui.HomeController">
+   <top>
+      <fx:include source="UserTopBar.fxml"/>
+   </top>
+   <center>
+      <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="850.0" style="-fx-alignment: center;" BorderPane.alignment="CENTER">
+         <Pane prefHeight="538.0" prefWidth="850.0" style="-fx-background-color: #000000;">
+
+            <ImageView fitHeight="503.0" fitWidth="850.0" opacity="0.25" pickOnBounds="true" preserveRatio="true">
+               <Image url="@../images/homewall.jpg" />
+            </ImageView>
+            <Text fill="WHITE" layoutX="24.0" layoutY="214.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Benvenuto in">
+               <font>
+                  <Font name="Futura-Medium" size="35.0" />
+               </font>
+            </Text>
+            <Text fill="WHITE" layoutX="24.0" layoutY="250.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lo strumento per gli appassionati di kart.">
+               <font>
+                  <Font name="Futura-Medium" size="25.0" />
+               </font>
+            </Text>
+            <Text fill="#c5151d" layoutX="220.0" layoutY="214.0" strokeType="OUTSIDE" strokeWidth="0.0" text="KartHub">
+               <font>
+                  <Font name="Futura-Medium" size="35.0" />
+               </font>
+            </Text>
+         </Pane>
+      </VBox>
+   </center>
+</BorderPane>

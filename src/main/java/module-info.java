@@ -13,9 +13,7 @@ module karthub{
     exports models.user;
     exports controllers;
     exports beans;
-    exports views;
     exports start;
-    exports views.topbar;
-    opens views.topbar to javafx.fxml;
-    opens views to javafx.fxml;
+    exports graphicalcontroller.gui;
+    opens graphicalcontroller.gui to javafx.fxml;
 }

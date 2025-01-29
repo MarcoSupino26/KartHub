@@ -3,8 +3,8 @@ package start;
 import exceptions.DataLoadException;
 import javafx.application.Application;
 import javafx.stage.Stage;
-import views.SceneManager;
-import views.cli.HomeCLI;
+import graphicalcontroller.gui.SceneManager;
+import graphicalcontroller.cli.HomeCLI;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -57,7 +57,7 @@ public class Main extends Application {
             return;
         }
         SceneManager.setInitialStage(initialStage);
-        SceneManager.changeScene("/Home.fxml");
+        SceneManager.changeScene("/views/Home.fxml");
     }
 
     private static void startCLI() {
