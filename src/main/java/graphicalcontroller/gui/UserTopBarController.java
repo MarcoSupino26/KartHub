@@ -62,9 +62,9 @@ public class UserTopBarController {
     @FXML
     public void switchToEventi(){
         SessionManager sessionManager = SessionManager.getInstance();
-        if(sessionManager.getInstance().getLoggedUser()!=null) {
+        if(SessionManager.getInstance().getLoggedUser()!=null) {
             sessionManager.setCurrentSection("Eventi");
-            SceneManager.changeScene("/views/Events.fxml");;
+            SceneManager.changeScene("/views/Events.fxml");
         }else {
             sessionManager.setCurrentSection(LOGIN);
             SceneManager.changeScene("/views/Login.fxml");
@@ -75,7 +75,7 @@ public class UserTopBarController {
     public void switchToLogin(){
         SessionManager sessionManager = SessionManager.getInstance();
         sessionManager.setCurrentSection(LOGIN);
-        if(sessionManager.getInstance().getLoggedUser() == null){
+        if(SessionManager.getInstance().getLoggedUser() == null){
             SceneManager.changeScene("/views/Login.fxml");
         }else {
             if(sessionManager.getBookingSession()!=null) sessionManager.freeBookingSession();
