@@ -106,7 +106,6 @@ public class BookManager {
             SlotBean slotBean = new SlotBean(start, end, available);
             daySlots.add(slotBean);
         }
-
         return daySlots;
     }
 

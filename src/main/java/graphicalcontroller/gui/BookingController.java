@@ -223,7 +223,6 @@ public class BookingController {
             SceneManager.changeScene("/Book.fxml");
         }
 
-
         try {
             if(day.getValue() == null) {
                 throw new EmptyFieldException();
