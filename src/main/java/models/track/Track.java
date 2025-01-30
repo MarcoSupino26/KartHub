@@ -49,12 +49,10 @@ public class Track {
     public List<TimeSlot> getTimeSlots(LocalDate date) {
         List<TimeSlot> slots = timeSlots.getOrDefault(date, Collections.emptyList());
         return new ArrayList<>(slots);
-        //return timeSlots.getOrDefault(date, Collections.emptyList());
     }
 
     public void addTimeSlots(List<TimeSlot> timeSlots, LocalDate date) {
         this.timeSlots.putIfAbsent(date, timeSlots);
-        //this.timeSlots.put(date, timeSlots);
     }
 
     public void setSlotAvailability(LocalDate date, int numShifts, double startTime){
