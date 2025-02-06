@@ -1,14 +1,10 @@
 package models.booking;
 
 public class ChampagneDecorator extends BookDecorator {
-    private double champagneCost;
+    private final double champagneCost;
 
     public ChampagneDecorator(BookingInterface booking, double priceModifier) {
         super(booking);
-        champagneCost = priceModifier;
-    }
-
-    public void setChampagneCost(double priceModifier) {
         champagneCost = priceModifier;
     }
 

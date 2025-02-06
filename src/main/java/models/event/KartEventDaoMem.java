@@ -6,7 +6,7 @@ import java.util.List;
 
 public class KartEventDaoMem extends KartEventDao {
     private static KartEventDaoMem instance;
-    private HashMap<String, KartEvent> kartEvents;
+    private final HashMap<String, KartEvent> kartEvents;
 
     protected KartEventDaoMem() {
         kartEvents = new HashMap<>();

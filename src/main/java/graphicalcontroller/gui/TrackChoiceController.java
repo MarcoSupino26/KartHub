@@ -68,14 +68,14 @@ public class TrackChoiceController {
         Button selectTrack = new Button("Seleziona");
         selectTrack.setStyle("-fx-background-color: #c5151d; -fx-text-fill: white;");
         selectTrack.setFont(Font.font(fontName, 18));
-        selectTrack.setOnAction(event->onSelectClicked(event, name.getText()));
+        selectTrack.setOnAction(event-> selectedEvent(event, name.getText()));
 
         trackProfile.getChildren().addAll(trackPic, trackDetails, selectTrack);
         tracksContainer.getChildren().add(trackProfile);
     }
 
     @FXML
-    public void onSelectClicked(ActionEvent event, String name) {
+    public void selectedEvent(ActionEvent event, String name) {
         BookManager bookManager = new BookManager();
         bookManager.setBookingSession(name);
         try{

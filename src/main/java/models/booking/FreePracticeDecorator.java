@@ -1,14 +1,12 @@
 package models.booking;
 
 public class FreePracticeDecorator extends BookDecorator {
-    private double fpCost;
+    private final double fpCost;
 
     public FreePracticeDecorator(BookingInterface booking, double priceModifier) {
         super(booking);
         fpCost = priceModifier;
     }
-
-    public void setPracticeCost(double priceModifier) {fpCost = priceModifier;}
 
     @Override
     public double getCost(){

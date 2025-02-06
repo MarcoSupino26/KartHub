@@ -1,14 +1,12 @@
 package models.booking;
 
 public class QualifyingDecorator extends BookDecorator{
-    private double qualiCost;
+    private final double qualiCost;
 
     public QualifyingDecorator(BookingInterface booking, double priceModifier) {
         super(booking);
         qualiCost = priceModifier;
     }
-
-    public void setQualiCost(double priceModifier) {qualiCost = priceModifier;}
 
     @Override
     public double getCost(){
