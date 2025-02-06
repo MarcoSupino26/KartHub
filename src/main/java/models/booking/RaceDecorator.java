@@ -1,14 +1,12 @@
 package models.booking;
 
 public class RaceDecorator extends BookDecorator{
-    private double raceCost;
+    private final double raceCost;
 
     public RaceDecorator(BookingInterface booking, double priceModifier) {
         super(booking);
         raceCost = priceModifier;
     }
-
-    public void setRaceCost(double priceModifier) {raceCost = priceModifier;}
 
     @Override
     public double getCost(){

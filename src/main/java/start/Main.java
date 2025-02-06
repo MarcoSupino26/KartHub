@@ -14,7 +14,7 @@ import java.util.Scanner;
 public class Main extends Application {
 
     private static boolean isCLI = false;
-    private static String executionMode = "demo";
+    private static String executionMode = "db";
 
     public static void main(String[] args) {
         try {

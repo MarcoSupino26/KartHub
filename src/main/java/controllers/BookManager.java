@@ -75,7 +75,7 @@ public class BookManager {
         session.getTrack().addTimeSlots(timeSlots, selectedDate);
     }
 
-    public  List<TimeSlot> getTimeSlotList(Track track) {//Generazione dei turni secondo i turni del tracciato
+    public List<TimeSlot> getTimeSlotList(Track track) {//Generazione dei turni secondo i turni del tracciato
         double start = track.getOpeningHour();
         double end = track.getClosingHour();
         double duration = track.getShiftDuration();

@@ -22,13 +22,13 @@ class AuthControllerTest {
     void testAuthUser_SuccessfulLogin() {
 
         LoginBean loginBean = new LoginBean();
-        loginBean.setUsername("Marco");
-        loginBean.setPassword("psw1");
+        loginBean.setUsername("Supino");
+        loginBean.setPassword("psw2");
 
         boolean result = authController.authUser(loginBean);
 
         assertTrue(result, "Login successful");
         assertNotNull(SessionManager.getInstance().getLoggedUser(), "User should be logged in");
-        assertEquals("Marco", SessionManager.getInstance().getLoggedUser().getUsername(), "Username should be Marco");
+        assertEquals("Supino", SessionManager.getInstance().getLoggedUser().getUsername(), "Username should be Supino");
     }
 }

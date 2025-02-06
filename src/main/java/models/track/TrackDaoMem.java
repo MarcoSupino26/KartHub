@@ -22,7 +22,6 @@ public class TrackDaoMem extends TrackDao {
         trackDetails.put("availableKarts", 14);
         trackDetails.put("image", new Image("file:C:\\Users\\supin\\Desktop\\Università\\ISPW\\Interfacce\\tt racing.jpg"));
         trackDetails.put("owner", new Owner("demo", "password", "Proprietario"));
-
         double[] timings = {10.00, 18.00, 15.00};
         Track demoTrack = saveDemoTrack(new Track(), trackDetails, timings);
         tracks.put(demoTrack.getName(), demoTrack);
